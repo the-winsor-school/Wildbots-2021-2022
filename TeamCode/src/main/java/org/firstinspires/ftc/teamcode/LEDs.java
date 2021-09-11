@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
-public class Wheeeeee extends LinearOpMode {
+public class LEDs extends LinearOpMode {
     RevBlinkinLedDriver LEDStrip;
     RevBlinkinLedDriver.BlinkinPattern pattern;
 
