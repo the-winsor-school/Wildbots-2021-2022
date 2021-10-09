@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.enums.DrivingMode;
@@ -13,12 +14,11 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
+@TeleOp(name = "RevampingRoverRuckus", group = "Concept")
 
 /**
  * Created by lamanwyner on 2/9/19.
  */
-@Disabled
-@Autonomous(name = "Simple Mineral Sampling", group = "In Progress")
 public class RevampingRoverRuckus extends LinearOpMode {
     DrivingLibrary drivingLibrary; // renaming the drivinglibrary
 
