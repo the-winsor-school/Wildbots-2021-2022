@@ -20,8 +20,19 @@ public class FSRTest extends LinearOpMode { //Force Sensitive Resistor (FSR)
         while(opModeIsActive()){
             currentForce = forceSensitiveResistor.getVoltage();
 
-            telemetry.addData("Force", currentForce);
-            telemetry.update();
+            if (currentForce > 0.113 && currentForce < 0.169) {
+                telemetry.addData("Box Weight:", "Light");
+                telemetry.update();
+            } else if (currentForce > 0.189 && currentForce < 0.224) {
+                telemetry.addData("Box Weight:", "Medium");
+                telemetry.update();
+            } else if (currentForce > 0.235 && currentForce < 0.278){
+                telemetry.addData("Box Weight:", "Heavy");
+                telemetry.update();
+            } else {
+                telemetry.addData("Force", currentForce);
+                telemetry.update();
+            }
         }
     }
 }
