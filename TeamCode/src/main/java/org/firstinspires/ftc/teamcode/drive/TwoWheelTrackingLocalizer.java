@@ -99,7 +99,7 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         //  compensation method
 
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()) *X_Multiplier, 
+                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()) *X_Multiplier,
                 encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity()) *Y_Multiplier
         );
     }
