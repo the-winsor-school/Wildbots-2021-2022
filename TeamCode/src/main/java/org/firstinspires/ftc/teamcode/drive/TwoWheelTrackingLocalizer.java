@@ -35,13 +35,17 @@ import java.util.List;
 public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 8192;
     public static double WHEEL_RADIUS = 1.37795276; // in
-    public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
+    //changed gear ratio, was originally 1
+    public static double GEAR_RATIO = 0.5; // output (wheel) speed / input (encoder) speed
 
     public static double PARALLEL_X = 1.5; // X is the up and down direction
     public static double PARALLEL_Y = 7.375; // Y is the strafe direction
 
     public static double PERPENDICULAR_X = 1;
     public static double PERPENDICULAR_Y = -0.125;
+
+    public static double X_Multiplier = 0.9922; // Multiplier in the X direction
+    public static double Y_Multiplier = 0.9994; // Multiplier in the Y direction
 
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
@@ -82,8 +86,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     @Override
     public List<Double> getWheelPositions() {
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getCurrentPosition()),
-                encoderTicksToInches(perpendicularEncoder.getCurrentPosition())
+                encoderTicksToInches(parallelEncoder.getCurrentPosition()) *X_Multiplier,
+                encoderTicksToInches(perpendicularEncoder.getCurrentPosition()) *Y_Multiplier
         );
     }
 
@@ -95,8 +99,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         //  compensation method
 
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()),
-                encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity())
+                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()) *X_Multiplier, 
+                encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity()) *Y_Multiplier
         );
     }
 }
