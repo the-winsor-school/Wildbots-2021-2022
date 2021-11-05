@@ -111,7 +111,10 @@ public class ManualFeedforwardTuner extends LinearOpMode {
                     MotionState motionState = activeProfile.get(profileTime);
                     double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), kV, kA, kStatic);
 
-                    drive.setDrivePower(new Pose2d(targetPower, 0, 0));
+                    //CHANGED THIS HERE, ORIGINALLY WAS drive.setDrivePower
+                    drive.setAdjustedMotorPowers(0, 0, (float)targetPower);
+                    //drive.setDrivePower(new Pose2d(targetPower, 0, 0));
+
                     drive.updatePoseEstimate();
 
                     Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");

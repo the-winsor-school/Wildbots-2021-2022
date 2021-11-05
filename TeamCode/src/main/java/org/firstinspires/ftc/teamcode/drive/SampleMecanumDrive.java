@@ -19,6 +19,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -60,6 +61,13 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 1;
+
+    //angle stuff
+    private double[] strafeBias;
+    private double[] strafePowers;
+    private double theta;
+    private double targetAngle;
+    private OpMode opMode;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -105,6 +113,10 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
+        //Strafe stuff
+        double strafeError;
+        strafeBias = new double[]{1, 1, 1, 1};
+
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
             motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
@@ -149,6 +161,80 @@ public class SampleMecanumDrive extends MecanumDrive {
                 VEL_CONSTRAINT, ACCEL_CONSTRAINT,
                 MAX_ANG_VEL, MAX_ANG_ACCEL
         );
+    }
+
+    //speed is relative to other wheels - >1 will make it faster, <1 will make it slower
+    public void setStrafeBias(int wheel, double speed) {
+        strafeBias[wheel] = speed;
+    }
+
+    //for incrementally changing strafe bias for testing
+    public void updateStrafeBias(int wheel, int multiplier) {
+        strafeBias[wheel] += (.01 * multiplier);
+    }
+
+    //scales strafing values so all motor powers are between -1 and 1
+    public double[] strafeScale(double[] strafePowers) {
+        double maxPower = Math.abs(strafePowers[0]);
+        for (int i = 1; i < 4; i++) {
+            if (Math.abs(strafePowers[i]) > maxPower) {
+                maxPower = Math.abs(strafePowers[i]);
+            }
+        }
+        double scale = maxPower;
+        if (scale >= 1) {
+            for (int i = 0; i < 4; i++) {
+                strafePowers[i] /= scale;
+            }
+        }
+        return strafePowers;
+    }
+
+    public double strafeSpeed(float x, float y) {
+        double d = Math.sqrt(x*x + y*y);
+        if (d > 1) {
+            d = 1;
+        }
+        return d;
+    }
+
+    public void setAdjustedMotorPowers(float x, float y, float t) {
+        double vd = strafeSpeed(x, y);
+        theta = Math.atan2(y, x);
+        double vt = t;
+
+        if (vt == 0) {
+            if (Math.abs(imu.getAngularOrientation().firstAngle - targetAngle) >= .1) {
+                if (imu.getAngularOrientation().firstAngle > 0) {
+                    vt = .1;
+                }
+                else {
+                    vt = .1;
+                }
+            }
+        }
+        else {
+            targetAngle = imu.getAngularOrientation().firstAngle;
+        }
+
+        //in order -- lF, rF, rR, lR
+        strafePowers = new double[] {
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[0] - vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[1] + vt,
+                vd * Math.sin(theta + Math.PI/4) * strafeBias[2] + vt,
+                vd * Math.sin(theta - Math.PI/4) * strafeBias[3] - vt
+        };
+
+        strafeScale(strafePowers);
+
+        leftFront.setPower(strafePowers[0] * -MAX_VEL);
+        rightFront.setPower(strafePowers[1] * MAX_VEL);
+        rightRear.setPower(strafePowers[2] * MAX_VEL);
+        leftRear.setPower(strafePowers[3] * -MAX_VEL);
+
+        if (vt != 0) {
+            targetAngle = imu.getAngularOrientation().firstAngle;
+        }
     }
 
     public void turnAsync(double angle) {
@@ -227,7 +313,9 @@ public class SampleMecanumDrive extends MecanumDrive {
             motor.setPIDFCoefficients(runMode, compensatedCoefficients);
         }
     }
-
+    public void keepStraight(){
+        
+    }
     public void setWeightedDrivePower(Pose2d drivePower) {
         Pose2d vel = drivePower;
 
