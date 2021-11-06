@@ -71,7 +71,9 @@ public class AutonFirstDraft extends LinearOpMode {
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(2000);
             drivingLibrary.brakeStop();
+            */
 
+            /*
             //Path 3:
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(500);
@@ -88,7 +90,9 @@ public class AutonFirstDraft extends LinearOpMode {
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(1000);
             drivingLibrary.brakeStop();
+            */
 
+            /*
             //Path 4:
             //may have to turn after scanning
             drivingLibrary.bevelDrive(0, -1, 0);
