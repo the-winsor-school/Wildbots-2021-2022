@@ -23,7 +23,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
-public class AutonLibrary {
+public class AutonLibrary2 {
 
     //
     public DrivingLibrary drivingLibrary;
@@ -54,7 +54,7 @@ public class AutonLibrary {
     // other variables? (currently singular variable)
     public boolean goalReached;
 
-    public AutonLibrary (DrivingLibrary drivingLibrary, OpMode opMode) {
+    public AutonLibrary2(DrivingLibrary drivingLibrary, OpMode opMode) {
         this.drivingLibrary = drivingLibrary;
         this.opMode = opMode;
 
