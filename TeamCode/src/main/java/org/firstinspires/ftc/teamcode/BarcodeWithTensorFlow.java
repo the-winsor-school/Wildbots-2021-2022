@@ -25,7 +25,8 @@ public class BarcodeWithTensorFlow extends LinearOpMode {
          * random data. As an example, here is a example of a fragment of a valid key:
          *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
          * Once you've obtained a license key, copy the string from the Vuforia web site
-         * and paste it in to your code on the next line, between the double quotes.
+         * and paste it in to your code on the next lin
+         * e, between the double quotes.
          */
         private static final String VUFORIA_KEY = "AYtzJiX/////AAABmdYFe9BmNk+ql9Whza+MyWA8JYo1KDpmYAQYA/mdTQN3Kt9J13kde2C5eYuGN725m11GpnoMomwiqCvODM+eN/9NK3ERjoUKyJdBJtiIPQb5s7XzqpJ7SDyfLuWRh97kNvJyuMS1dUwS8mHoaXCdocSy+9O7ufi90XbGJbPcq63GrkgYxzcdnfVxKFOGbqnYcXU3vMrqNAQHpgWGtmiYpjUmpJ1gaGCjMXIUq6BclVWgaqirlRf78FjO7Z+2I83+Z8Q+DUTnVmlyUKqG4+F+doEfFhqIqH+eeKl7bN6M2cQBlJNOaXmCrTGylB45k/2mDitSUMD4I+g/64+hBIepHTbcgWjlFQAog38GQJ5gP0p6";
 
@@ -55,7 +56,7 @@ public class BarcodeWithTensorFlow extends LinearOpMode {
             }*/
 
             /** Wait for the game to begin */
-            telemetry.addData(">", "Press Play to start tracking");
+            telemetry.addData(">", "Press play and you're cool");
             telemetry.update();
             waitForStart();
 
