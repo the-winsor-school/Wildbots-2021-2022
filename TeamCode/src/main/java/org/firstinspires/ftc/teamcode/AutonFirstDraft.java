@@ -47,61 +47,63 @@ public class AutonFirstDraft extends LinearOpMode {
             sleep(1000);
             drivingLibrary.brakeStop();
 
-//            //Path 2:
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(500);
-//            drivingLibrary.brakeStop();
-//            //spin carousel
-//            drivingLibrary.spinToAngle((Math.PI * 25) / 18);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(3000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.spinToAngle(Math.PI/4);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(2000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.spinToAngle(Math.PI/2);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(2000);
-//            drivingLibrary.brakeStop();
-//
-//            //Path 3:
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(500);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.spinToAngle((Math.PI * 5) / 4);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(2000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.spinToAngle(Math.PI / 4);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//
-//            //Path 4:
-//            //may have to turn after scanning
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(500);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, 1, 9);
-//            sleep(300);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.spinToAngle((Math.PI * 23) / 36);
-//            sleep(1000);
-//            drivingLibrary.brakeStop();
-//            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(2000);
-//            drivingLibrary.brakeStop();
+            /*
+            //Path 2:
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(500);
+            drivingLibrary.brakeStop();
+            //spin carousel
+            drivingLibrary.spinToAngle((Math.PI * 25) / 18);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(3000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.spinToAngle(Math.PI/4);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(2000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.spinToAngle(Math.PI/2);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(2000);
+            drivingLibrary.brakeStop();
+
+            //Path 3:
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(500);
+            drivingLibrary.brakeStop();
+            drivingLibrary.spinToAngle((Math.PI * 5) / 4);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(2000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.spinToAngle(Math.PI / 4);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+
+            //Path 4:
+            //may have to turn after scanning
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(500);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, 1, 9);
+            sleep(300);
+            drivingLibrary.brakeStop();
+            drivingLibrary.spinToAngle((Math.PI * 23) / 36);
+            sleep(1000);
+            drivingLibrary.brakeStop();
+            drivingLibrary.bevelDrive(0, -1, 0);
+            sleep(2000);
+            drivingLibrary.brakeStop();
+            */
         }
     }
 }
