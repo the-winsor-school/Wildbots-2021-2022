@@ -23,6 +23,6 @@ public class TankDrive {
 
     public void Drive(double l, double r) {
         left.setPower(l);
-        right.setPower(r);
+        right.setPower(-r);
     }
 }
