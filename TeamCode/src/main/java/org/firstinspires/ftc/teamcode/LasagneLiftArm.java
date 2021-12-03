@@ -17,8 +17,7 @@ public class LasagneLiftArm<encoderValues> extends LinearOpMode {
     Servo leftServo;
     Servo rightServo;
     public DcMotor rotini;
-    private int encoderValues;
-    encoderValues = new int 0;
+    private int encoderValues = 0;
 
     //initializing
     @Override
@@ -72,6 +71,6 @@ public class LasagneLiftArm<encoderValues> extends LinearOpMode {
     }
     public void printEncoderValues(){
         getEncoderValues();
-        opMode.telemetry.addData("rotini encoder", encoderValues);
+        telemetry.addData("rotini encoder", encoderValues);
     }
 }
