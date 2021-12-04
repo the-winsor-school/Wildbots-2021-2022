@@ -51,15 +51,27 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
             rotini.setPower(gamepad2.right_stick_y);
 
-            if(gamepad2.x) {
+            if(gamepad2.x) { //brake stop (not float)
                 rotiniBrake();
             }
 
-            if(gamepad2.left_bumper) {
-
+            if(gamepad2.a) { //float stop
+                rotini.setPower(0);
             }
 
+            if(gamepad2.dpad_up) { //rotating servos/intake box up/down
+                double position = leftServo.getPosition();
+                leftServo.setPosition(position += 0.05);
+                position = rightServo.getPosition();
+                rightServo.setPosition(position -= 0.05); //may have to switch + and - for right and left servos
+            }
 
+            if(gamepad2.dpad_down) {
+                double position = leftServo.getPosition();
+                leftServo.setPosition(position -= 0.05);
+                position = rightServo.getPosition();
+                rightServo.setPosition(position += 0.05);
+            }
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
@@ -68,25 +80,18 @@ public class LiftieTeleOpDraft extends LinearOpMode {
         }
     }
 
-    public void servosUp () { //sets position at a certain angle
-        leftServo.setPosition(1); //please recalibrate and test
-        rightServo.setPosition(0);
-    }
-
-    public void servosDown () {
-        leftServo.setPosition(0);
-        rightServo.setPosition(1);
-    }
+//    public void servosUp () { //sets position at a certain angle
+//        leftServo.setPosition(1); //please recalibrate and test
+//        rightServo.setPosition(0);
+//    }
+//
+//    public void servosDown () {
+//        leftServo.setPosition(0);
+//        rightServo.setPosition(1);
+//    }
 
     public void rotiniBrake () { //turn the motor off
         rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
-    //encoders to make rotini use rotations not time
-    public int getEncoderValues(){
-        encoderValues = rotini.getCurrentPosition();
-        telemetry.addData("rotini encoder", encoderValues);
-        return encoderValues;
     }
 
 }

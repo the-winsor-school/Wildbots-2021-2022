@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -24,6 +23,6 @@ public class TankDrive {
 
     public void Drive(double l, double r) {
         left.setPower(l);
-        right.setPower(r);
+        right.setPower(-r);
     }
 }
