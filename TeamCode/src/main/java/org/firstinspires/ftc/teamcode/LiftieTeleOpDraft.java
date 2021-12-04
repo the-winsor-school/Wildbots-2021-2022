@@ -21,6 +21,7 @@ public class LiftieTeleOpDraft extends LinearOpMode {
     public DcMotor spinner;
     public Servo leftServo;
     public Servo rightServo;
+    public Servo cappingServo;
 
     public void runOpMode() throws InterruptedException {
         //set up our driving library
@@ -31,8 +32,9 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
         joint = hardwareMap.get(DcMotor.class, "joint");
         spinner = hardwareMap.get(DcMotor.class, "spinner");
-        leftServo = hardwareMap.get(Servo.class, "leftServo");
-        rightServo = hardwareMap.get(Servo.class, "rightServo");
+        leftServo = hardwareMap.get(Servo.class, "left Servo");
+        rightServo = hardwareMap.get(Servo.class, "right Servo");
+        cappingServo = hardwareMap.get(Servo.class, "capping Servo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -72,6 +74,14 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
             if (gamepad2.a) {
                 spinner.setPower(0);
+            }
+
+            if (gamepad2.right_bumper) {
+                cappingServo.setPosition(45);
+            }
+
+            if (gamepad2.left_bumper) {
+                cappingServo.setPosition(90);
             }
 
 
