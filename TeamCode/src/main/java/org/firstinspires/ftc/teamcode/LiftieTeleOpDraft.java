@@ -34,7 +34,7 @@ public class LiftieTeleOpDraft extends LinearOpMode {
         spinner = hardwareMap.get(DcMotor.class, "spinner");
         leftServo = hardwareMap.get(Servo.class, "left Servo");
         rightServo = hardwareMap.get(Servo.class, "right Servo");
-        cappingServo = hardwareMap.get(Servo.class, "capping Servo")
+        cappingServo = hardwareMap.get(Servo.class, "capping Servo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
