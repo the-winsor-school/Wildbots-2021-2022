@@ -9,7 +9,7 @@ import org.firstinspires.ftc.enums.Encoders;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp(name = "Lasagne")
-public class LasagneLiftArm<encoderValues> extends LinearOpMode {
+public class LiftArmStuff<encoderValues> extends LinearOpMode {
 
     //define things here
     //private DrivingLibrary drivingLibrary;
@@ -66,7 +66,7 @@ public class LasagneLiftArm<encoderValues> extends LinearOpMode {
 
     //encoders to make rotini use rotations not time
     public int getEncoderValues(){
-        encoderValues = rotini.getCurrentPosition();
+        encoderValues = .getCurrentPosition();
         return encoderValues;
     }
     public void printEncoderValues(){
