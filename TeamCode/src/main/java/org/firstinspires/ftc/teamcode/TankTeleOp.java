@@ -37,9 +37,9 @@ public class TankTeleOp extends LinearOpMode {
             telemetry.update();
 
             if(gamepad2.dpad_up) { //moves arm up, serves rotate, then arm moves down
-                rotini.setPower(-1);
+                rotini.setPower(-1); //rotini goes up
                 sleep(600);
-                rotini.setPower(0);
+                rotini.setPower(0); //stops rotini
                 rotiniBrake();
             }
 
@@ -51,10 +51,10 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if(gamepad2.dpad_down) {
-                rotini.setPower(0);
-                rotini.setPower(1);
+                rotini.setPower(0); //cancels brake
+                rotini.setPower(1); //rotini goes down
                 sleep(600);
-                rotini.setPower(0);
+                rotini.setPower(0); //stops rotini
             }
 
             if(gamepad2.a) {
