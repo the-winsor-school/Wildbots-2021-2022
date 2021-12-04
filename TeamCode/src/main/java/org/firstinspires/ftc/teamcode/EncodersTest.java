@@ -11,14 +11,15 @@ import org.firstinspires.ftc.libraries.DrivingLibrary;
 @Autonomous(name = "Encodeers ")
 public class EncodersTest extends LinearOpMode {
 
-    private DrivingLibrary drivingLibrary;
-    //Servo spinningArm;
+    public DcMotor testMotor;
+    private int encoderValues;
 
     //initializing
     @Override
     public void runOpMode() throws InterruptedException {
-        drivingLibrary = new DrivingLibrary(this);
-        drivingLibrary.setSpeed(1.0);
+
+        testMotor = hardwareMap.get(DcMotor.class, "test motor");
+
         telemetry.addData("status", "initialized");
         telemetry.update();
 
