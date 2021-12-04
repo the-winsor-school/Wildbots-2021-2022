@@ -58,19 +58,18 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
     public void boxServos(int position) {
         leftServo.setPosition(position);
         rightServo.setPosition(180 - position);
-
     }
     public void rotiniBrake () {
         rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    //encoders to make rotini use rotations not time
-    public int getEncoderValues(){
-        encoderValues = .getCurrentPosition();
-        return encoderValues;
-    }
-    public void printEncoderValues(){
-        getEncoderValues();
-        telemetry.addData("rotini encoder", encoderValues);
-    }
+//    //encoders to make rotini use rotations not time
+//    public int getEncoderValues(){
+//        encoderValues = getCurrentPosition();
+//        return encoderValues;
+//    }
+//    public void printEncoderValues(){
+//        getEncoderValues();
+//        telemetry.addData("rotini encoder", encoderValues);
+//    }
 }
