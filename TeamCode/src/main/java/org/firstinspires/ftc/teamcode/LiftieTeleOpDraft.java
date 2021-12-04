@@ -17,10 +17,10 @@ public class LiftieTeleOpDraft extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
 
-    Servo leftServo;
-    Servo rightServo;
-    public DcMotor rotini;
-    private int encoderValues = 0;
+    public DcMotor joint;
+    public DcMotor spinner;
+    public Servo leftServo;
+    public Servo rightServo;
 
     public void runOpMode() throws InterruptedException {
         //set up our driving library
@@ -29,9 +29,10 @@ public class LiftieTeleOpDraft extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
-        rotini = hardwareMap.get(DcMotor.class, "rotini");
-        leftServo = hardwareMap.get(Servo.class, "left Servo");
-        rightServo = hardwareMap.get(Servo.class, "right Servo");
+        joint = hardwareMap.get(DcMotor.class, "joint");
+        spinner = hardwareMap.get(DcMotor.class, "spinner");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -49,15 +50,7 @@ public class LiftieTeleOpDraft extends LinearOpMode {
                 drivingLibrary.setMode(drivingMode);
             }
 
-            rotini.setPower(gamepad2.right_stick_y);
-
-            if(gamepad2.x) { //brake stop (not float)
-                rotiniBrake();
-            }
-
-            if(gamepad2.a) { //float stop
-                rotini.setPower(0);
-            }
+            joint.setPower(gamepad2.right_stick_y);
 
             if(gamepad2.dpad_up) { //rotating servos/intake box up/down
                 double position = leftServo.getPosition();
@@ -72,6 +65,28 @@ public class LiftieTeleOpDraft extends LinearOpMode {
                 position = rightServo.getPosition();
                 rightServo.setPosition(position += 0.05);
             }
+
+            if (gamepad2.b) {
+                spinner.setPower(1);
+            }
+
+            if (gamepad2.a) {
+                spinner.setPower(0);
+            }
+
+
+/*
+            rotini.setPower(gamepad2.right_stick_y);
+
+            if(gamepad2.x) { //brake stop (not float)
+                rotiniBrake();
+            }
+
+            if(gamepad2.a) { //float stop
+                rotini.setPower(0);
+            }
+
+             */
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
@@ -89,9 +104,5 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 //        leftServo.setPosition(0);
 //        rightServo.setPosition(1);
 //    }
-
-    public void rotiniBrake () { //turn the motor off
-        rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
 
 }
