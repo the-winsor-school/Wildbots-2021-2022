@@ -34,7 +34,7 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
 
         if (opModeIsActive()) {
             boxServos(45);
-           /* sleep(5000);
+            sleep(5000);
             boxServos(45);
             sleep(5000);
             //boxServos(0);
@@ -50,7 +50,7 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
             rotini.setPower(0); //cancels brake
             rotini.setPower(1); // 1 = goes down
             sleep(1800);
-            rotini.setPower(0); */
+            rotini.setPower(0);
 
         }
     }
@@ -72,4 +72,5 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
 //        getEncoderValues();
 //        telemetry.addData("rotini encoder", encoderValues);
 //    }
+
 }
