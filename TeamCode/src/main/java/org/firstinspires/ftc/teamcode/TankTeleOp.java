@@ -12,7 +12,7 @@ public class TankTeleOp extends LinearOpMode {
     private TankDrive tankDrive;
 
     Servo leftServo;
-    Servo rightServo;
+    //Servo rightServo;
     public DcMotor rotini;
     private int encoderValues = 0;
     @Override
@@ -21,7 +21,7 @@ public class TankTeleOp extends LinearOpMode {
 
         rotini = hardwareMap.get(DcMotor.class, "rotini");
         leftServo = hardwareMap.get(Servo.class, "left Servo");
-        rightServo = hardwareMap.get(Servo.class, "right Servo");
+        //rightServo = hardwareMap.get(Servo.class, "right Servo");
 
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
@@ -36,17 +36,17 @@ public class TankTeleOp extends LinearOpMode {
             tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             telemetry.update();
 
-            if(gamepad2.dpad_up) { //moves arm up, serves rotate, then arm moves down
+            if(gamepad2.dpad_up) {
                 rotini.setPower(-1); //rotini goes up
-                sleep(600);
+                sleep(600); // 1/3 of full height
                 rotini.setPower(0); //stops rotini
                 rotiniBrake();
             }
 
-            if(gamepad2.y) {
-                boxServos(90);
+            if(gamepad2.y) { //test function inputs
+                leftServo.setPosition(0); //makes box parallel to floor
                 sleep(1000);
-                boxServos(135);
+                leftServo.setPosition(1); //rotates box servo in a certain direction
                 sleep(1000);
             }
 
@@ -58,7 +58,7 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if(gamepad2.a) {
-                boxServos(90);
+                leftServo.setPosition(-1);
             }
 
         }
@@ -68,8 +68,8 @@ public class TankTeleOp extends LinearOpMode {
         rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void boxServos(int position) {
-        leftServo.setPosition(position);
-        rightServo.setPosition(180 - position);
-    }
+//    public void boxServos(int position) {
+//        leftServo.setPosition(position);
+//        //rightServo.setPosition(180 - position);
+//    }
 }

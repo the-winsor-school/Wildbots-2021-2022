@@ -18,10 +18,10 @@ public class LiftieTeleOpDraft extends LinearOpMode {
     int drivingMode;
 
     public DcMotor joint;
-    public DcMotor spinner;
+    //public DcMotor spinner;
     public Servo leftServo;
     public Servo rightServo;
-    public Servo cappingServo;
+    //public Servo cappingServo;
 
     public void runOpMode() throws InterruptedException {
         //set up our driving library
@@ -31,10 +31,10 @@ public class LiftieTeleOpDraft extends LinearOpMode {
         drivingLibrary.setMode(drivingMode);
 
         joint = hardwareMap.get(DcMotor.class, "joint");
-        spinner = hardwareMap.get(DcMotor.class, "spinner");
+        //spinner = hardwareMap.get(DcMotor.class, "spinner");
         leftServo = hardwareMap.get(Servo.class, "left Servo");
         rightServo = hardwareMap.get(Servo.class, "right Servo");
-        cappingServo = hardwareMap.get(Servo.class, "capping Servo");
+        //cappingServo = hardwareMap.get(Servo.class, "capping Servo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -52,11 +52,11 @@ public class LiftieTeleOpDraft extends LinearOpMode {
                 drivingLibrary.setMode(drivingMode);
             }
 
-            joint.setPower(gamepad2.right_stick_y);
+            joint.setPower(gamepad2.right_stick_y); //could do 3 increments instead of continuous
 
             if(gamepad2.dpad_up) { //rotating servos/intake box up/down
                 double position = leftServo.getPosition();
-                leftServo.setPosition(position += 0.05);
+                leftServo.setPosition(position += 0.05); //servo is coded in 0.05 increments (0-1)
                 position = rightServo.getPosition();
                 rightServo.setPosition(position -= 0.05); //may have to switch + and - for right and left servos
             }
@@ -68,21 +68,21 @@ public class LiftieTeleOpDraft extends LinearOpMode {
                 rightServo.setPosition(position += 0.05);
             }
 
-            if (gamepad2.b) {
-                spinner.setPower(1);
-            }
-
-            if (gamepad2.a) {
-                spinner.setPower(0);
-            }
-
-            if (gamepad2.right_bumper) {
-                cappingServo.setPosition(45);
-            }
-
-            if (gamepad2.left_bumper) {
-                cappingServo.setPosition(90);
-            }
+//            if (gamepad2.b) {
+//                spinner.setPower(1);
+//            }
+//
+//            if (gamepad2.a) {
+//                spinner.setPower(0);
+//            }
+//
+//            if (gamepad2.right_bumper) {
+//                cappingServo.setPosition(45);
+//            }
+//
+//            if (gamepad2.left_bumper) {
+//                cappingServo.setPosition(90);
+//            }
 
 
 /*
@@ -98,10 +98,10 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
              */
 
-            telemetry.addData("Status", "Running");
+            telemetry.addData("Status", "Running"); //prints to phone
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
-            telemetry.update();
+            telemetry.update(); //makes actually print
         }
     }
 
