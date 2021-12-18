@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous(name = "auton")
-public class Liza extends LinearOpMode {
+public class LiftieAutonDrive extends LinearOpMode {
 
     private DrivingLibrary drivingLibrary;
 
