@@ -31,7 +31,7 @@ public class    DrivingLibrary {
     public DcMotor rightFront;
     public DcMotor leftRear;
     public DcMotor rightRear;
-    
+    public DcMotor rotini;
     //public Rev2mDistanceSensor distSenTop;
     //public Rev2mDistanceSensor distSenBottom;
 
@@ -394,11 +394,45 @@ public class    DrivingLibrary {
         double deltaY=deltaS*Math.sin(getIMUAngle()+halfDeltaTheta);
         return deltaY;
     }
+    public double getRotiniHeight(){
+        return (rotini.getCurrentPosition()/28)*3.14*0.5;
+    }
     public void moveRotiniUp(){
+        //28 counts per rev for this motor
+        //diameter of wheel is like half an inch :T
+        //goes up 7 in
+        double position =getRotiniHeight();
+        if(position<21) {
+            if(position<7){
+                rotini.setTargetPosition((int)(7*28/(Math.PI*0.5)));
+            }
+            else if(position<14){
+                rotini.setTargetPosition((int)(14*28/(Math.PI*0.5)));
+            }
+            else {
+                rotini.setTargetPosition((int)(21*28/(Math.PI*0.5)));
+            }
+
+        }
 
     }
     public void moveRotiniDown(){
+        //28 counts per rev for this motor
+        //diameter of wheel is like half an inch :T
+        //goes up 7 in
+        double position =getRotiniHeight();
+        if(position>0) {
+            if(position>14){
+                rotini.setTargetPosition((int)(14*28/(Math.PI*0.5)));
+            }
+            else if(position>7){
+                rotini.setTargetPosition((int)(7*28/(Math.PI*0.5)));
+            }
+            else {
+                rotini.setTargetPosition((int)(0*28/(Math.PI*0.5)));
+            }
 
+        }
     }
 
 }

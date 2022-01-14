@@ -6,20 +6,26 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.libraries.AutonLibrary;
+import org.firstinspires.ftc.libraries.DrivingLibrary;
+
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
 
     private TankDrive tankDrive;
+    private DrivingLibrary drivingLibrary;
+    private AutonLibrary autonLibrary;
 
     Servo leftServo;
     //Servo rightServo;
-    public DcMotor rotini;
+
     private int encoderValues = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        rotini = hardwareMap.get(DcMotor.class, "rotini");
+        drivingLibrary.rotini = hardwareMap.get(DcMotor.class, "rotini");
+        drivingLibrary.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftServo = hardwareMap.get(Servo.class, "left Servo");
         //rightServo = hardwareMap.get(Servo.class, "right Servo");
 
@@ -37,10 +43,8 @@ public class TankTeleOp extends LinearOpMode {
             telemetry.update();
 
             if(gamepad2.dpad_up) {
-                rotini.setPower(-1); //rotini goes up
-                sleep(600); // 1/3 of full height
-                rotini.setPower(0); //stops rotini
-                rotiniBrake();
+                drivingLibrary.rotini.setPower(-1); //rotini goes up
+                drivingLibrary.moveRotiniUp();
             }
 
             if(gamepad2.y) { //test function inputs
@@ -51,10 +55,9 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if(gamepad2.dpad_down) {
-                rotini.setPower(0); //cancels brake
-                rotini.setPower(1); //rotini goes down
-                sleep(600);
-                rotini.setPower(0); //stops rotini
+                drivingLibrary.rotini.setPower(0); //cancels brake
+                drivingLibrary.rotini.setPower(1); //rotini goes down
+                drivingLibrary.moveRotiniDown();
             }
 
             if(gamepad2.a) {
@@ -65,7 +68,7 @@ public class TankTeleOp extends LinearOpMode {
     }
 
     public void rotiniBrake () { //turn the motor off
-        rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drivingLibrary.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 //    public void boxServos(int position) {
