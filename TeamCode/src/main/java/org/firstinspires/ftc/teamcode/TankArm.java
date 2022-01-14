@@ -9,11 +9,11 @@ import org.firstinspires.ftc.enums.Encoders;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp(name = "Lasagne")
-public class LiftArmStuff<encoderValues> extends LinearOpMode {
+public class TankArm<encoderValues> extends LinearOpMode {
 
     //define things here
-    //private DrivingLibrary drivingLibrary;
-    //Servo armServo;
+    private DrivingLibrary drivingLibrary;
+    Servo armServo;
     Servo leftServo;
     Servo rightServo;
     public DcMotor rotini;
@@ -59,18 +59,8 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
         leftServo.setPosition(position);
         rightServo.setPosition(180 - position);
     }
-    public void rotiniBrake () {
+
+    public void rotiniBrake() {
         rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-
-//    //encoders to make rotini use rotations not time
-//    public int getEncoderValues(){
-//        encoderValues = getCurrentPosition();
-//        return encoderValues;
-//    }
-//    public void printEncoderValues(){
-//        getEncoderValues();
-//        telemetry.addData("rotini encoder", encoderValues);
-//    }
-
 }
