@@ -31,6 +31,7 @@ public class    DrivingLibrary {
     public DcMotor rightFront;
     public DcMotor leftRear;
     public DcMotor rightRear;
+    
     //public Rev2mDistanceSensor distSenTop;
     //public Rev2mDistanceSensor distSenBottom;
 
@@ -392,6 +393,12 @@ public class    DrivingLibrary {
         double deltaS = getDeltaS();
         double deltaY=deltaS*Math.sin(getIMUAngle()+halfDeltaTheta);
         return deltaY;
+    }
+    public void moveRotiniUp(){
+
+    }
+    public void moveRotiniDown(){
+
     }
 
 }
