@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.libraries.TankDriveLibrary;
 
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
 
-    private TankDrive tankDrive;
+    private TankDriveLibrary tankDriveLibrary;
 
     Servo leftServo;
     //Servo rightServo;
@@ -17,7 +18,7 @@ public class TankTeleOp extends LinearOpMode {
     private int encoderValues = 0;
     @Override
     public void runOpMode() throws InterruptedException {
-        tankDrive = new TankDrive(this);
+        tankDriveLibrary = new TankDriveLibrary(this);
 
         rotini = hardwareMap.get(DcMotor.class, "rotini");
         leftServo = hardwareMap.get(Servo.class, "left Servo");
@@ -33,7 +34,7 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted=true;
             }
-            tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            tankDriveLibrary.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             telemetry.update();
 
             if(gamepad2.dpad_up) {
