@@ -57,7 +57,7 @@ public class LiftArmStuff<encoderValues> extends LinearOpMode {
 
     public void boxServos(int position) {
         leftServo.setPosition(position);
-        rightServo.setPosition(180 - position);
+        rightServo.setPosition(-1 * position);
     }
     public void rotiniBrake () {
         rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
