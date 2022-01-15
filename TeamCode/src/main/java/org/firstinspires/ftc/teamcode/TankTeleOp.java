@@ -35,7 +35,7 @@ public class TankTeleOp extends LinearOpMode {
             }
             tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             telemetry.update();
-
+// rotini = motor (up and down) bc motors rotate and therefore rotini
             if(gamepad2.dpad_up) {
                 rotini.setPower(-1); //rotini goes up
                 sleep(600); // 1/3 of full height

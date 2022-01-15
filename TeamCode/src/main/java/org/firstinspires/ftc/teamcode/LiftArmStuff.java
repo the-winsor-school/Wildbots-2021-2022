@@ -9,7 +9,7 @@ import org.firstinspires.ftc.enums.Encoders;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp(name = "Lasagne")
-public class LiftArmStuff<enco derValues> extends LinearOpMode {
+public class LiftArmStuff<encoderValues> extends LinearOpMode {
 
     //define things here
     //private DrivingLibrary drivingLibrary;

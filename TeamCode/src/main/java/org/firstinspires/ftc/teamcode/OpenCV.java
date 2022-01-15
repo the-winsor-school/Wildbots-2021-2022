@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @TeleOp
-public class opencvexample extends LinearOpMode {
+public class OpenCV extends LinearOpMode {
     OpenCvCamera webcam;
     SamplePipeline pipeline;
 
@@ -48,10 +48,10 @@ public class opencvexample extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Type", pipeline.getType());
-            telemetry.addData(pipeline.getAverage());
-//            telemetry.addData("Average #2", pipeline.getAverage());
-//            telemetry.addData("Average #3", pipeline.getAverage());
-           // telemetry.addData("Location", pipeline.getLocation());
+            telemetry.addData("Average", pipeline.getAverage());
+           // telemetry.addData("Average #2", pipeline.getAverage());
+           // telemetry.addData("Average #3", pipeline.getAverage());
+            telemetry.addData("Location", pipeline.getLocation());
             telemetry.update();
             sleep(50);
         }
@@ -60,8 +60,8 @@ public class opencvexample extends LinearOpMode {
     public static class SamplePipeline extends OpenCvPipeline {
         private static final Scalar BLUE = new Scalar(0, 0, 255);
 
-        private static final int THRESHOLD1 = 107; // yellow < 107 < white
-        private static final int THRESHOLD2 = 140; // white < 140 < purple
+        //private static final int THRESHOLD1 = 107; // yellow < 107 < white
+        private static final int THRESHOLD2 = 138; // white < 140 < purple
 
 //random x values. NEED TO TEST!
 //coordinates for each region
@@ -80,6 +80,7 @@ public class opencvexample extends LinearOpMode {
         Mat region3_Cb;
         Mat YCrCb = new Mat(); //color data
         Mat Cb = new Mat();
+
 
         private volatile int average1;
         private volatile int average2;
@@ -123,12 +124,15 @@ public class opencvexample extends LinearOpMode {
 //            }
             if (average1 > THRESHOLD2) {
                 location = LOCATION.LEFT;
+
             }
             if (average2 > THRESHOLD2) {
                 location = LOCATION.MIDDLE;
+
             }
             if (average3 > THRESHOLD2) {
                 location = LOCATION.RIGHT;
+
             }
 
 
@@ -140,12 +144,15 @@ public class opencvexample extends LinearOpMode {
         }
 
         public String getAverage() {
-            return String.format("average #1: %d \n average #2: %d \n average #3: %d", average1, average2, average3);
+            return String.format(" #1: %d \n Average #2: %d \n Average #3: %d", average1, average2, average3);
             // %d: d means int; %d will act as a variable that the variable (average1 for the first %d) listed later will replace)
         }
-
+        public String getLocation(){
+            return String.format("%s", location);
+            //Output = LOCATION.LEFT, LOCATION.MIDDLE, or LOCATION.RIGHT
+        }
         public enum TYPE { //enum = variable with set output values
-            BALL, CUBE, BEZ //bez for embezzlemnet (aka the team object)
+            BALL, CUBE, BEZ //bez for embezzlement (aka the team object)
         }
         public enum LOCATION {
             LEFT, MIDDLE, RIGHT
