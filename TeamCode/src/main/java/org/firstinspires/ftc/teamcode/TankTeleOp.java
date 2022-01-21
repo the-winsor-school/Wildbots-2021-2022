@@ -41,6 +41,7 @@ public class TankTeleOp extends LinearOpMode {
             telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             telemetry.addData("rotini", "target height ="+rotiniTarget);
             tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            // use joysticks for Tankalicious teleop
             telemetry.update();
 
 
@@ -56,25 +57,33 @@ public class TankTeleOp extends LinearOpMode {
                 tankDrive.rotini.setPower(0);
             }
             if(gamepad2.dpad_up) {
+                // up arrow
                 rotiniTarget=tankDrive.moveRotiniUp();
                 tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                // moves arm up
 
             }
 
             if(gamepad2.y) { //test function inputs
+                // letter y
                 leftServo.setPosition(0); //makes box parallel to floor
                 sleep(1000);
                 leftServo.setPosition(1); //rotates box servo in a certain direction
                 sleep(1000);
+                // rotates intake servo
             }
 
             if(gamepad2.dpad_down) {
+                // down arrow
                 rotiniTarget=tankDrive.moveRotiniDown();
                 tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                // moves arm down
             }
 
             if(gamepad2.a) {
                 leftServo.setPosition(-1);
+                // letter a
+                // sets intake servo back to original position (?)
             }
 
         }
