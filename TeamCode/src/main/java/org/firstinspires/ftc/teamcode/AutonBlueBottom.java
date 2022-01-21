@@ -6,7 +6,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+<<<<<<< Updated upstream
 @Autonomous(name = "ABB")
+=======
+@Autonomous(name = "Blue Bottom Auton")
+>>>>>>> Stashed changes
 public class AutonBlueBottom extends LinearOpMode {
 
     private DrivingLibrary drivingLibrary;

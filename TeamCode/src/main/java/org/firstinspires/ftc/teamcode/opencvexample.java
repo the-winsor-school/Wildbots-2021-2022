@@ -48,10 +48,17 @@ public class opencvexample extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Type", pipeline.getType());
+<<<<<<< Updated upstream
             //telemetry.addData(pipeline.getAverage()); //was broken idk sdahfhhasd
 //            telemetry.addData("Average #2", pipeline.getAverage());
 //            telemetry.addData("Average #3", pipeline.getAverage());
            // telemetry.addData("Location", pipeline.getLocation());
+=======
+            telemetry.addData("Average", pipeline.getAverage());
+            telemetry.addData("Average #2", pipeline.getAverage());
+            telemetry.addData("Average #3", pipeline.getAverage());
+            telemetry.addData("Location", pipeline.getLocation());
+>>>>>>> Stashed changes
             telemetry.update();
             sleep(50);
         }
@@ -143,7 +150,9 @@ public class opencvexample extends LinearOpMode {
             return String.format("average #1: %d \n average #2: %d \n average #3: %d", average1, average2, average3);
             // %d: d means int; %d will act as a variable that the variable (average1 for the first %d) listed later will replace)
         }
-
+        public String getLocation() {
+            return String.format("Location: ", location);
+        }
         public enum TYPE { //enum = variable with set output values
             BALL, CUBE, BEZ //bez for embezzlemnet (aka the team object)
         }
