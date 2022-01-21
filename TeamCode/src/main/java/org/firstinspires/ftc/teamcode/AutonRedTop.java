@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "First Draft of Auton")
+@Autonomous(name = "ART")
 public class AutonRedTop extends LinearOpMode {
 
     private DrivingLibrary drivingLibrary;

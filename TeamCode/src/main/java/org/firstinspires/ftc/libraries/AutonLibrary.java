@@ -162,27 +162,41 @@ public class AutonLibrary {
     }
 
     public boolean getAllianceTarget(){
-        boolean targetVisible = false;
-
-        targetVisible = false;
-        VuforiaTrackable x = null;
-        for (VuforiaTrackable trackable : allTrackables) {
-            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
-                opMode.telemetry.addData("Visible Target", trackable.getName());
-                opMode.telemetry.update();
-                targetVisible = true;
-
-                if(trackable.getName().equals("Blue Alliance Target")) {
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
-                    if (robotLocationTransform != null) {
-                        lastLocation = robotLocationTransform;
-                    }
-                    return true;
-                }
-            }
-        }
         return false;
     }
+        /*
+    public void resetRotini(){
+        if (drivingLibrary.getRotiniHeight()>0){
+            drivingLibrary.rotini.setTargetPosition(0);
+
+        }
+    }
+    */
+    /*
+    public int liftToHeight(){
+
+        double currentForce = tank.forceSensitiveResistor.getVoltage();
+        int weight=0;
+        //light
+        if (currentForce > 0.113 && currentForce < 0.169) {
+            weight=1;
+        }
+        //medium
+        else if (currentForce > 0.189 && currentForce < 0.224) {
+            weight=2;
+        }
+        //heavy
+        else if (currentForce > 0.235 && currentForce < 0.278){
+            weight=3;
+        }
+        //other??
+        else {
+
+        }
+
+        return 0;
+    }
+    */
 
     public float[] lineUpWithGoal () {
         float min = 3;

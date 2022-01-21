@@ -6,17 +6,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "ABT")
-public class AutonBlueTop extends LinearOpMode {
+@Autonomous(name = "ABTMS")
+public class AutonBlueTopMinorSpice extends LinearOpMode {
 
-    private DrivingLibrary drivingLibrary;
+    private TankDrive tankDrive;
     //Servo spinningArm;
 
     //initializing
     @Override
     public void runOpMode() throws InterruptedException {
-        drivingLibrary = new DrivingLibrary(this);
-        drivingLibrary.setSpeed(1.0);
+        tankDrive = new TankDrive(this);
+
+        int duckPos;
         telemetry.addData("status", "initialized");
         telemetry.update();
 
@@ -25,7 +26,9 @@ public class AutonBlueTop extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-
+            /*
+            duckPos=tankDrive.detectDuck();
+            tankDrive.driveADistance(6,0.75);
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(500);
             drivingLibrary.brakeStop();
@@ -48,7 +51,7 @@ public class AutonBlueTop extends LinearOpMode {
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(2000);
             drivingLibrary.brakeStop();
-
+        */
         }
     }
 }

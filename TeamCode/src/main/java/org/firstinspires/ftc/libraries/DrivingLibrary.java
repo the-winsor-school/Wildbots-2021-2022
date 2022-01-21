@@ -9,6 +9,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -32,6 +33,7 @@ public class    DrivingLibrary {
     public DcMotor leftRear;
     public DcMotor rightRear;
     public DcMotor rotini;
+
     //public Rev2mDistanceSensor distSenTop;
     //public Rev2mDistanceSensor distSenBottom;
 
@@ -69,6 +71,7 @@ public class    DrivingLibrary {
 
         encoderTable = new Hashtable<Encoders, Integer>();
         recordEncoderTable=new Hashtable<Encoders,Integer>();
+
 
 
         // MOTOR ORDER: LF, RF, LR, RR
@@ -397,42 +400,51 @@ public class    DrivingLibrary {
     public double getRotiniHeight(){
         return (rotini.getCurrentPosition()/28)*3.14*0.5;
     }
-    public void moveRotiniUp(){
+    public int moveRotiniUp(){
         //28 counts per rev for this motor
         //diameter of wheel is like half an inch :T
         //goes up 7 in
         double position =getRotiniHeight();
+        int target =0;
         if(position<21) {
             if(position<7){
-                rotini.setTargetPosition((int)(7*28/(Math.PI*0.5)));
+                target =(int)(7*28/(Math.PI*0.5));
+
             }
             else if(position<14){
-                rotini.setTargetPosition((int)(14*28/(Math.PI*0.5)));
+                target=(int)(14*28/(Math.PI*0.5));
+
             }
             else {
-                rotini.setTargetPosition((int)(21*28/(Math.PI*0.5)));
+                target=(int)(21*28/(Math.PI*0.5));
             }
-
+            rotini.setTargetPosition(target);
+            return target;
         }
+        return 21;
 
     }
-    public void moveRotiniDown(){
+    public int moveRotiniDown(){
         //28 counts per rev for this motor
         //diameter of wheel is like half an inch :T
         //goes up 7 in
+        int target =0;
         double position =getRotiniHeight();
         if(position>0) {
             if(position>14){
-                rotini.setTargetPosition((int)(14*28/(Math.PI*0.5)));
+                target =(int)(14*28/(Math.PI*0.5));
             }
             else if(position>7){
-                rotini.setTargetPosition((int)(7*28/(Math.PI*0.5)));
+                target = (int)(7*28/(Math.PI*0.5));
             }
             else {
-                rotini.setTargetPosition((int)(0*28/(Math.PI*0.5)));
+                target = ((int)(0*28/(Math.PI*0.5)));
             }
+            rotini.setTargetPosition(target);
+            return target;
 
         }
+        return 21;
     }
 
 }
