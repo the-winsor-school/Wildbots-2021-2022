@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.AutonLibrary;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
+import org.firstinspires.ftc.teamcode.TankDrive;
 
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
@@ -21,7 +22,7 @@ public class TankTeleOp extends LinearOpMode {
     public DcMotor duckSpinner;
 
 
-    private int encoderValues = 0;
+    //private int encoderValues = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
@@ -46,7 +47,6 @@ public class TankTeleOp extends LinearOpMode {
             tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
-<<<<<<< Updated upstream
 
 
             if (rotiniTarget > tankDrive.getRotiniHeight()) {
@@ -55,27 +55,6 @@ public class TankTeleOp extends LinearOpMode {
             } else if (rotiniTarget < tankDrive.getRotiniHeight()) {
                 tankDrive.rotini.setPower(1);
                 telemetry.addData("status", "lowering rotini");
-=======
-            if(rotiniTarget>tankDrive.getRotiniHeight()){
-                // if target height > current height
-                tankDrive.rotini.setPower(-1);
-                telemetry.addData("status", "raising rotini");
-                // raise arm
-            }
-            else if(rotiniTarget<tankDrive.getRotiniHeight()){
-                // if current height > target height
-                tankDrive.rotini.setPower(1);
-                telemetry.addData("status", "lowering rotini");
-                // lower arm
-            }
-            else{
-            if (rotiniTarget > tankDrive.getRotiniHeight()) {
-                tankDrive.rotini.setPower(-1);
-                telemetry.addData("status", "raising rotini");
-            } else if (rotiniTarget < tankDrive.getRotiniHeight()) {
-                tankDrive.rotini.setPower(1);
-                telemetry.addData("status", "lowering rotini");
->>>>>>> Stashed changes
             } else {
                 tankDrive.rotini.setPower(0);
             }
@@ -84,46 +63,6 @@ public class TankTeleOp extends LinearOpMode {
                 rotiniTarget = tankDrive.moveRotiniUp();
                 tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 // moves arm up
-
-            }
-<<<<<<< Updated upstream
-
-=======
-            if(gamepad2.b) {
-                // letter b
->>>>>>> Stashed changes
-            if (gamepad2.b) {
-                duckSpinner.setPower(1);
-                // spins duck
-                sleep(100); //CHANGE for amount of time to spin duck off
-            }
-<<<<<<< Updated upstream
-
-            if (gamepad2.y) { //test function inputs
-=======
-            // moves one servo in one direction and the other in the other direction
-            if(gamepad2.y) { //test function inputs
-            if (gamepad2.y) { //test function inputs
-                // letter y
-                leftServo.setPosition(0);
-                rightServo.setPosition(0);
-                sleep(1000);
-                leftServo.setPosition(1);
-                rightServo.setPosition(-1);
-                sleep(1000);
-                // intake
-            }
-
-            if(gamepad2.a) {
->>>>>>> Stashed changes
-                // letter y
-                leftServo.setPosition(0);
-                rightServo.setPosition(0);
-                sleep(1000);
-                leftServo.setPosition(-1);
-                rightServo.setPosition(1);
-                sleep(1000);
-                // outtake
             }
 
             if (gamepad2.dpad_down) {
@@ -133,18 +72,34 @@ public class TankTeleOp extends LinearOpMode {
                 // moves arm down
             }
 
-<<<<<<< Updated upstream
-=======
-            if(gamepad2.dpad_up) {
-                // up arrow
-                rotiniTarget=tankDrive.moveRotiniUp();
-                tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                // moves arm up
->>>>>>> Stashed changes
-            if (gamepad2.a) {
+            if (gamepad2.b) {
+                // letter b
+                duckSpinner.setPower(1);
+                sleep(100); //CHANGE for amount of time to spin duck off
+                // spins duck spinner
+            }
+
+            if (gamepad2.y) { //test function inputs
+                // letter y
                 leftServo.setPosition(0);
+                rightServo.setPosition(0);
+                sleep(1000);
+                leftServo.setPosition(1);
+                rightServo.setPosition(-1);
+                sleep(1000);
+                // intake
+                // moves one servo in one direction and the other in the other direction
+            }
+
+            if (gamepad2.a) { //test function inputs
                 // letter a
-                // sets intake servo back to original position (?)
+                leftServo.setPosition(0);
+                rightServo.setPosition(0);
+                sleep(1000);
+                leftServo.setPosition(-1);
+                rightServo.setPosition(1);
+                sleep(1000);
+                // outtake
             }
 
         }
@@ -156,6 +111,5 @@ public class TankTeleOp extends LinearOpMode {
 
     public void boxServos(int position) {
         leftServo.setPosition(position);
-        rightServo.setPosition(position);
     }
 }
