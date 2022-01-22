@@ -84,24 +84,24 @@ public class LiftieTeleOpDraft extends LinearOpMode {
                 sleep(100); //CHANGE for amount of time to spin duck off
             }
 
-            if (gamepad2.right_bumper) {
+            if (gamepad1.right_bumper) {
                 cappingServo.setPosition(45);
             }
 
-            if (gamepad2.left_bumper) {
+            if (gamepad1.left_bumper) {
                 cappingServo.setPosition(90);
             }
 
 
 /*
-            rotini.setPower(gamepad2.right_stick_y);
+            rotini.setPower(gamepad1.right_stick_y);
 
-            if(gamepad2.x) { //brake stop (not float)
+            if(gamepad1.x) { //brake stop (not float)
             // x button
                 rotiniBrake();
             }
 
-            if(gamepad2.y) { //float stop
+            if(gamepad1.y) { //float stop
             // y button
                 rotini.setPower(0);
             }
