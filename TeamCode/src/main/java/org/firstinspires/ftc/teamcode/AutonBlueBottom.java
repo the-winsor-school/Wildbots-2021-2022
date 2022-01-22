@@ -13,14 +13,24 @@ public class AutonBlueBottom extends LinearOpMode {
 
     private DrivingLibrary drivingLibrary;
     //Servo spinningArm;
+    private TankDrive tankDrive;
+    private OpenCV.SamplePipeline pipeline;
 
     //initializing
     @Override
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
+        tankDrive = new TankDrive (this);
+
         drivingLibrary.setSpeed(1.0);
+        pipeline = new org.firstinspires.ftc.teamcode.OpenCV.SamplePipeline();
         telemetry.addData("status", "initialized");
         telemetry.update();
+        telemetry.addData("Type", tankDrive.pipeline.getType());
+        telemetry.addData("Average", tankDrive.pipeline.getAverage());
+        telemetry.addData("Location", tankDrive.pipeline.getLocation());
+        telemetry.update();
+        }
 
         //spinningArm = hardwareMap.get(Servo.class, "Carousel Spinning Arm");
 
