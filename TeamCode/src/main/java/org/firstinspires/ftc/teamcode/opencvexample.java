@@ -48,6 +48,10 @@ public class opencvexample extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Type", pipeline.getType());
+            //telemetry.addData(pipeline.getAverage()); //was broken idk sdahfhhasd
+//            telemetry.addData("Average #2", pipeline.getAverage());
+//            telemetry.addData("Average #3", pipeline.getAverage());
+           // telemetry.addData("Location", pipeline.getLocation());
             telemetry.addData("Average", pipeline.getAverage());
             //telemetry.addData("Average #2", pipeline.getAverage());
             //telemetry.addData("Average #3", pipeline.getAverage());
