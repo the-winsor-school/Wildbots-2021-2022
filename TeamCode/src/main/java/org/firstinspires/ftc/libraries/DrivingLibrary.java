@@ -248,16 +248,16 @@ public class    DrivingLibrary {
 
     //sets brake mode (int) - float stop is 0, brake stop is 1
     public void setMode(int i) {
-        DrivingMode[] values = DrivingMode.values();
-        drivingMode = values[i];
+//        DrivingMode[] values = DrivingMode.values();
+//        drivingMode = values[i];
 
-        switch (drivingMode) {
-            case FLOAT_STOP:
+        switch (i) {
+            case 0:
                 for (DcMotor motor : allMotors) {
                     motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
                 } //coasts when it stops
                 break;
-            case BRAKE_STOP:
+            case 1:
                 for (DcMotor motor : allMotors) {
                     motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 } //fully brakes
@@ -298,7 +298,8 @@ public class    DrivingLibrary {
 
     //get current driving mode (brake type)
     public String getMode() {
-        return drivingMode.getStringValue();
+        //return drivingMode == 1 ? "floatStop" : "brakeStop";
+        return "hi";
     }
 
     // get current robot angle (radians)

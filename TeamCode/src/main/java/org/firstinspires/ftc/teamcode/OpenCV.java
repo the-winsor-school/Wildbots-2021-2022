@@ -1,3 +1,4 @@
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/OpenCV.java
 
 package org.firstinspires.ftc.teamcode;
 
@@ -113,15 +114,6 @@ public class OpenCV extends LinearOpMode {
             Imgproc.rectangle(input, topLeft2, bottomRight2, BLUE, 2);
             Imgproc.rectangle(input, topLeft3, bottomRight3, BLUE, 2);
 
-//            if (average1 < THRESHOLD1) {
-//                type = TYPE.CUBE;
-//            }
-//            else if (average1 > THRESHOLD1 && average1 < THRESHOLD2) {
-//                type = TYPE.BALL;
-//            }
-//            else {
-//                type = TYPE.BEZ;
-//            }
             if (average1 > THRESHOLD2) {
                 location = LOCATION.LEFT;
 
