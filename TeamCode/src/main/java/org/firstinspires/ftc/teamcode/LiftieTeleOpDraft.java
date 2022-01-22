@@ -32,12 +32,15 @@ public class LiftieTeleOpDraft extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
+        DcMotor intakeSpinner;
+        Servo cappingServo;
+
         joint = hardwareMap.get(DcMotor.class, "joint");
-        //intakeSpinner = hardwareMap.get(DcMotor.class, "spinner");
+        intakeSpinner = hardwareMap.get(DcMotor.class, "spinner");
         leftServo = hardwareMap.get(Servo.class, "left Servo");
         rightServo = hardwareMap.get(Servo.class, "right Servo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duck spinning motor");
-        //cappingServo = hardwareMap.get(Servo.class, "capping Servo");
+        cappingServo = hardwareMap.get(Servo.class, "capping Servo");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -50,6 +53,7 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
             // switching braking modes
             if (gamepad1.b) {
+                // letter b
                 drivingMode++;
                 drivingMode %= DrivingMode.values().length;
                 drivingLibrary.setMode(drivingMode);
@@ -57,42 +61,48 @@ public class LiftieTeleOpDraft extends LinearOpMode {
 
             joint.setPower(gamepad2.right_stick_y); //could do 3 increments instead of continuous
 
-            if(gamepad2.dpad_up) { //rotating servos/intake box up/down
+            if(gamepad1.dpad_up) { //rotating servos/intake box up/down
+                // up button
                 double position = leftServo.getPosition();
                 leftServo.setPosition(position += 0.05); //servo is coded in 0.05 increments (0-1)
                 position = rightServo.getPosition();
                 rightServo.setPosition(position -= 0.05); //may have to switch + and - for right and left servos
             }
 
-            if(gamepad2.dpad_down) {
+            if(gamepad1.dpad_down) {
+                // down button
                 double position = leftServo.getPosition();
                 leftServo.setPosition(position -= 0.05);
                 position = rightServo.getPosition();
                 rightServo.setPosition(position += 0.05);
             }
 
-            if(gamepad2.b) {
+            if(gamepad1.a) {
+                // letter a
+                // duck spinner
                 duckSpinner.setPower(1);
                 sleep(100); //CHANGE for amount of time to spin duck off
             }
-//
-//            if (gamepad2.right_bumper) {
-//                cappingServo.setPosition(45);
-//            }
-//
-//            if (gamepad2.left_bumper) {
-//                cappingServo.setPosition(90);
-//            }
+
+            if (gamepad2.right_bumper) {
+                cappingServo.setPosition(45);
+            }
+
+            if (gamepad2.left_bumper) {
+                cappingServo.setPosition(90);
+            }
 
 
 /*
             rotini.setPower(gamepad2.right_stick_y);
 
             if(gamepad2.x) { //brake stop (not float)
+            // x button
                 rotiniBrake();
             }
 
-            if(gamepad2.a) { //float stop
+            if(gamepad2.y) { //float stop
+            // y button
                 rotini.setPower(0);
             }
 
