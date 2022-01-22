@@ -100,7 +100,7 @@ public class TankDrive {
         int target=0;
 
         if (currentForce > 0.113 && currentForce < 0.169) { //light
-            target = ((int)(0*28/(Math.PI*0.5)));
+            target = ((int)(1*28/(Math.PI*0.5)));
         } else if (currentForce > 0.189 && currentForce < 0.224) { //medium
             target = ((int)(7*28/(Math.PI*0.5)));
         } else if (currentForce > 0.235 && currentForce < 0.278){ //heavy
