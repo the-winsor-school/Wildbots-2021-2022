@@ -18,6 +18,7 @@ public class TankTeleOp extends LinearOpMode {
 
     public Servo leftServo;
     public Servo rightServo;
+    public Servo cappingServo;
 
     public DcMotor duckSpinner;
 
@@ -29,6 +30,7 @@ public class TankTeleOp extends LinearOpMode {
 
         leftServo = hardwareMap.get(Servo.class, "left Servo");
         rightServo = hardwareMap.get(Servo.class, "right Servo");
+        cappingServo = hardwareMap.get(Servo.class, "cap Servo");
         duckSpinner = hardwareMap.get(DcMotor.class, "Duck Spinning Motor");
 
         telemetry.addData("status", "BAAAAAAAH initialized");
@@ -100,6 +102,16 @@ public class TankTeleOp extends LinearOpMode {
                 rightServo.setPosition(1);
                 sleep(1000);
                 // outtake
+            }
+
+            if (gamepad2.right_bumper) {
+                cappingServo.setPosition(45);
+                // moves capping servo 45 degrees to the right
+            }
+
+            if (gamepad2.left_bumper) {
+                cappingServo.setPosition(-45);
+                // moves capping servo 45 degrees to the left(?)
             }
 
         }
