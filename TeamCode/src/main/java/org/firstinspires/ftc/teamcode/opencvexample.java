@@ -48,17 +48,10 @@ public class opencvexample extends LinearOpMode {
 
         while (opModeIsActive()) {
             telemetry.addData("Type", pipeline.getType());
-<<<<<<< Updated upstream
-            //telemetry.addData(pipeline.getAverage()); //was broken idk sdahfhhasd
-//            telemetry.addData("Average #2", pipeline.getAverage());
-//            telemetry.addData("Average #3", pipeline.getAverage());
-           // telemetry.addData("Location", pipeline.getLocation());
-=======
             telemetry.addData("Average", pipeline.getAverage());
-            telemetry.addData("Average #2", pipeline.getAverage());
-            telemetry.addData("Average #3", pipeline.getAverage());
+            //telemetry.addData("Average #2", pipeline.getAverage());
+            //telemetry.addData("Average #3", pipeline.getAverage());
             telemetry.addData("Location", pipeline.getLocation());
->>>>>>> Stashed changes
             telemetry.update();
             sleep(50);
         }
@@ -70,8 +63,6 @@ public class opencvexample extends LinearOpMode {
         private static final int THRESHOLD1 = 107; // yellow < 107 < white
         private static final int THRESHOLD2 = 140; // white < 140 < purple
 
-//random x values. NEED TO TEST!
-//coordinates for each region
         //region 1
         Point topLeft1 = new Point(50, 50);
         Point bottomRight1 = new Point(100, 100);
@@ -153,6 +144,7 @@ public class opencvexample extends LinearOpMode {
         public String getLocation() {
             return String.format("Location: ", location);
         }
+
         public enum TYPE { //enum = variable with set output values
             BALL, CUBE, BEZ //bez for embezzlemnet (aka the team object)
         }
