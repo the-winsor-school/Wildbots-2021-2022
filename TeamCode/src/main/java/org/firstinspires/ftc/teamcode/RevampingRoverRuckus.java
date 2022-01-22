@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
+@Disabled
 @TeleOp(name = "RevampingRoverRuckus", group = "Concept")
 
 /**

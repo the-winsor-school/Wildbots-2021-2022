@@ -1,16 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-<<<<<<< Updated upstream
-@Autonomous(name = "ABB")
-=======
+@Disabled
 @Autonomous(name = "Blue Bottom Auton")
->>>>>>> Stashed changes
 public class AutonBlueBottom extends LinearOpMode {
 
     private DrivingLibrary drivingLibrary;
