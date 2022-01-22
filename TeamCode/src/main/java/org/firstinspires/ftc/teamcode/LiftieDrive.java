@@ -49,7 +49,7 @@ public class LiftieDrive extends LinearOpMode {
                 lifter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            intake.setPower(gamepad2.right_stick_y); //based on positioning of the joystick, motor will intake or outtake
+            intake.setPower(gamepad2.right_stick_y); //based on positoning of the joystick, motor will intake or outtake
 
             telemetry.addData("Status", "Running"); //prints to phone
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
