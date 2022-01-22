@@ -298,8 +298,13 @@ public class    DrivingLibrary {
 
     //get current driving mode (brake type)
     public String getMode() {
-        //return drivingMode == 1 ? "floatStop" : "brakeStop";
-        return "hi";
+        switch(drivingMode) {
+            case FLOAT_STOP:
+                return "floatStop";
+            case BRAKE_STOP:
+                return "brakeStop";
+        }
+        return "no driving mode";
     }
 
     // get current robot angle (radians)
