@@ -18,7 +18,7 @@ public class TankTeleOp extends LinearOpMode {
 
     public Servo boxServo;
 
-    public Servo cappingServo;
+    //public Servo cappingServo;
 
     public DcMotor leftIntakeSpinner;
     public DcMotor rightIntakeSpinner;
@@ -31,11 +31,11 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "box servo");
-        cappingServo = hardwareMap.get(Servo.class, "cap Servo");
-        duckSpinner = hardwareMap.get(DcMotor.class, "Duck Spinning Motor");
-        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "Left Intake Spinner Motor");
-        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "Right Intake Spinner Motor");
+        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
+        duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
+        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
+        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
 
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
@@ -48,13 +48,13 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
             }
-            telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
-            telemetry.addData("rotini", "target height =" + rotiniTarget);
+            //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
+            //telemetry.addData("rotini", "target height =" + rotiniTarget);
             tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
 
-
+            /*
             if (rotiniTarget > tankDrive.getRotiniHeight()) {
                 tankDrive.rotini.setPower(-1);
                 telemetry.addData("status", "raising rotini");
@@ -64,30 +64,39 @@ public class TankTeleOp extends LinearOpMode {
             } else {
                 tankDrive.rotini.setPower(0);
             }
+            */
+
             if (gamepad2.dpad_up) {
                 // up arrow
-                rotiniTarget = tankDrive.moveRotiniUp();
-                tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                tankDrive.rotini.setPower(1);
+                sleep(500);
+                tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                tankDrive.rotini.setPower(0);
                 // moves arm up
             }
 
             if (gamepad2.dpad_down) {
                 // down arrow
-                rotiniTarget = tankDrive.moveRotiniDown();
-                tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                tankDrive.rotini.setPower(-1);
+                sleep(500);
+                tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                tankDrive.rotini.setPower(0);
                 // moves arm down
             }
-
+            if(!gamepad2.dpad_up && !gamepad2.dpad_down){
+                tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            /*
             if (gamepad2.dpad_left) {
                 cappingServo.setPosition(45);
                 // moves capping servo 45 degrees to the right
             }
-
+            *
             if (gamepad2.dpad_right) {
                 cappingServo.setPosition(-45);
                 // moves capping servo 45 degrees to the left(?)
             }
-
+            */
             if (gamepad2.x) {//spins carousel
                 // letter a
                 duckSpinner.setPower(1);
@@ -107,7 +116,7 @@ public class TankTeleOp extends LinearOpMode {
 
             if (gamepad2.b) {//spins intake wheels
                 leftIntakeSpinner.setPower(1);
-                rightIntakeSpinner.setPower(1);
+                rightIntakeSpinner.setPower(-1);
                 sleep(1000);
                 leftIntakeSpinner.setPower(0);
                 rightIntakeSpinner.setPower(0);
