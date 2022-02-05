@@ -16,8 +16,8 @@ public class TankTeleOp extends LinearOpMode {
     private TankDrive tankDrive;
 
 
-    public Servo leftServo;
-    public Servo rightServo;
+    public Servo boxServo;
+
     public Servo cappingServo;
 
     public DcMotor leftIntakeSpinner;
@@ -31,8 +31,7 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        leftServo = hardwareMap.get(Servo.class, "left Servo");
-        rightServo = hardwareMap.get(Servo.class, "right Servo");
+        boxServo = hardwareMap.get(Servo.class, "box servo");
         cappingServo = hardwareMap.get(Servo.class, "cap Servo");
         duckSpinner = hardwareMap.get(DcMotor.class, "Duck Spinning Motor");
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "Left Intake Spinner Motor");
@@ -97,14 +96,12 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if (gamepad2.y) { //moves box servos up
-                leftServo.setPosition(0);
-                rightServo.setPosition(0);
+                boxServo.setPosition(0);
                 // moves one servo in one direction and the other in the other direction
             }
 
             if (gamepad2.a) { //moves box down
-                leftServo.setPosition(90);
-                rightServo.setPosition(90);
+                boxServo.setPosition(90);
                 // outtake
             }
 
