@@ -119,8 +119,5 @@ public class TankTeleOp extends LinearOpMode {
     public void rotiniBrake () { //turn the motor off
         tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-
-    public void boxServos(int position) {
-        leftServo.setPosition(position);
-    }
+    
 }
