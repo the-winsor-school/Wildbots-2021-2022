@@ -20,6 +20,9 @@ public class TankTeleOp extends LinearOpMode {
     public Servo rightServo;
     public Servo cappingServo;
 
+    public DcMotor leftIntakeSpinner;
+    public DcMotor rightIntakeSpinner;
+
     public DcMotor duckSpinner;
 
 
@@ -32,6 +35,8 @@ public class TankTeleOp extends LinearOpMode {
         rightServo = hardwareMap.get(Servo.class, "right Servo");
         cappingServo = hardwareMap.get(Servo.class, "cap Servo");
         duckSpinner = hardwareMap.get(DcMotor.class, "Duck Spinning Motor");
+        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "Left Intake Spinner Motor");
+        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "Right Intake Spinner Motor");
 
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
@@ -73,35 +78,42 @@ public class TankTeleOp extends LinearOpMode {
                 tankDrive.rotini.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 // moves arm down
             }
-            
 
-            if (gamepad2.a) {
+            if (gamepad2.dpad_left) {
+                cappingServo.setPosition(45);
+                // moves capping servo 45 degrees to the right
+            }
+
+            if (gamepad2.dpad_right) {
+                cappingServo.setPosition(-45);
+                // moves capping servo 45 degrees to the left(?)
+            }
+
+            if (gamepad2.x) {//spins carousel
                 // letter a
                 duckSpinner.setPower(1);
                 sleep(100); //CHANGE for amount of time to spin duck off
                 // spins duck spinner
             }
 
-            if (gamepad1.y) { //moves box servos with
+            if (gamepad2.y) { //moves box servos up
                 leftServo.setPosition(0);
                 rightServo.setPosition(0);
                 // moves one servo in one direction and the other in the other direction
             }
 
-            if (gamepad1.a) { //test function inputs
+            if (gamepad2.a) { //moves box down
                 leftServo.setPosition(90);
                 rightServo.setPosition(90);
                 // outtake
             }
 
-            if (gamepad2.right_bumper) {
-                cappingServo.setPosition(45);
-                // moves capping servo 45 degrees to the right
-            }
-
-            if (gamepad2.left_bumper) {
-                cappingServo.setPosition(-45);
-                // moves capping servo 45 degrees to the left(?)
+            if (gamepad2.b) {//spins intake wheels
+                leftIntakeSpinner.setPower(1);
+                rightIntakeSpinner.setPower(1);
+                sleep(1000);
+                leftIntakeSpinner.setPower(0);
+                rightIntakeSpinner.setPower(0);
             }
 
         }
