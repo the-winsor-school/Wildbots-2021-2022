@@ -21,7 +21,7 @@ public class LiftieTeleOp extends LinearOpMode {
     Rev2mDistanceSensor barcode;
     DcMotor carousel;
     DcMotor arm;
-    DcMotor spinning;
+    DcMotor intakeSpinner;
     Servo left;
     Servo right;
 
@@ -35,7 +35,7 @@ public class LiftieTeleOp extends LinearOpMode {
         barcode = hardwareMap.get(Rev2mDistanceSensor.class, "barcode");
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
-        spinning = hardwareMap.get(DcMotor.class, "spinning");
+        intakeSpinner = hardwareMap.get(DcMotor.class, "spinning");
         left = hardwareMap.get(Servo.class, "left");
         right = hardwareMap.get(Servo.class, "right");
 
@@ -75,12 +75,12 @@ public class LiftieTeleOp extends LinearOpMode {
 
             //intake
             if(gamepad2.b) {
-                spinning.setPower(1);
+                intakeSpinner.setPower(1);
             }
 
             //outake
-            if(gamepad2.x) {
-                spinning.setPower(-1);
+            if(gamepad2.y) {
+                intakeSpinner.setPower(-1);
             }
 
             //get distance
@@ -91,7 +91,7 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             //carousel ducks
-            if(gamepad2.y) {
+            if(gamepad2.a) {
                 carousel.setPower(1);
             }
 
