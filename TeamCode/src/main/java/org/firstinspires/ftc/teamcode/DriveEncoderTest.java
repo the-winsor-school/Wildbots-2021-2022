@@ -10,8 +10,8 @@ import org.firstinspires.ftc.libraries.AutonLibrary;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
 
-@TeleOp(name = "arm testing")
-public class ArmTester extends LinearOpMode {
+@TeleOp(name = "drive encoder testing")
+public class DriveEncoderTest extends LinearOpMode {
 
     private TankDrive tankDrive;
 
@@ -46,15 +46,22 @@ public class ArmTester extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (!alreadyPrinted) {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
-                telemetry.addData("value", tankDrive.getRotiniHeight());
+                telemetry.addData("left value",  tankDrive.left.getCurrentPosition());
+                telemetry.addData("right value",  tankDrive.right.getCurrentPosition());
+
                 alreadyPrinted = true;
             }
-            tankDrive.resetRotini();
-            tankDrive.rotini.setPower(0.5);
+            tankDrive.left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.left.setPower(1);
+            tankDrive.right.setPower(1);
+
             sleep(1000);
-            tankDrive.rotini.setPower(0);
-            tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            telemetry.addData("value", tankDrive.getRotiniHeight());
+            tankDrive.left.setPower(0);
+            tankDrive.right.setPower(1);
+            tankDrive.left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            tankDrive.right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            telemetry.addData("value", tankDrive.right.getCurrentPosition());
 
         }
     }

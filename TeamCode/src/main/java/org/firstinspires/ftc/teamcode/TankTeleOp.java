@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -22,6 +23,7 @@ public class TankTeleOp extends LinearOpMode {
 
     public DcMotor leftIntakeSpinner;
     public DcMotor rightIntakeSpinner;
+    AnalogInput forceSensitiveResistor;
 
     public DcMotor duckSpinner;
 
@@ -36,7 +38,8 @@ public class TankTeleOp extends LinearOpMode {
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
         rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
-
+        double currentForce;
+        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
         boolean alreadyPrinted = false;
@@ -48,9 +51,10 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
             }
+            currentForce = forceSensitiveResistor.getVoltage();
             //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             //telemetry.addData("rotini", "target height =" + rotiniTarget);
-            tankDrive.Drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            tankDrive.drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
 
@@ -66,6 +70,8 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
+            //LOSING MY MIND HERES WHAT MAKES ROTINI GO UP
+
             if (gamepad2.dpad_up) {
                 // up arrow
                 tankDrive.rotini.setPower(1);
@@ -74,7 +80,7 @@ public class TankTeleOp extends LinearOpMode {
                 tankDrive.rotini.setPower(0);
                 // moves arm up
             }
-
+            //MAKES ROTINI GO DOWN
             if (gamepad2.dpad_down) {
                 // down arrow
                 tankDrive.rotini.setPower(-1);
@@ -97,7 +103,8 @@ public class TankTeleOp extends LinearOpMode {
                 // moves capping servo 45 degrees to the left(?)
             }
             */
-            if (gamepad2.x) {//spins carousel
+
+            if (gamepad2.left_bumper) {//spins carousel
                 // letter a
                 duckSpinner.setPower(-1);
                 sleep(2000); //CHANGE for amount of time to spin duck off
@@ -105,12 +112,12 @@ public class TankTeleOp extends LinearOpMode {
                 // spins duck spinner
             }
 
-            if (gamepad2.y) { //moves box servos up
+            if (gamepad2.dpad_up) { //moves box servos up
                 boxServo.setPosition(0);
                 // moves one servo in one direction and the other in the other direction
             }
 
-            if (gamepad2.a) { //moves box down
+            if (gamepad2.dpad_down) { //moves box down
                 boxServo.setPosition(90);
                 // outtake
             }
@@ -121,6 +128,19 @@ public class TankTeleOp extends LinearOpMode {
                 sleep(1000);
                 leftIntakeSpinner.setPower(0);
                 rightIntakeSpinner.setPower(0);
+            }
+            if (currentForce > 0.113 && currentForce < 0.169) {
+                telemetry.addData("Box Weight:", "Light");
+                telemetry.update();
+            } else if (currentForce > 0.189 && currentForce < 0.224) {
+                telemetry.addData("Box Weight:", "Medium");
+                telemetry.update();
+            } else if (currentForce > 0.235 && currentForce < 0.278){
+                telemetry.addData("Box Weight:", "Heavy");
+                telemetry.update();
+            } else {
+                telemetry.addData("Force", currentForce);
+                telemetry.update();
             }
 
         }

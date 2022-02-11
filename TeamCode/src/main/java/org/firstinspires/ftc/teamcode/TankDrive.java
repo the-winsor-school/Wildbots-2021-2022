@@ -51,33 +51,38 @@ public class TankDrive {
         forceSensitiveResistor = hardwareMap.tryGet(AnalogInput.class, "Force Sensitive Resistor");
     }
 
-    public void Drive(double l, double r) {
+    public void drive(double l, double r) {
         left.setPower(l);
         right.setPower(-r);
     }
-    public double getRotiniHeight(){
-        return (rotini.getCurrentPosition()/28)*3.14*0.5;
+
+    public double getRotiniHeight() {
+        return (rotini.getCurrentPosition() / 28) * 3.14 * 0.5;
     }
 
-    public int convertToRotini(int num){ return (int)(num*28/(Math.PI*0.5)); }
-    public int convertToTread(int num){ return (int)(num*28/(Math.PI*0.7));} //no idea what the conversion factor actually is yet :(
-    public int moveRotiniUp(){
+    public int convertToRotini(int num) {
+        return (int) (num * 28 / (Math.PI * 0.5));
+    }
+
+    public int convertToTread(int num) {
+        return (int) (num * 28 / (Math.PI * 0.7));
+    } //no idea what the conversion factor actually is yet :(
+
+    public int moveRotiniUp() {
         //28 counts per rev for this motor
         //diameter of wheel is like half an inch :O
         //goes up 7 in
-        double position =getRotiniHeight();
-        int target =0;
-        if(position<21) {
-            if(position<7){
-                target =convertToRotini(7);
+        double position = getRotiniHeight();
+        int target = 0;
+        if (position < 21) {
+            if (position < 7) {
+                target = convertToRotini(7);
 
-            }
-            else if(position<14){
-                target=convertToRotini(14);
+            } else if (position < 14) {
+                target = convertToRotini(14);
 
-            }
-            else {
-                target=convertToRotini(21);
+            } else {
+                target = convertToRotini(21);
             }
             rotini.setTargetPosition(target);
             return target;
@@ -85,21 +90,20 @@ public class TankDrive {
         return 21;
 
     }
+
     //move the rotini down
-    public int moveRotiniDown(){
+    public int moveRotiniDown() {
         //28 counts per rev for this motor
         //diameter of wheel is like half an inch :T
         //goes up 7 in
-        int target =0;
-        double position =getRotiniHeight();
-        if(position>0) {
-            if(position>14){
-                target =convertToRotini(14);
-            }
-            else if(position>7){
-                target =convertToRotini(7);
-            }
-            else {
+        int target = 0;
+        double position = getRotiniHeight();
+        if (position > 0) {
+            if (position > 14) {
+                target = convertToRotini(14);
+            } else if (position > 7) {
+                target = convertToRotini(7);
+            } else {
                 target = convertToRotini(0);
             }
             rotini.setTargetPosition(target);
@@ -108,42 +112,46 @@ public class TankDrive {
         }
         return 21;
     }
+
     //theoretically could be used to measure the weight and automatically move rotini height, idk if that's what we want yet though
-    public int weightToRotini(int num){
+    public int weightToRotini(int num) {
         double currentForce = forceSensitiveResistor.getVoltage();
         // integrating FSR
-        int target=0;
+        int target = 0;
         if (currentForce > 0.113 && currentForce < 0.169) { //light
-            target = ((int)(1*28/(Math.PI*0.5)));
+            target = ((int) (1 * 28 / (Math.PI * 0.5)));
         } else if (currentForce > 0.189 && currentForce < 0.224) { //medium
-            target = ((int)(7*28/(Math.PI*0.5)));
-        } else if (currentForce > 0.235 && currentForce < 0.278){ //heavy
-            target = ((int)(14*28/(Math.PI*0.5)));
+            target = ((int) (7 * 28 / (Math.PI * 0.5)));
+        } else if (currentForce > 0.235 && currentForce < 0.278) { //heavy
+            target = ((int) (14 * 28 / (Math.PI * 0.5)));
         }
         return target;
     }
+
     //i got tired of writing the same thing over again so this one will actually the target position to rotini numbers
-    public int moveRotiniToAPosition(int num){
-        int target=0;
-        switch(num){
+    public int moveRotiniToAPosition(int num) {
+        int target = 0;
+        switch (num) {
             case 1:
-               target= convertToRotini(0);
-               break;
+                target = convertToRotini(0);
+                break;
             case 2:
-                target= convertToRotini(7);
+                target = convertToRotini(7);
                 break;
             case 3:
-                target= convertToRotini(14);
+                target = convertToRotini(14);
                 break;
         }
         return target;
     }
+
     //just so it exists so I can write pseudo code with it lol
-    public int detectDuck(){
+    public int detectDuck() {
         //do stuff
         return 0;
     }
-    public void driveADistance(int dist, double motorPower){
+
+    public void driveADistance(int dist, double motorPower) {
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -155,19 +163,20 @@ public class TankDrive {
         //still have to set motor power to 0 after lol sorry
 
     }
+
     // get current robot angle (radians)
     public double getIMUAngle() {
         angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
         return angles.firstAngle;
     }
+
     public void spinToAngle(double angle) {
         double goalAngle = getIMUAngle() + angle;
         while (Math.abs(angle - getIMUAngle()) > .15) {
             if (angle > 0) {
                 left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 left.setPower(0.25f);
-            }
-            else {
+            } else {
                 right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 right.setPower(0.25f);
             }
@@ -176,6 +185,7 @@ public class TankDrive {
         brakeStop();
         //targetAngle = getIMUAngle();
     }
+
     public void brakeStop() {
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left.setPower(0);
@@ -184,8 +194,14 @@ public class TankDrive {
 
     }
 
+    public void resetRotini() {
+        rotini.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rotini.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+}
 
-    public class OpenCV extends LinearOpMode {
+
+    class OpenCV2 extends LinearOpMode {
         OpenCvCamera webcam;
         org.firstinspires.ftc.teamcode.OpenCV.SamplePipeline pipeline;
 
@@ -214,7 +230,7 @@ public class TankDrive {
 
         }
     }
-        public static class SamplePipeline extends OpenCvPipeline {
+        class SamplePipeline extends OpenCvPipeline {
             private static final Scalar BLUE = new Scalar(0, 0, 255);
 
             //private static final int THRESHOLD1 = 107; // yellow < 107 < white
@@ -305,4 +321,4 @@ public class TankDrive {
             }
         }
 
-}
+
