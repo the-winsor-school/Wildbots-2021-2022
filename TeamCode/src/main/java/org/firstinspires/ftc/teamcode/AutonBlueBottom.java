@@ -37,17 +37,17 @@ public class AutonBlueBottom extends LinearOpMode {
 
         boxServo = hardwareMap.get(Servo.class, "boxServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-
         telemetry.addData("status", "initialized");
         telemetry.update();
         //telemetry.addData("Type", pipeline.getType());
         //telemetry.addData("Average", pipeline.getAverage());
         // telemetry.addData("Location", pipeline.getLocation());
-        telemetry.update();
+        //telemetry.update();
 
 
         //spinningArm = hardwareMap.get(Servo.class, "Carousel Spinning Arm");
 
+        /*
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().
 
@@ -67,6 +67,8 @@ public class AutonBlueBottom extends LinearOpMode {
 
             }
         });
+
+         */
 
         waitForStart();
 
@@ -100,6 +102,7 @@ public class AutonBlueBottom extends LinearOpMode {
                 sleep(secToHub);
                 tankDrive.brakeStop();
 
+                /*
             if (pipeline.getLocation() == LOCATION.LEFT) {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1000);
@@ -132,7 +135,7 @@ public class AutonBlueBottom extends LinearOpMode {
                 sleep(700);
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
-            }
+                 */
             //go to parking spot
             tankDrive.drive(-1, -1);
             sleep(secToHub);
@@ -146,6 +149,9 @@ public class AutonBlueBottom extends LinearOpMode {
             tankDrive.drive(1,1);
             sleep(1000);
             tankDrive.brakeStop();
+
+            }
+
 
 
                 /*
@@ -223,5 +229,3 @@ public class AutonBlueBottom extends LinearOpMode {
 
         }
     }
-}
-
