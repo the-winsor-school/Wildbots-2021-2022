@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -22,8 +23,8 @@ public class LiftieTeleOp extends LinearOpMode {
     DcMotor carousel;
     DcMotor arm;
     DcMotor intakeSpinner;
-    Servo left;
-    Servo right;
+    CRServo left;
+    CRServo right;
 
     public void runOpMode() throws InterruptedException {
         //set up our driving library
@@ -36,8 +37,11 @@ public class LiftieTeleOp extends LinearOpMode {
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
         intakeSpinner = hardwareMap.get(DcMotor.class, "spinning");
-        left = hardwareMap.get(Servo.class, "left");
-        right = hardwareMap.get(Servo.class, "right");
+        left = hardwareMap.get(CRServo.class, "left");
+        right = hardwareMap.get(CRServo.class, "right");
+
+        left.setDirection(CRServo.Direction.FORWARD);
+        right.setDirection(CRServo.Direction.REVERSE);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -70,8 +74,18 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             //adjust the angle of the intake box
-            left.setPosition(gamepad2.left_stick_y);
-            right.setPosition(1-gamepad2.left_stick_y);
+            if(gamepad1.a) {
+                left.setPower(1);
+                right.setPower(1);
+            }
+
+            if(gamepad1.x) {
+                left.setPower(0);
+                right.setPower(0);
+            }
+
+            left.setPower(.5);
+            right.setPower(.5);
 
             //intake
             if(gamepad2.b) {
