@@ -110,7 +110,11 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             telemetry.addData("Status", "Running"); //prints to phone
-            telemetry.addData("Brake Mode", drivingLibrary.getMode());
+            telemetry.addData("Left CR Servo power", left.getPower()); //prints to phone
+            telemetry.addData("Right CR Servo power", right.getPower()); //prints to phone
+            telemetry.addData("Left CR Servo direction", left.getDirection()); //prints to phone
+            telemetry.addData("Right CR Servo direction", right.getDirection()); //prints to phone
+            //telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
             telemetry.update(); //makes actually print
         }
