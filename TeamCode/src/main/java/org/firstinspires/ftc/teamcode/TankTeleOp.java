@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
+
 
 import org.firstinspires.ftc.libraries.AutonLibrary;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
@@ -19,7 +21,7 @@ public class TankTeleOp extends LinearOpMode {
     private TankDrive tankDrive;
 
 
-    public Servo boxServo;
+    public CRServo boxServo;
 
     //public Servo cappingServo;
 
@@ -36,7 +38,7 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
@@ -123,6 +125,7 @@ public class TankTeleOp extends LinearOpMode {
                 // spins duck spinner
             }
 
+            /*
             if (gamepad2.dpad_up) { //moves box servos up
                 boxServo.setPosition(0);
                 // moves one servo in one direction and the other in the other direction
@@ -132,6 +135,9 @@ public class TankTeleOp extends LinearOpMode {
                 boxServo.setPosition(90);
                 // outtake
             }
+            */
+
+            boxServo.setPower(gamepad2.right_stick_x);
 
             if (gamepad2.b) {//spins intake wheels
                 leftIntakeSpinner.setPower(1);
