@@ -31,9 +31,9 @@ public class ArmTester extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        boxServo = hardwareMap.get(Servo.class, "boxServo"); //
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
-        duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
+        duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner"); //
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
         rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
 
@@ -54,9 +54,11 @@ public class ArmTester extends LinearOpMode {
                 //tankDrive.rotini.setPower(-0.5);
                 //sleep(1000);
                 tankDrive.resetRotini();
-                tankDrive.rotini.setPower(0.5);
-                sleep(1000);
-                tankDrive.rotini.setPower(0);
+
+                tankDrive.rotini.setPower(0.5);//
+                sleep(1000);//
+                tankDrive.rotini.setPower(0);//
+
                 tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 already=true;
 

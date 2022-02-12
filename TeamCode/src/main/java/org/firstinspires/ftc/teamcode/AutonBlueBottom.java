@@ -3,6 +3,7 @@
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -22,6 +23,8 @@ public class AutonBlueBottom extends LinearOpMode {
     private TankDrive tankDrive;
     OpenCvCamera webcam;
     SamplePipeline pipeline;
+    public Servo boxServo;
+    public DcMotor duckSpinner;
 
     //initializing
     @Override
@@ -32,6 +35,8 @@ public class AutonBlueBottom extends LinearOpMode {
 
         drivingLibrary.setSpeed(1.0);
 
+        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
 
         telemetry.addData("status", "initialized");
         telemetry.update();
@@ -64,6 +69,12 @@ public class AutonBlueBottom extends LinearOpMode {
         });
 
         waitForStart();
+
+        /* ABBIE'S CODE
+        tankDrive.rotini.setPower(0.5);//
+                sleep(1000);//
+                tankDrive.rotini.setPower(0);//
+         */
 
 
         if (
