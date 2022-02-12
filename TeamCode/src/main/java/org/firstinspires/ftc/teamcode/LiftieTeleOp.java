@@ -40,6 +40,11 @@ public class LiftieTeleOp extends LinearOpMode {
         left = hardwareMap.get(CRServo.class, "left");
         right = hardwareMap.get(CRServo.class, "right");
 
+        left.setDirection(CRServo.Direction.FORWARD);
+        right.setDirection(CRServo.Direction.REVERSE);
+
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -47,7 +52,7 @@ public class LiftieTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //driving
-            drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
+            drivingLibrary.bevelDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             // switching braking modes
             if (gamepad1.b) {
@@ -58,57 +63,70 @@ public class LiftieTeleOp extends LinearOpMode {
 
             //lift the arm
 //            if(gamepad2.dpad_up) { //move up one level
-//                arm.setPower(0.5);
-//                sleep(100);
+//                arm.setPower(1);
+//                sleep(500);
 //                arm.setPower(0);
-//                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //            }
+
+            arm.setPower(gamepad2.left_stick_y * 0.3);
 
             //making the arm go down
-            arm.setPower((gamepad2.left_stick_y) / 2);
-
 //            if(gamepad2.dpad_down) {
-//                arm.setPower(-0.5);
-//                sleep(100);
+//                arm.setPower(-1);
+//                sleep(500);
 //                arm.setPower(0);
-//                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //            }
 
-            left.setPower(gamepad2.right_stick_x);
-            right.setPower(-gamepad2.right_stick_x);
-
             //adjust the angle of the intake box
+            if(gamepad2.a) {
+                left.setPower(1);
+                right.setPower(1);
+            }
+
+            if(gamepad2.b) {
+                left.setPower(0);
+                right.setPower(0);
+            }
+
+            left.setPower(.5);
+            right.setPower(.5);
 
             //intake
-            if(gamepad2.b) {
+            if(gamepad2.x) {
                 intakeSpinner.setPower(1);
-                sleep(1500);
-                intakeSpinner.setPower(0);
             }
 
             //outake
-            if(gamepad2.y) {
+            else if(gamepad2.y) {
                 intakeSpinner.setPower(-1);
-                sleep(1500);
+            }
+
+            else {
                 intakeSpinner.setPower(0);
             }
 
             //get distance
-            if(gamepad2.a) {
+            if(gamepad2.right_bumper) {
                 barcode.getDistance(DistanceUnit.CM);
                 telemetry.addData("Distance", barcode.getDistance(DistanceUnit.CM));
                 telemetry.update();
             }
 
             //carousel ducks
-            if(gamepad2.a) {
+            if(gamepad2.dpad_up) {
                 carousel.setPower(1);
-                sleep(2000);
+            }
+
+            if(gamepad2.dpad_down) {
                 carousel.setPower(0);
             }
 
             telemetry.addData("Status", "Running"); //prints to phone
-            telemetry.addData("Brake Mode", drivingLibrary.getMode());
+            telemetry.addData("Left CR Servo power", left.getPower()); //prints to phone
+            telemetry.addData("Right CR Servo power", right.getPower()); //prints to phone
+            telemetry.addData("Left CR Servo direction", left.getDirection()); //prints to phone
+            telemetry.addData("Right CR Servo direction", right.getDirection()); //prints to phone
+            //telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
             telemetry.update(); //makes actually print
         }

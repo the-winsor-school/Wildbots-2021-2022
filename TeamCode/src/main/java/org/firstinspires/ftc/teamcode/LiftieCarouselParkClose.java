@@ -11,7 +11,7 @@
 //import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //
 //@Autonomous(name = "Liftie Auton")
-//public class LiftieAuton extends LinearOpMode {
+//public class LiftieCarouselParkClose extends LinearOpMode {
 //
 //    private DrivingLibrary drivingLibrary;
 //    Rev2mDistanceSensor barcode;
@@ -42,62 +42,14 @@
 //        waitForStart();
 //
 //        if (opModeIsActive()) {
-//            // strafing to each spot on the barcode
-//            drivingLibrary.bevelDrive(1, 0, 0);
-//            sleep(500);
+//            drivingLibrary.bevelDrive(0, 1, 0);
+//            sleep(2000);
 //            drivingLibrary.brakeStop();
-//            int randomized = 0;
-//            if(barcode.getDistance(DistanceUnit.CM) < 800) {
-//                randomized = 3;
-//            }
-//            drivingLibrary.bevelDrive(1, 0, 0);
-//            sleep(500);
-//            drivingLibrary.brakeStop();
-//            if(barcode.getDistance(DistanceUnit.CM) < 800) {
-//                randomized = 2;
-//            }
-//            drivingLibrary.bevelDrive(1, 0, 0);
-//            sleep(500);
-//            drivingLibrary.brakeStop();
-//            if(barcode.getDistance(DistanceUnit.CM) < 800) {
-//                randomized = 1;
-//            }
-//            drivingLibrary.bevelDrive(1, 0, 0);
-//            sleep(1500);
 //            carousel.setPower(1);
 //            sleep(3500);
 //            carousel.setPower(0);
-//            drivingLibrary.bevelDrive(1, 0.5f, 0);
-//            sleep(2000);
-//            drivingLibrary.brakeStop();
-//            arm.setPower(1);
-//            switch(randomized) {
-//                case 1:
-//                    sleep(500);
-//                    break;
-//                case 2:
-//                    sleep(1000);
-//                    break;
-//                case 3:
-//                    sleep(1500);
-//                    break;
-//            }
-//            left.setPower(1);
-//            right.setPower(1);
-//            sleep(500);
-//            left.setPower(.5);
-//            right.setPower(.5);
-//            spinning.setPower(1);
-//            sleep(1000);
-//            spinning.setPower(0);
-//            left.setPower(0);
-//            right.setPower(0);
-//            sleep(500);
-//            left.setPower(.5);
-//            right.setPower(.5);
-//            drivingLibrary.spinToAngle(Math.PI/2);
 //            drivingLibrary.bevelDrive(0, -1, 0);
-//            sleep(5000);
+//            sleep(7000);
 //            drivingLibrary.brakeStop();
 //        }
 //    }
