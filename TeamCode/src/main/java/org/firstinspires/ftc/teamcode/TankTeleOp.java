@@ -11,6 +11,8 @@ import org.firstinspires.ftc.libraries.AutonLibrary;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
 
+
+
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
 
@@ -108,6 +110,14 @@ public class TankTeleOp extends LinearOpMode {
             if (gamepad2.left_bumper) {//spins carousel
                 // letter a
                 duckSpinner.setPower(-1);
+                sleep(2000); //CHANGE for amount of time to spin duck off
+                duckSpinner.setPower(0);
+                // spins duck spinner
+            }
+
+            if (gamepad2.right_bumper) {//spins carousel
+                // letter a
+                duckSpinner.setPower(1);
                 sleep(2000); //CHANGE for amount of time to spin duck off
                 duckSpinner.setPower(0);
                 // spins duck spinner
