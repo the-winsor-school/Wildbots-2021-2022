@@ -100,6 +100,10 @@ public class TankTeleOp extends LinearOpMode {
                 // moves arm down
             }
 
+            if (gamepad1.b) {
+                tankDrive.brakeStop();
+            }
+
             /*
             if (gamepad2.dpad_left) {
                 cappingServo.setPosition(45);
