@@ -1,4 +1,4 @@
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/OpenCV.java
+/* <<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/OpenCV.java
 
 package org.firstinspires.ftc.teamcode;
 
@@ -151,3 +151,4 @@ public class OpenCV extends LinearOpMode {
         }
     }
 }
+*/
