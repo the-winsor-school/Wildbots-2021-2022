@@ -74,8 +74,8 @@ public class TankTeleOp extends LinearOpMode {
 
             if (gamepad2.dpad_up) {
                 // up arrow
-                tankDrive.rotini.setPower(1);
-                sleep(500);
+                tankDrive.rotini.setPower(0.5);
+                sleep(1000);
                 tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 tankDrive.rotini.setPower(0);
                 // moves arm up
@@ -83,15 +83,13 @@ public class TankTeleOp extends LinearOpMode {
             //MAKES ROTINI GO DOWN
             if (gamepad2.dpad_down) {
                 // down arrow
-                tankDrive.rotini.setPower(-1);
-                sleep(500);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1000);
                 tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 tankDrive.rotini.setPower(0);
                 // moves arm down
             }
-            if(!gamepad2.dpad_up && !gamepad2.dpad_down){
-                tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            }
+
             /*
             if (gamepad2.dpad_left) {
                 cappingServo.setPosition(45);
