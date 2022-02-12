@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -17,8 +18,8 @@ public class LiftieAuton extends LinearOpMode {
     DcMotor carousel;
     DcMotor arm;
     DcMotor spinning;
-    Servo left;
-    Servo right;
+    CRServo left;
+    CRServo right;
 
     //initializing
     @Override
@@ -29,8 +30,12 @@ public class LiftieAuton extends LinearOpMode {
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
         spinning = hardwareMap.get(DcMotor.class, "spinning");
-        left = hardwareMap.get(Servo.class, "left");
-        right = hardwareMap.get(Servo.class, "right");
+        left = hardwareMap.get(CRServo.class, "left");
+        right = hardwareMap.get(CRServo.class, "right");
+
+        left.setDirection(CRServo.Direction.FORWARD);
+        right.setDirection(CRServo.Direction.REVERSE);
+
         telemetry.addData("status", "initialized");
         telemetry.update();
 
@@ -77,12 +82,19 @@ public class LiftieAuton extends LinearOpMode {
                     sleep(1500);
                     break;
             }
-            left.setPosition(1);
-            right.setPosition(-1);
+            left.setPower(1);
+            right.setPower(1);
             sleep(500);
+            left.setPower(.5);
+            right.setPower(.5);
             spinning.setPower(1);
             sleep(1000);
             spinning.setPower(0);
+            left.setPower(0);
+            right.setPower(0);
+            sleep(500);
+            left.setPower(.5);
+            right.setPower(.5);
             drivingLibrary.spinToAngle(Math.PI/2);
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(5000);
