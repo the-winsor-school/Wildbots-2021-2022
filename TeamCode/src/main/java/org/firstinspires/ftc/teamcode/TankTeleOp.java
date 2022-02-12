@@ -56,7 +56,7 @@ public class TankTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            servoPosition = 0;
+            servoPosition = 10;
             if (!alreadyPrinted) {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
