@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.SamplePipeline.LOCATION;
 
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+//import org.firstinspires.ftc.libraries.TankDrive;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -18,22 +18,23 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "Blue Bottom Auton")
 public class AutonBlueBottom extends LinearOpMode {
 
-    private DrivingLibrary drivingLibrary;
+
     //Servo spinningArm;
-    private TankDrive tankDrive;
     OpenCvCamera webcam;
     SamplePipeline pipeline;
     public Servo boxServo;
     public DcMotor duckSpinner;
+    TankDrive tankDrive;
+
+    int secToCarousel=1500;
+    int secToHub=1000;
+    int secDuckSpin=3000;
 
     //initializing
     @Override
     public void runOpMode() throws InterruptedException {
 
-        drivingLibrary = new DrivingLibrary(this);
         tankDrive = new TankDrive(this);
-
-        drivingLibrary.setSpeed(1.0);
 
         boxServo = hardwareMap.get(Servo.class, "boxServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
@@ -77,80 +78,148 @@ public class AutonBlueBottom extends LinearOpMode {
          */
 
 
-        if (
+        if (opModeIsActive()) {
 
-                opModeIsActive()) {
+                tankDrive.spinToAngle(-Math.PI/2);
+                //go to the carousel
+                tankDrive.drive(1,1);
+                sleep(secToCarousel);
+                tankDrive.brakeStop();
+
+                //spin carousel
+                duckSpinner.setPower(1);
+                sleep(secDuckSpin);
+                duckSpinner.setPower(0);
+
+                //go to the alliance hub?
+                tankDrive.drive(-1,-1);
+                sleep(secToCarousel*2);
+                tankDrive.brakeStop();
+
+                tankDrive.spinToAngle(0);
+                tankDrive.drive(1, 1);
+                sleep(secToHub);
+                tankDrive.brakeStop();
+
             if (pipeline.getLocation() == LOCATION.LEFT) {
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.rotini.setPower(0.5);
+                sleep(1000);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1000);
+            }
+            else if (pipeline.getLocation() == LOCATION.MIDDLE) {
+                tankDrive.rotini.setPower(0.5);
                 sleep(1500);
-                drivingLibrary.brakeStop();
-                //spin carousel
-                drivingLibrary.spinToAngle((Math.PI * 25) / 18);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1500);
+            }
+            else {
+                tankDrive.rotini.setPower(0.5);
+                sleep(1500);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1500);
+            }
+            //go to parking spot
+            tankDrive.drive(-1, -1);
+            sleep(secToHub);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(-Math.PI/2);
+            tankDrive.drive(-1, -1);
+            sleep(secToCarousel*2);
+            //should be back at carousel
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
+            tankDrive.drive(1,1);
+            sleep(1000);
+            tankDrive.brakeStop();
+
+
+                /*
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(3000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 4);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 2);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
+                tankDrive.brakeStop();
+
+
             } else if (pipeline.getLocation() == LOCATION.MIDDLE) {
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.drive(1,1);
                 sleep(1500);
-                drivingLibrary.brakeStop();
+                tankDrive.brakeStop();
                 //spin carousel
-                drivingLibrary.spinToAngle((Math.PI * 25) / 18);
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(3000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 4);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 2);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
+                tankDrive.brakeStop();
             } else {
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.drive(1,1);
                 sleep(1500);
-                drivingLibrary.brakeStop();
+                tankDrive.brakeStop();
                 //spin carousel
-                drivingLibrary.spinToAngle((Math.PI * 25) / 18);
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(3000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 4);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.spinToAngle(Math.PI / 2);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
                 sleep(1000);
-                drivingLibrary.brakeStop();
-                drivingLibrary.bevelDrive(0, -1, 0);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
                 sleep(2000);
-                drivingLibrary.brakeStop();
+                tankDrive.brakeStop();
 
             }
+            */
+
 
 
         }
