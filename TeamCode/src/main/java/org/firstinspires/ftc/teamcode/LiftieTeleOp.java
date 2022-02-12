@@ -60,26 +60,28 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             //lift the arm
-            if(gamepad2.dpad_up) { //move up one level
-                arm.setPower(1);
-                sleep(500);
-                arm.setPower(0);
-            }
+//            if(gamepad2.dpad_up) { //move up one level
+//                arm.setPower(1);
+//                sleep(500);
+//                arm.setPower(0);
+//            }
+
+            arm.setPower(gamepad2.left_stick_y);
 
             //making the arm go down
-            if(gamepad2.dpad_down) {
-                arm.setPower(-1);
-                sleep(500);
-                arm.setPower(0);
-            }
+//            if(gamepad2.dpad_down) {
+//                arm.setPower(-1);
+//                sleep(500);
+//                arm.setPower(0);
+//            }
 
             //adjust the angle of the intake box
-            if(gamepad1.a) {
+            if(gamepad2.a) {
                 left.setPower(1);
                 right.setPower(1);
             }
 
-            if(gamepad1.x) {
+            if(gamepad2.b) {
                 left.setPower(0);
                 right.setPower(0);
             }
@@ -88,7 +90,7 @@ public class LiftieTeleOp extends LinearOpMode {
             right.setPower(.5);
 
             //intake
-            if(gamepad2.b) {
+            if(gamepad2.x) {
                 intakeSpinner.setPower(1);
             }
 
@@ -98,14 +100,14 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             //get distance
-            if(gamepad2.a) {
+            if(gamepad2.right_bumper) {
                 barcode.getDistance(DistanceUnit.CM);
                 telemetry.addData("Distance", barcode.getDistance(DistanceUnit.CM));
                 telemetry.update();
             }
 
             //carousel ducks
-            if(gamepad2.a) {
+            if(gamepad2.dpad_up) {
                 carousel.setPower(1);
             }
 
