@@ -51,14 +51,17 @@ public class LiftieCarouselParkFar extends LinearOpMode {
 //            drivingLibrary.bevelDrive(0, -1, 0);
 //            sleep(7000);
 //            drivingLibrary.brakeStop();
+            sleep(5000);
+            drivingLibrary.bevelDrive(0, 1, 0);
+            sleep(3000);
+            drivingLibrary.brakeStop();
+            carousel.setPower(-1);
+            sleep(3500);
+            carousel.setPower(0);
             drivingLibrary.bevelDrive(0, -1, 0);
             sleep(1000);
-            drivingLibrary.brakeStop();
-            sleep(15000);
-            drivingLibrary.bevelDrive(0, 1, 0);
-            sleep(1000);
             drivingLibrary.bevelDrive(-1, 0, 0);
-            sleep(4000);
+            sleep(8000);
             drivingLibrary.brakeStop();
         }
     }

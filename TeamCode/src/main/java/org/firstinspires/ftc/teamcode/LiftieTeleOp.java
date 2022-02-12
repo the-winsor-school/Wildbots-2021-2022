@@ -52,7 +52,7 @@ public class LiftieTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //driving
-            drivingLibrary.bevelDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             // switching braking modes
             if (gamepad1.b) {
@@ -68,7 +68,7 @@ public class LiftieTeleOp extends LinearOpMode {
 //                arm.setPower(0);
 //            }
 
-            arm.setPower(gamepad2.left_stick_y * 0.3);
+            arm.setPower(gamepad2.left_stick_y * 0.5);
 
             //making the arm go down
 //            if(gamepad2.dpad_down) {
@@ -113,8 +113,12 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             //carousel ducks
-            if(gamepad2.dpad_up) {
+            if(gamepad2.dpad_left) {
                 carousel.setPower(1);
+            }
+
+            if(gamepad2.dpad_right) {
+                carousel.setPower(-1);
             }
 
             if(gamepad2.dpad_down) {
