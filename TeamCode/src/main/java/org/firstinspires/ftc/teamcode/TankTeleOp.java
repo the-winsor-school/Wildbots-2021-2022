@@ -21,8 +21,8 @@ public class TankTeleOp extends LinearOpMode {
 
     //public Servo cappingServo;
 
-    public DcMotor leftIntakeSpinner;
-    public DcMotor rightIntakeSpinner;
+    //public DcMotor leftIntakeSpinner;
+    //public DcMotor rightIntakeSpinner;
     AnalogInput forceSensitiveResistor;
 
     public DcMotor duckSpinner;
@@ -36,8 +36,8 @@ public class TankTeleOp extends LinearOpMode {
         boxServo = hardwareMap.get(Servo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
-        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
+        //leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
+        //rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
         double currentForce;
         forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
         telemetry.addData("status", "BAAAAAAAH initialized");
@@ -123,11 +123,11 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if (gamepad2.b) {//spins intake wheels
-                leftIntakeSpinner.setPower(1);
-                rightIntakeSpinner.setPower(-1);
+                //leftIntakeSpinner.setPower(1);
+                //rightIntakeSpinner.setPower(-1);
                 sleep(1000);
-                leftIntakeSpinner.setPower(0);
-                rightIntakeSpinner.setPower(0);
+                //leftIntakeSpinner.setPower(0);
+                //rightIntakeSpinner.setPower(0);
             }
             if (currentForce > 0.113 && currentForce < 0.169) {
                 telemetry.addData("Box Weight:", "Light");

@@ -42,6 +42,7 @@ public class ArmTester extends LinearOpMode {
         boolean alreadyPrinted = false;
         int rotiniTarget = 0;
         waitForStart();
+        boolean already=false;
 
         while (opModeIsActive() && !isStopRequested()) {
             if (!alreadyPrinted) {
@@ -49,12 +50,20 @@ public class ArmTester extends LinearOpMode {
                 telemetry.addData("value", tankDrive.getRotiniHeight());
                 alreadyPrinted = true;
             }
-            tankDrive.resetRotini();
-            tankDrive.rotini.setPower(0.5);
-            sleep(1000);
-            tankDrive.rotini.setPower(0);
-            tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            if (!already){
+                //tankDrive.rotini.setPower(-0.5);
+                //sleep(1000);
+                tankDrive.resetRotini();
+                tankDrive.rotini.setPower(0.5);
+                sleep(1000);
+                tankDrive.rotini.setPower(0);
+                tankDrive.rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                already=true;
+
+            }
+
             telemetry.addData("value", tankDrive.getRotiniHeight());
+            telemetry.update();
 
         }
     }
