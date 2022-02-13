@@ -41,7 +41,7 @@ public class LiftieTeleOp extends LinearOpMode {
         right = hardwareMap.get(CRServo.class, "right");
 
         left.setDirection(CRServo.Direction.FORWARD);
-        right.setDirection(CRServo.Direction.REVERSE);
+        right.setDirection(CRServo.Direction.FORWARD);
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -52,7 +52,7 @@ public class LiftieTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
             //driving
-            drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             // switching braking modes
             if (gamepad1.b) {
@@ -77,7 +77,7 @@ public class LiftieTeleOp extends LinearOpMode {
 //                arm.setPower(0);
 //            }
 
-            //adjust the angle of the intake box
+           /* //adjust the angle of the intake box
             if(gamepad2.a) {
                 left.setPower(1);
                 right.setPower(1);
@@ -89,7 +89,11 @@ public class LiftieTeleOp extends LinearOpMode {
             }
 
             left.setPower(.5);
-            right.setPower(.5);
+            right.setPower(.5); */
+
+            // cr servos
+            left.setPower(gamepad2.right_stick_y);
+            right.setPower(gamepad2.right_stick_y);
 
             //intake
             if(gamepad2.x) {
