@@ -117,19 +117,18 @@ public class TankTeleOp extends LinearOpMode {
             */
 
             if (gamepad2.left_bumper) {//spins carousel
-                // letter a
                 duckSpinner.setPower(-1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
                 // spins duck spinner
             }
 
             if (gamepad2.right_bumper) {//spins carousel
-                // letter a
                 duckSpinner.setPower(1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
                 // spins duck spinner
+            }
+
+            if (gamepad2.y) {//stops carousel
+                duckSpinner.setPower(0);
+                //stops duck spinning motor
             }
 /*
 
