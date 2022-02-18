@@ -119,7 +119,7 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             if (gamepad2.dpad_down) { //moves box down
-                boxServo.setPosition(90);
+                boxServo.setPosition(180);
                 // outtake
             }
 
