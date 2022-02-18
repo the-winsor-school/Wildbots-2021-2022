@@ -6,10 +6,14 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
+
 
 import org.firstinspires.ftc.libraries.AutonLibrary;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
+
+
 
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
@@ -17,7 +21,7 @@ public class TankTeleOp extends LinearOpMode {
     private TankDrive tankDrive;
 
 
-    public Servo boxServo;
+    public CRServo boxServo;
 
     //public Servo cappingServo;
 
@@ -25,6 +29,8 @@ public class TankTeleOp extends LinearOpMode {
     public DcMotor rightIntakeSpinner;
     public DcMotor frontIntakeSpinner;
     AnalogInput forceSensitiveResistor;
+
+    public int servoPosition;
 
     public DcMotor duckSpinner;
 
@@ -34,7 +40,7 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
@@ -50,6 +56,7 @@ public class TankTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
+            servoPosition = 10;
             if (!alreadyPrinted) {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
@@ -57,7 +64,7 @@ public class TankTeleOp extends LinearOpMode {
             currentForce = forceSensitiveResistor.getVoltage();
             //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             //telemetry.addData("rotini", "target height =" + rotiniTarget);
-            tankDrive.drive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+            tankDrive.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
 
@@ -93,6 +100,10 @@ public class TankTeleOp extends LinearOpMode {
                 // moves arm down
             }
 
+            if (gamepad1.b) {
+                tankDrive.brakeStop();
+            }
+
             /*
             if (gamepad2.dpad_left) {
                 cappingServo.setPosition(45);
@@ -106,27 +117,62 @@ public class TankTeleOp extends LinearOpMode {
             */
 
             if (gamepad2.left_bumper) {//spins carousel
-                // letter a
                 duckSpinner.setPower(-1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
                 // spins duck spinner
             }
 
-            if (gamepad2.dpad_up) { //moves box servos up
-                boxServo.setPosition(0);
+            if (gamepad2.right_bumper) {//spins carousel
+                duckSpinner.setPower(1);
+                // spins duck spinner
+            }
+
+            if (gamepad2.y) {//stops carousel
+                duckSpinner.setPower(0);
+                //stops duck spinning motor
+            }
+/*
+
+            if (gamepad2.dpad_right) { //moves box servos up
+                servoPosition += 1;
+                boxServo.setPosition(servoPosition);
+                telemetry.addData("right", servoPosition);
                 // moves one servo in one direction and the other in the other direction
             }
 
+            if (gamepad2.dpad_left) { //moves box down
+                servoPosition -= 1;
+                boxServo.setPosition(servoPosition);
+                telemetry.addData("left", servoPosition);
+                // outtake
+            }
+            */
+
+
+            boxServo.setPower(gamepad2.right_stick_y);
+
+            if (gamepad2.dpad_right) { //moves box servos up
+                boxServo.setPower(1);
+                sleep(50);
+                boxServo.setPower(0);
+                // moves one servo in one direction and the other in the other direction
+            }
+
+<<<<<<< HEAD
             if (gamepad2.dpad_down) { //moves box down
                 boxServo.setPosition(180);
+=======
+            if (gamepad2.dpad_left) { //moves box down
+                boxServo.setPower(-1);
+                sleep(50);
+                boxServo.setPower(0);
+>>>>>>> 222a7827dfcbeb33e6103d2725de306302fca7ae
                 // outtake
             }
 
             if (gamepad2.b) {//spins intake wheels
                 leftIntakeSpinner.setPower(1);
                 rightIntakeSpinner.setPower(-1);
-                frontIntakeSpinner.setPower(-1);
+                frontIntakeSpinner.setPower(1);
                 sleep(1000);
                 leftIntakeSpinner.setPower(0);
                 rightIntakeSpinner.setPower(0);
