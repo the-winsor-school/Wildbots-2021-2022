@@ -157,15 +157,11 @@ public class TankTeleOp extends LinearOpMode {
                 // moves one servo in one direction and the other in the other direction
             }
 
-<<<<<<< HEAD
-            if (gamepad2.dpad_down) { //moves box down
-                boxServo.setPosition(180);
-=======
+
             if (gamepad2.dpad_left) { //moves box down
                 boxServo.setPower(-1);
                 sleep(50);
                 boxServo.setPower(0);
->>>>>>> 222a7827dfcbeb33e6103d2725de306302fca7ae
                 // outtake
             }
 

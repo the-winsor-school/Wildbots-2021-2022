@@ -10,13 +10,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "ParkingAuton")
-public class ParkingAuton extends LinearOpMode {
+@Autonomous(name = "DucksAuton")
+public class DucksAuton extends LinearOpMode {
 
     //private DrivingLibrary drivingLibrary;
     private TankDrive tankDrive;
 
-    public CRServo boxServo;
+    //public CRServo boxServo;
 
     //public Servo cappingServo;
 
@@ -32,13 +32,15 @@ public class ParkingAuton extends LinearOpMode {
     //initializing
 
     public void turn90Right() {
-        tankDrive.drive(1,0);
-        sleep(1000);
+        TankDrive tankDrive= new TankDrive(this);
+        tankDrive.drive(0.5,-0.5);
+        sleep(1500);
         tankDrive.brakeStop();
     }
     public void turn90Left() {
-        tankDrive.drive(0,1);
-        sleep(1000);
+        TankDrive tankDrive= new TankDrive(this);
+        tankDrive.drive(-0.5,0.5);
+        sleep(1500);
         tankDrive.brakeStop();
     }
     @Override
@@ -46,8 +48,8 @@ public class ParkingAuton extends LinearOpMode {
 //        drivingLibrary = new DrivingLibrary(this);
 //        drivingLibrary.setSpeed(1.0);
 
-
-        boxServo = hardwareMap.get(CRServo.class, "boxServo");
+        TankDrive tankDrive= new TankDrive(this);
+        //boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
@@ -73,15 +75,32 @@ public class ParkingAuton extends LinearOpMode {
             sleep(300);
             tankDrive.brakeStop();
             //turn right
+            turn90Right();
+            tankDrive.drive(1,1);
+            sleep(450);
+            tankDrive.brakeStop();
             turn90Left();
             tankDrive.drive(1,1);
-            sleep(1000);
-            turn90Right();
-            //outake
-            turn90Left();
-            tankDrive.drive(-1,-1);
-            
+            sleep(700);
+            tankDrive.brakeStop();
 
+            sleep(700);
+            //outake
+            turn90Right();
+            tankDrive.drive(-1,-1);
+            sleep(2000);
+            tankDrive.brakeStop();
+            turn90Left();
+            tankDrive.drive(1,1);
+            sleep(500);
+            tankDrive.brakeStop();
+            sleep(500);
+            duckSpinner.setPower(1);
+            sleep(1000);
+            //spin ducks
+            tankDrive.drive(1,1);
+            sleep(500);
+            tankDrive.brakeStop();
 
         }
     }
