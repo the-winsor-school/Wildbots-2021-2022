@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,6 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name = "DucksAuton")
 public class DucksAuton extends LinearOpMode {
@@ -24,6 +29,8 @@ public class DucksAuton extends LinearOpMode {
     public DcMotor rightIntakeSpinner;
     public DcMotor frontIntakeSpinner;
     AnalogInput forceSensitiveResistor;
+    private Orientation angles;
+    private BNO055IMU imu; //gyroscope in rev hub
 
     public int servoPosition;
 
@@ -42,6 +49,25 @@ public class DucksAuton extends LinearOpMode {
         tankDrive.drive(-0.5,0.5);
         sleep(1500);
         tankDrive.brakeStop();
+    }
+    public double getIMUAngle() {
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
+        return angles.firstAngle;
+    }
+    public void spinToAngle(double angle) {
+        double goalAngle = getIMUAngle() + angle;
+        while (Math.abs(angle - getIMUAngle()) > .15) {
+            if (angle > 0) {
+                tankDrive.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                tankDrive.left.setPower(0.25f);
+            } else {
+                tankDrive.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                tankDrive.right.setPower(0.25f);
+            }
+            telemetry.update();
+        }
+        tankDrive.brakeStop();
+        //targetAngle = getIMUAngle();
     }
     @Override
     public void runOpMode() throws InterruptedException {
@@ -75,7 +101,7 @@ public class DucksAuton extends LinearOpMode {
             sleep(300);
             tankDrive.brakeStop();
             //turn right
-            turn90Right();
+            spinToAngle(Math.PI);
             tankDrive.drive(1,1);
             sleep(450);
             tankDrive.brakeStop();
