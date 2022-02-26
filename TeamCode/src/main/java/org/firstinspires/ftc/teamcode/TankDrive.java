@@ -81,7 +81,7 @@ public class TankDrive {
     public int convertToTread(int num) {
         return (int) (num * 28 / (Math.PI * 0.7));
     } //no idea what the conversion factor actually is yet :(
-    
+
     public void moveRotiniUp(int pos) {
 
         int initPos=rotini.getCurrentPosition();

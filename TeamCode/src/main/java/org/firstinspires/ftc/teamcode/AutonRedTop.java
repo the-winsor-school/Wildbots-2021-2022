@@ -64,11 +64,11 @@ public class AutonRedTop extends LinearOpMode {
             tankDrive.driveADistance(27,0.5);
             //sleep(secToHubHoriz);
             tankDrive.brakeStop();
-            tankDrive.moveRotiniPos(1);
+            tankDrive.moveRotiniToAPosition(1);
             boxWheels.setPower(-1);
             sleep(1000);
             boxWheels.setPower(0);
-            tankDrive.moveRotiniPos(0);
+            tankDrive.moveRotiniToAPosition(0);
             tankDrive.driveADistance(30,-0.5);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
