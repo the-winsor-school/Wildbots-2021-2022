@@ -134,7 +134,7 @@ public class TankDrive {
     public void moveRotiniToAPosition(int num) {
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
-        if(convertToRotini(num)+initPos>initPos){
+        if(convertToRotini(num)+initPos>curPos){
             while(curPos-initPos>convertToRotini(num)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
@@ -143,7 +143,7 @@ public class TankDrive {
                 opMode.telemetry.update();
             }
         }
-        if(convertToRotini(num)+initPos<initPos){
+        if(convertToRotini(num)+initPos<curPos){
             while(curPos-initPos<convertToRotini(num)){
                 rotini.setPower(-0.5);
                 curPos=rotini.getCurrentPosition();
