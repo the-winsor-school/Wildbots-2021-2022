@@ -54,6 +54,8 @@ public class AutonRedTop extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            tankDrive.driveADistance(4,0.5);
+            tankDrive.brakeStop();
             tankDrive.spinToAngle(-Math.PI/2);
             tankDrive.driveADistance(18,0.5);
             //sleep(secToHubVert);
@@ -66,10 +68,11 @@ public class AutonRedTop extends LinearOpMode {
             boxWheels.setPosition(1);
             sleep(700);
             boxWheels.setPosition(0);
-            tankDrive.driveADistance(30,0.5);
+            moveRotiniToAPosition(0);
+            tankDrive.driveADistance(30,-0.5);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(-Math.PI/2);
-            tankDrive.driveADistance(40,0.5);
+            tankDrive.driveADistance(40,-0.5);
             tankDrive.brakeStop();
             duckSpinner.setPower(1);
             sleep(1500);
