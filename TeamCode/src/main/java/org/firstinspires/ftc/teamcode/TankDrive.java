@@ -81,36 +81,7 @@ public class TankDrive {
     public int convertToTread(int num) {
         return (int) (num * 28 / (Math.PI * 0.7));
     } //no idea what the conversion factor actually is yet :(
-
-    int rotiniLevel = 0;
-    public void moveRotiniPos(int level) {
-        opMode.telemetry.addData("level in fuction", level);
-        int distance = 0;
-        if (rotiniLevel > level) {
-            //moving down
-            if ((rotiniLevel - level) == 2) {
-                distance -= 12;
-            } else if ((rotiniLevel - level) == 1)  {
-                distance -= 6;
-            }
-            opMode.telemetry.addData("distance down", distance);
-            moveRotiniDown(distance);
-
-        } else if (rotiniLevel < level) {
-            //moving up
-            if (rotiniLevel == 0) {
-                distance += 3;
-            } else if ((level - rotiniLevel) == 2) {
-                distance += 12;
-            } else if ((level - rotiniLevel) == 1) {
-                distance += 6;
-            }
-            opMode.telemetry.addData("distance up", distance);
-            moveRotiniUp(distance);
-        }
-        opMode.telemetry.update();
-        rotiniLevel = level;
-    }
+    
     public void moveRotiniUp(int pos) {
 
         int initPos=rotini.getCurrentPosition();
