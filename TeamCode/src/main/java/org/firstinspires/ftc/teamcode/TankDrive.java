@@ -50,6 +50,7 @@ public class TankDrive {
         left.setDirection(DcMotor.Direction.REVERSE);
         right = hardwareMap.tryGet(DcMotor.class, "right");
         rotini = hardwareMap.get(DcMotor.class, "rotini");
+        rotini.setDirection(DcMotor.Direction.REVERSE);
         forceSensitiveResistor = hardwareMap.tryGet(AnalogInput.class, "Force Sensitive Resistor");
 
         //for imu set up
@@ -102,7 +103,7 @@ public class TankDrive {
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
         if(getRotiniHeight()>4){
-            while(curPos-initPos>convertToRotini(-4)){
+            while(curPos-initPos<convertToRotini(4)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
                 opMode.telemetry.addData("initial rotini", initPos);
@@ -130,20 +131,29 @@ public class TankDrive {
     }
 
     //i got tired of writing the same thing over again so this one will actually the target position to rotini numbers
-    public int moveRotiniToAPosition(int num) {
-        int target = 0;
-        switch (num) {
-            case 1:
-                target = convertToRotini(0);
-                break;
-            case 2:
-                target = convertToRotini(7);
-                break;
-            case 3:
-                target = convertToRotini(14);
-                break;
+    public void moveRotiniToAPosition(int num) {
+        int initPos=rotini.getCurrentPosition();
+        int curPos=rotini.getCurrentPosition();
+        if(convertToRotini(num)+initPos>initPos){
+            while(curPos-initPos>convertToRotini(num)){
+                rotini.setPower(0.5);
+                curPos=rotini.getCurrentPosition();
+                opMode.telemetry.addData("initial rotini", initPos);
+                opMode.telemetry.addData("rotini", curPos-initPos);
+                opMode.telemetry.update();
+            }
         }
-        return target;
+        if(convertToRotini(num)+initPos<initPos){
+            while(curPos-initPos<convertToRotini(num)){
+                rotini.setPower(-0.5);
+                curPos=rotini.getCurrentPosition();
+                opMode.telemetry.addData("initial rotini", initPos);
+                opMode.telemetry.addData("rotini", curPos-initPos);
+                opMode.telemetry.update();
+            }
+        }
+        rotini.setPower(0);
+        rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     //just so it exists so I can write pseudo code with it lol
