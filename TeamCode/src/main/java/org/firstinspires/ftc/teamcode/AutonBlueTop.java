@@ -59,37 +59,71 @@ public class AutonBlueTop extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            tankDrive.rotini.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.rotini.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            tankDrive.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
 
-            tankDrive.driveADistance(15, 0.7);
+            //going long across
+            tankDrive.driveADistance(13, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
 
-            tankDrive.driveADistance(4, 0.7);
+            //going to hub
+            tankDrive.driveADistance(1, 0.5);
             tankDrive.brakeStop();
 
-            tankDrive.moveRotiniToAPosition(7);
+            //deilvers freight
+            tankDrive.moveRotiniToAPosition(15);
             boxWheels.setPower(-1);
             sleep(1000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
 
-            tankDrive.driveADistance(7, -0.7);
+            //goes back
+            tankDrive.driveADistance(-21, -0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
 
-            tankDrive.driveADistance(20, -0.7);
+            //goes to carousel ish
+            tankDrive.driveADistance(-55, -0.8);
             tankDrive.brakeStop();
 
-            duckSpinner.setPower(1);
-            sleep(1000);
+            //aligns with carousel
+            tankDrive.drive(0,1);
+            sleep(30);
+            tankDrive.brakeStop();
+
+            //spins carousel
+            duckSpinner.setPower(0.75);
+            sleep(1800);
             duckSpinner.setPower(0);
 
+            //backs up
+            tankDrive.driveADistance(17, 0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(-Math.PI / 2);
+
+            //drives to park
+            tankDrive.driveADistance(10, 0.7);
+            tankDrive.brakeStop();
+
+            /*
+            //parks
             tankDrive.spinToAngle(0);
             tankDrive.driveADistance(8, 0.7);
             tankDrive.brakeStop();
+
+            //fully parks
+            tankDrive.drive(-0.5, -0.2);
+            sleep(700);
+            tankDrive.brakeStop();
+            */
+
+
             /*
             if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
                 tankDrive.rotini.setPower(0.5);

@@ -137,14 +137,14 @@ public class TankDrive {
         int curPos=rotini.getCurrentPosition();
         if(convertToRotini(num)>curPos){
             while(curPos<convertToRotini(num)){
-                rotini.setPower(0.5);
+                rotini.setPower(0.7);
                 curPos=rotini.getCurrentPosition();
                 opMode.telemetry.update();
             }
         }
         if(convertToRotini(num)<curPos){
             while(curPos>convertToRotini(num)){
-                rotini.setPower(-0.5);
+                rotini.setPower(-0.7);
                 curPos=rotini.getCurrentPosition();
             }
         }
@@ -167,14 +167,27 @@ public class TankDrive {
         int rightCurPos=right.getCurrentPosition();
         opMode.telemetry.addData("right init", rightInitPos);
         opMode.telemetry.update();
-        while(rightCurPos-rightInitPos<inchToTankTick(dist)){
-            right.setPower(motorPower);
-            left.setPower(motorPower);
-            opMode.telemetry.addData("right current", rightCurPos-rightInitPos);
-            opMode.telemetry.addData("goal", inchToTankTick(dist));
-            opMode.telemetry.update();
-            rightCurPos=right.getCurrentPosition();
+        if(inchToTankTick(dist)>0){
+            while(rightCurPos-rightInitPos<inchToTankTick(dist)){
+                right.setPower(motorPower);
+                left.setPower(motorPower);
+                opMode.telemetry.addData("right current", rightCurPos-rightInitPos);
+                opMode.telemetry.addData("goal", inchToTankTick(dist));
+                opMode.telemetry.update();
+                rightCurPos=right.getCurrentPosition();
+            }
         }
+        if(inchToTankTick(dist)<0){
+            while(rightCurPos-rightInitPos>inchToTankTick(dist)){
+                right.setPower(motorPower);
+                left.setPower(motorPower);
+                opMode.telemetry.addData("right current", rightCurPos-rightInitPos);
+                opMode.telemetry.addData("goal", inchToTankTick(dist));
+                opMode.telemetry.update();
+                rightCurPos=right.getCurrentPosition();
+            }
+        }
+
         right.setPower(0);
         left.setPower(0);
 
@@ -193,10 +206,10 @@ public class TankDrive {
         while (Math.abs(angle - getIMUAngle()) > .15) {
             if (angle > 0) {
                 //left.setPower(-0.5f);
-                right.setPower(0.5f);
+                right.setPower(0.7f);
             } else {
                 //right.setPower(-0.5f);
-                left.setPower(0.5f);
+                left.setPower(0.7f);
             }
             opMode.telemetry.update();
         }
