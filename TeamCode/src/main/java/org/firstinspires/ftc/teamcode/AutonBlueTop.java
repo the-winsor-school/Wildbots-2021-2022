@@ -61,26 +61,26 @@ public class AutonBlueTop extends LinearOpMode {
         if (opModeIsActive()) {
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI/2);
+            tankDrive.spinToAngle(Math.PI/2);
 
-            tankDrive.driveADistance(18, 0.7);
+            tankDrive.driveADistance(15, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
 
-            tankDrive.driveADistance(27, 0.7);
+            tankDrive.driveADistance(4, 0.7);
             tankDrive.brakeStop();
 
-            tankDrive.moveRotiniToAPosition(15);
+            tankDrive.moveRotiniToAPosition(7);
             boxWheels.setPower(-1);
             sleep(1000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
 
-            tankDrive.driveADistance(30, -0.7);
+            tankDrive.driveADistance(7, -0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI/2);
+            tankDrive.spinToAngle(Math.PI/2);
 
-            tankDrive.driveADistance(40, -0.7);
+            tankDrive.driveADistance(20, -0.7);
             tankDrive.brakeStop();
 
             duckSpinner.setPower(1);
@@ -88,7 +88,7 @@ public class AutonBlueTop extends LinearOpMode {
             duckSpinner.setPower(0);
 
             tankDrive.spinToAngle(0);
-            tankDrive.driveADistance(30, 0.7);
+            tankDrive.driveADistance(8, 0.7);
             tankDrive.brakeStop();
             /*
             if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
