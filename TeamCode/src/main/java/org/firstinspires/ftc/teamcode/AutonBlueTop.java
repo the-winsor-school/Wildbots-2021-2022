@@ -70,7 +70,7 @@ public class AutonBlueTop extends LinearOpMode {
             tankDrive.driveADistance(27, 0.7);
             tankDrive.brakeStop();
 
-            tankDrive.moveRotiniToAPosition(22);
+            tankDrive.moveRotiniToAPosition(15);
             boxWheels.setPower(-1);
             sleep(1000);
             boxWheels.setPower(0);
