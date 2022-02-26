@@ -126,13 +126,7 @@ public class AutonBlueTop extends LinearOpMode {
             }
 
              */
-            tankDrive.drive(-1,-1);
-            sleep(500);
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(Math.PI/2);
-            tankDrive.drive(1,1);
-            sleep(secToWarehouse);
-            tankDrive.brakeStop();
+            
 
             /*
             drivingLibrary.bevelDrive(0, -1, 0);
