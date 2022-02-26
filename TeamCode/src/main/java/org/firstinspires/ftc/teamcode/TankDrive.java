@@ -25,6 +25,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class TankDrive {
     // hardware variables
@@ -209,5 +210,7 @@ public class TankDrive {
         rotini.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rotini.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
+
+
 }
 

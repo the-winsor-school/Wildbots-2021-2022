@@ -100,6 +100,10 @@ public class TankTeleOp extends LinearOpMode {
                 // moves arm down
             }
 
+            if (gamepad1.b) {
+                tankDrive.brakeStop();
+            }
+
             /*
             if (gamepad2.dpad_left) {
                 cappingServo.setPosition(45);
@@ -113,19 +117,18 @@ public class TankTeleOp extends LinearOpMode {
             */
 
             if (gamepad2.left_bumper) {//spins carousel
-                // letter a
                 duckSpinner.setPower(-1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
                 // spins duck spinner
             }
 
             if (gamepad2.right_bumper) {//spins carousel
-                // letter a
                 duckSpinner.setPower(1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
                 // spins duck spinner
+            }
+
+            if (gamepad2.y) {//stops carousel
+                duckSpinner.setPower(0);
+                //stops duck spinning motor
             }
 /*
 
@@ -153,6 +156,7 @@ public class TankTeleOp extends LinearOpMode {
                 boxServo.setPower(0);
                 // moves one servo in one direction and the other in the other direction
             }
+
 
             if (gamepad2.dpad_left) { //moves box down
                 boxServo.setPower(-1);
