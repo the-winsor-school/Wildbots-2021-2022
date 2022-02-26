@@ -24,11 +24,13 @@ public class DucksAuton extends LinearOpMode {
     //public CRServo boxServo;
 
     //public Servo cappingServo;
-
+    /*
     public DcMotor leftIntakeSpinner;
     public DcMotor rightIntakeSpinner;
     public DcMotor frontIntakeSpinner;
     AnalogInput forceSensitiveResistor;
+
+     */
     private Orientation angles;
     private BNO055IMU imu; //gyroscope in rev hub
 
@@ -36,39 +38,6 @@ public class DucksAuton extends LinearOpMode {
 
     public DcMotor duckSpinner;
 
-    //initializing
-
-    public void turn90Right() {
-        TankDrive tankDrive= new TankDrive(this);
-        tankDrive.drive(0.5,-0.5);
-        sleep(1500);
-        tankDrive.brakeStop();
-    }
-    public void turn90Left() {
-        TankDrive tankDrive= new TankDrive(this);
-        tankDrive.drive(-0.5,0.5);
-        sleep(1500);
-        tankDrive.brakeStop();
-    }
-    public double getIMUAngle() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
-        return angles.firstAngle;
-    }
-    public void spinToAngle(double angle) {
-        double goalAngle = getIMUAngle() + angle;
-        while (Math.abs(angle - getIMUAngle()) > .15) {
-            if (angle > 0) {
-                tankDrive.left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                tankDrive.left.setPower(0.25f);
-            } else {
-                tankDrive.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                tankDrive.right.setPower(0.25f);
-            }
-            telemetry.update();
-        }
-        tankDrive.brakeStop();
-        //targetAngle = getIMUAngle();
-    }
     @Override
     public void runOpMode() throws InterruptedException {
 //        drivingLibrary = new DrivingLibrary(this);
@@ -78,14 +47,16 @@ public class DucksAuton extends LinearOpMode {
         //boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
+        /*
         leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
         rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
         frontIntakeSpinner = hardwareMap.get(DcMotor.class, "frontIntakeSpinner");
 
+         */
 
 
         double currentForce;
-        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
+        //forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
         boolean alreadyPrinted = false;
@@ -97,20 +68,56 @@ public class DucksAuton extends LinearOpMode {
 
         if (opModeIsActive()) {
             //camera
-            tankDrive.drive(1,1);
+            tankDrive.driveADistance(6,0.5);
+            tankDrive.brakeStop();
+            /*
+            //turn right
+            tankDrive.spinToAngle(Math.PI/2);
+            tankDrive.brakeStop();
+
+            //line up with alliance hub
+            tankDrive.drive(0.5,0.5);
+            sleep(600);
+            tankDrive.brakeStop();
+
+            //spin to face alliance hub
+            tankDrive.spinToAngle(0);
+            tankDrive.brakeStop();
+
+            //go up to alliance hub
+            tankDrive.drive(0.5,0.5);
+            sleep(600);
+            tankDrive.brakeStop();
+
+            //[insert outtake here]
+            sleep(700);
+
+            //go back slightly
+            tankDrive.drive(-0.5,-0.5);
             sleep(300);
             tankDrive.brakeStop();
-            //turn right
-            spinToAngle(Math.PI);
-            tankDrive.drive(1,1);
-            sleep(450);
+
+            //spin so the duck spinner is facing the back wall
+            tankDrive.spinToAngle(Math.PI/2);
             tankDrive.brakeStop();
-            turn90Left();
-            tankDrive.drive(1,1);
+
+            //go backwards towards wall
+            tankDrive.drive(-0.5,-0.5);
+            sleep(3000);
+            tankDrive.brakeStop();
+
+            tankDrive.spinToAngle(3*Math.PI/2);
+            tankDrive.brakeStop();
+
+            tankDrive.drive(-0.5, -0.5);
             sleep(700);
             tankDrive.brakeStop();
 
-            sleep(700);
+            tankDrive.drive(0.5, 0.5);
+            sleep(2000);
+            tankDrive.brakeStop();
+
+            /*
             //outake
             turn90Right();
             tankDrive.drive(-1,-1);
@@ -127,7 +134,7 @@ public class DucksAuton extends LinearOpMode {
             tankDrive.drive(1,1);
             sleep(500);
             tankDrive.brakeStop();
-
+        */
         }
     }
 }

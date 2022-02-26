@@ -20,20 +20,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-@TeleOp(name = "tick tank tread")
-public class HowManyTicksInATankTread extends LinearOpMode {
+@TeleOp(name = "rotiniwhydown")
+public class rotiniwhydown extends LinearOpMode {
     //private TankDrive tankDrive;
     public Orientation angles;
     private BNO055IMU imu; //gyroscope in rev hub
-    int leftInitPos;
-    int rightInitPos;
-    int leftCurPos;
-    int rightCurPos;
+    float curHeading;
 
     public DcMotor duckSpinner;
+    public DcMotor rotini;
     public DcMotor left;
     public DcMotor right;
 
+    int initPos;
+    int curPos;
     //private int encoderValues = 0;
     public void runOpMode() throws InterruptedException {
 
@@ -47,11 +47,12 @@ public class HowManyTicksInATankTread extends LinearOpMode {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
 
+        rotini=hardwareMap.tryGet(DcMotor.class, "rotini");
         left = hardwareMap.tryGet(DcMotor.class, "left");
         right = hardwareMap.tryGet(DcMotor.class, "right");
 
         boolean alreadyRun = false;
-        boolean gotInitPos=false;
+        boolean firstTime=true;
 
         //tankDrive = new TankDrive(this);
         telemetry.addData("status", "BAAAAAAAH initialized");
@@ -59,40 +60,24 @@ public class HowManyTicksInATankTread extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            if(!gotInitPos){
-                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftInitPos=left.getCurrentPosition();
-                rightInitPos=right.getCurrentPosition();
-                telemetry.addData("left init", leftInitPos);
-                telemetry.addData("right init", rightInitPos);
-                telemetry.update();
-                gotInitPos=true;
+            if (firstTime){
+                initPos=rotini.getCurrentPosition();
+                curPos=rotini.getCurrentPosition();
+                while(curPos-initPos<inToTick(4)){
+                    rotini.setPower(0.5);
+                    curPos=rotini.getCurrentPosition();
+                    telemetry.addData("initial rotini", initPos);
+                    telemetry.addData("rotini", curPos-initPos);
+                    telemetry.update();
+                }
+                rotini.setPower(0);
+                rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                firstTime=false;
             }
-            if (!alreadyRun) {
-                left.setPower(-0.5);
-                right.setPower(0.5);
-                sleep(1000);
-                left.setPower(0);
-                right.setPower(0);
-                left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-                leftCurPos=left.getCurrentPosition();
-                rightCurPos=right.getCurrentPosition();
-
-                telemetry.addData("left init", leftInitPos);
-                telemetry.addData("right init", rightInitPos);
-
-                telemetry.addData("left final", leftCurPos);
-                telemetry.addData("right init", rightCurPos);
-                telemetry.update();
-
-                alreadyRun = true;
-            }
-
-
         }
+    }
+    public int inToTick(int inches){
+        return inches*420;
     }
     public void spinToAngle(double angle){
         double goalAngle = getIMUAngle() + angle;
