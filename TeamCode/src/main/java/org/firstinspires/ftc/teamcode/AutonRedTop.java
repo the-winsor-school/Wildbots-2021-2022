@@ -17,33 +17,26 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "Auton Red Top")
 public class AutonRedTop extends LinearOpMode {
 
-    //Servo spinningArm;
-    OpenCvCamera webcam;
-    SamplePipeline pipeline;
-    public Servo boxServo;
-    public DcMotor duckSpinner;
+   public DcMotor duckSpinner;
+    public DcMotor boxWheels;
     TankDrive tankDrive;
 
-    int secToHubHoriz=1500;
-    int secToHubVert=1000;
-    int secDuckSpin=3000;
-    int secToWarehouse=3000;
     @Override
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        //boxServo = hardwareMap.get(Servo.class, "boxServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
 
         telemetry.addData("status", "initialized");
         telemetry.update();
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().
+        //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+       // webcam = OpenCvCameraFactory.getInstance().
 
-                createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+                //createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
-        webcam.setPipeline(pipeline);
+        //webcam.setPipeline(pipeline);
 
-
+/*
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
@@ -56,81 +49,37 @@ public class AutonRedTop extends LinearOpMode {
             }
         });
 
+ */
+
         waitForStart();
 
         if (opModeIsActive()) {
+            tankDrive.driveADistance(4,0.5);
+            tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
-            tankDrive.drive(1,1);
-            sleep(secToHubVert);
+            tankDrive.driveADistance(18,0.5);
+            //sleep(secToHubVert);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
-            tankDrive.drive(1,1);
-            sleep(secToHubHoriz);
+            tankDrive.driveADistance(27,0.5);
+            //sleep(secToHubHoriz);
             tankDrive.brakeStop();
-            if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
-                tankDrive.rotini.setPower(0.5);
-                sleep(1000);
-                tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
-                sleep(700);
-                boxServo.setPosition(0);
-                sleep(700);
-                tankDrive.rotini.setPower(-0.5);
-                sleep(1000);
-            }
-            else if (pipeline.getLocation() == SamplePipeline.LOCATION.MIDDLE) {
-                tankDrive.rotini.setPower(0.5);
-                sleep(1500);
-                tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
-                sleep(700);
-                boxServo.setPosition(0);
-                sleep(700);
-                tankDrive.rotini.setPower(-0.5);
-                sleep(1500);
-            }
-            else {
-                tankDrive.rotini.setPower(0.5);
-                sleep(1500);
-                tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
-                sleep(700);
-                boxServo.setPosition(0);
-                sleep(700);
-                tankDrive.rotini.setPower(-0.5);
-                sleep(1500);
-            }
-            tankDrive.drive(-1,-1);
-            sleep(500);
+            tankDrive.moveRotiniPos(1);
+            boxWheels.setPower(-1);
+            sleep(1000);
+            boxWheels.setPower(0);
+            tankDrive.moveRotiniPos(0);
+            tankDrive.driveADistance(30,-0.5);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI/2);
-            tankDrive.drive(1,1);
-            sleep(secToWarehouse);
+            tankDrive.spinToAngle(Math.PI/2);
+            tankDrive.driveADistance(40,-0.5);
             tankDrive.brakeStop();
-            /*
-            drivingLibrary.bevelDrive(0, -1, 0);
-            sleep(500);
-            drivingLibrary.brakeStop();
-            //spin carousel
-            drivingLibrary.spinToAngle((Math.PI * 25) / 18);
-            sleep(1000);
-            drivingLibrary.brakeStop();
-            drivingLibrary.bevelDrive(0, -1, 0);
-            sleep(3000);
-            drivingLibrary.brakeStop();
-            drivingLibrary.spinToAngle(Math.PI/4);
-            sleep(1000);
-            drivingLibrary.brakeStop();
-            drivingLibrary.bevelDrive(0, -1, 0);
-            sleep(2000);
-            drivingLibrary.brakeStop();
-            drivingLibrary.spinToAngle(Math.PI/2);
-            sleep(1000);
-            drivingLibrary.brakeStop();
-            drivingLibrary.bevelDrive(0, -1, 0);
-            sleep(2000);
-            drivingLibrary.brakeStop();
-            */
+            duckSpinner.setPower(1);
+            sleep(1500);
+            duckSpinner.setPower(0);
+            tankDrive.spinToAngle(0);
+            tankDrive.driveADistance(30,0.5);
+            tankDrive.brakeStop();
         }
     }
 }

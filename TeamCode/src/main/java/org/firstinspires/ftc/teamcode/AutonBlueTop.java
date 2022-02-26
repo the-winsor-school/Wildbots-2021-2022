@@ -19,25 +19,22 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class AutonBlueTop extends LinearOpMode {
 
     //Servo spinningArm;
-    OpenCvCamera webcam;
+    /*OpenCvCamera webcam;
     SamplePipeline pipeline;
     public Servo boxServo;
+     */
     public DcMotor duckSpinner;
+    public DcMotor boxWheels;
     TankDrive tankDrive;
-
-    int secToHubHoriz=1500;
-    int secToHubVert=1000;
-    int secDuckSpin=3000;
-    int secToWarehouse=3000;
 
     @Override
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-
+        boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         telemetry.addData("status", "initialized");
         telemetry.update();
+        /*
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().
 
@@ -57,18 +54,43 @@ public class AutonBlueTop extends LinearOpMode {
 
             }
         });
+         */
 
         waitForStart();
 
         if (opModeIsActive()) {
+            tankDrive.driveADistance(6, 0.7);
+            tankDrive.brakeStop();
             tankDrive.spinToAngle(-Math.PI/2);
-            tankDrive.drive(1,1);
-            sleep(secToHubVert);
+
+            tankDrive.driveADistance(18, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
-            tankDrive.drive(1,1);
-            sleep(secToHubHoriz);
+
+            tankDrive.driveADistance(27, 0.7);
             tankDrive.brakeStop();
+
+            tankDrive.moveRotiniToAPosition(15);
+            boxWheels.setPower(-1);
+            sleep(1000);
+            boxWheels.setPower(0);
+            tankDrive.moveRotiniToAPosition(0);
+
+            tankDrive.driveADistance(30, -0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(-Math.PI/2);
+
+            tankDrive.driveADistance(40, -0.7);
+            tankDrive.brakeStop();
+
+            duckSpinner.setPower(1);
+            sleep(1000);
+            duckSpinner.setPower(0);
+
+            tankDrive.spinToAngle(0);
+            tankDrive.driveADistance(30, 0.7);
+            tankDrive.brakeStop();
+            /*
             if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1000);
@@ -102,13 +124,9 @@ public class AutonBlueTop extends LinearOpMode {
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
             }
-            tankDrive.drive(-1,-1);
-            sleep(500);
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(Math.PI/2);
-            tankDrive.drive(1,1);
-            sleep(secToWarehouse);
-            tankDrive.brakeStop();
+
+             */
+
 
             /*
             drivingLibrary.bevelDrive(0, -1, 0);

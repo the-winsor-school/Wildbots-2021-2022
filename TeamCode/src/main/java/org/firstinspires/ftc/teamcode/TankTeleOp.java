@@ -19,19 +19,12 @@ import org.firstinspires.ftc.teamcode.TankDrive;
 public class TankTeleOp extends LinearOpMode {
 
     private TankDrive tankDrive;
-
-
-    public CRServo boxServo;
-
     //public Servo cappingServo;
 
-    public DcMotor leftIntakeSpinner;
-    public DcMotor rightIntakeSpinner;
-    public DcMotor frontIntakeSpinner;
+    public DcMotor boxWheels;
+    public DcMotor rotini;
+
     AnalogInput forceSensitiveResistor;
-
-    public int servoPosition;
-
     public DcMotor duckSpinner;
 
 
@@ -40,12 +33,11 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
-        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
-        frontIntakeSpinner = hardwareMap.get(DcMotor.class, "frontIntakeSpinner");
+        boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
+        rotini = hardwareMap.get(DcMotor.class, "rotini");
+
 
         double currentForce;
         forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
@@ -56,7 +48,6 @@ public class TankTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            servoPosition = 10;
             if (!alreadyPrinted) {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
@@ -68,6 +59,43 @@ public class TankTeleOp extends LinearOpMode {
             // use joysticks for Tankalicious teleop
             telemetry.update();
 
+
+            if (gamepad1.b) {
+                tankDrive.brakeStop();
+            }
+
+            //Mech Controller
+
+            //Carousel
+            if (gamepad2.left_bumper) {//spins carousel
+                duckSpinner.setPower(-1);
+                // spins duck spinner
+            }
+
+            if (gamepad2.right_bumper) {//spins carousel
+                duckSpinner.setPower(1);
+                // spins duck spinner
+            }
+
+            if (gamepad2.x) {//stops carousel
+                duckSpinner.setPower(0);
+                //stops duck spinning motor
+            }
+
+            //Intake Outtake
+            if(gamepad2.dpad_left) {//intake
+                boxWheels.setPower(-1);
+            }
+
+            if(gamepad2.dpad_right) {//outake
+                boxWheels.setPower(1);
+            }
+
+            if(gamepad2.dpad_up) {
+                boxWheels.setPower(0);
+            }
+
+            //Arm
             /*
             if (rotiniTarget > tankDrive.getRotiniHeight()) {
                 tankDrive.rotini.setPower(-1);
@@ -80,8 +108,24 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
-            //LOSING MY MIND HERES WHAT MAKES ROTINI GO UP
+            rotini.setPower(gamepad2.left_stick_y);
 
+            if (gamepad2.y) {
+                tankDrive.moveRotiniPos(3);
+            }
+
+            if (gamepad2.b) {
+                tankDrive.moveRotiniPos(2);
+            }
+
+            if (gamepad2.a) {
+                tankDrive.moveRotiniPos(1);
+            }
+
+            //:) from Juila Reynolds
+
+
+/*
             if (gamepad2.dpad_up) {
                 // up arrow
                 tankDrive.rotini.setPower(0.5);
@@ -99,10 +143,9 @@ public class TankTeleOp extends LinearOpMode {
                 tankDrive.rotini.setPower(0);
                 // moves arm down
             }
+            */
 
-            if (gamepad1.b) {
-                tankDrive.brakeStop();
-            }
+
 
             /*
             if (gamepad2.dpad_left) {
@@ -116,64 +159,7 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
-            if (gamepad2.left_bumper) {//spins carousel
-                // letter a
-                duckSpinner.setPower(-1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
-                // spins duck spinner
-            }
 
-            if (gamepad2.right_bumper) {//spins carousel
-                // letter a
-                duckSpinner.setPower(1);
-                sleep(2000); //CHANGE for amount of time to spin duck off
-                duckSpinner.setPower(0);
-                // spins duck spinner
-            }
-/*
-
-            if (gamepad2.dpad_right) { //moves box servos up
-                servoPosition += 1;
-                boxServo.setPosition(servoPosition);
-                telemetry.addData("right", servoPosition);
-                // moves one servo in one direction and the other in the other direction
-            }
-
-            if (gamepad2.dpad_left) { //moves box down
-                servoPosition -= 1;
-                boxServo.setPosition(servoPosition);
-                telemetry.addData("left", servoPosition);
-                // outtake
-            }
-            */
-
-
-            boxServo.setPower(gamepad2.right_stick_y);
-
-            if (gamepad2.dpad_right) { //moves box servos up
-                boxServo.setPower(1);
-                sleep(50);
-                boxServo.setPower(0);
-                // moves one servo in one direction and the other in the other direction
-            }
-
-            if (gamepad2.dpad_left) { //moves box down
-                boxServo.setPower(-1);
-                sleep(50);
-                boxServo.setPower(0);
-                // outtake
-            }
-
-            if (gamepad2.b) {//spins intake wheels
-                leftIntakeSpinner.setPower(1);
-                rightIntakeSpinner.setPower(-1);
-                frontIntakeSpinner.setPower(1);
-                sleep(1000);
-                leftIntakeSpinner.setPower(0);
-                rightIntakeSpinner.setPower(0);
-                frontIntakeSpinner.setPower(0);
-            }
             if (currentForce > 0.113 && currentForce < 0.169) {
                 telemetry.addData("Box Weight:", "Light");
                 telemetry.update();

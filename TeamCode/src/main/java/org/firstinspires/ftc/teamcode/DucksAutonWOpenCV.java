@@ -1,10 +1,14 @@
-
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+//webcam stuff
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -17,18 +21,57 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Disabled
-@TeleOp
-public class opencvexample extends LinearOpMode {
-    OpenCvCamera webcam;
-    SamplePipeline pipeline;
+import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Autonomous(name = "DucksAutonWOpenCV")
+public class DucksAutonWOpenCV extends LinearOpMode {
+
+    //webcam stuff
+    OpenCvCamera webcam;
+    opencvexample.SamplePipeline pipeline;
+
+
+    //private DrivingLibrary drivingLibrary;
+    private TankDrive tankDrive;
+
+    //public CRServo boxServo;
+
+    //public Servo cappingServo;
+
+    public DcMotor leftIntakeSpinner;
+    public DcMotor rightIntakeSpinner;
+    public DcMotor frontIntakeSpinner;
+    AnalogInput forceSensitiveResistor;
+
+    public int servoPosition;
+
+    public DcMotor duckSpinner;
+
+    //initializing
+
+    public void turn90Right() {
+        TankDrive tankDrive= new TankDrive(this);
+        tankDrive.drive(0.5,-0.5);
+        sleep(1500);
+        tankDrive.brakeStop();
+    }
+    public void turn90Left() {
+        TankDrive tankDrive= new TankDrive(this);
+        tankDrive.drive(-0.5,0.5);
+        sleep(1500);
+        tankDrive.brakeStop();
+    }
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
+//        drivingLibrary = new DrivingLibrary(this);
+//        drivingLibrary.setSpeed(1.0);
+
+        //webcam stuff
+        DucksAutonWOpenCV.SamplePipeline samplePipeline = new DucksAutonWOpenCV.SamplePipeline();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
-        pipeline = new SamplePipeline();
+        pipeline = new opencvexample.SamplePipeline();
         webcam.setPipeline(pipeline);
 
 
@@ -46,23 +89,85 @@ public class opencvexample extends LinearOpMode {
 
             }
         });
+
+
+        TankDrive tankDrive= new TankDrive(this);
+        //boxServo = hardwareMap.get(CRServo.class, "boxServo");
+        //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
+        duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
+        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
+        rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
+        frontIntakeSpinner = hardwareMap.get(DcMotor.class, "frontIntakeSpinner");
+
+
+
+        double currentForce;
+        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
+        telemetry.addData("status", "BAAAAAAAH initialized");
+        telemetry.update();
+        boolean alreadyPrinted = false;
+        int rotiniTarget = 0;
+
+        //spinningArm = hardwareMap.get(Servo.class, "Carousel Spinning Arm");
+
         waitForStart();
 
-        while (opModeIsActive()) {
-            telemetry.addData("Type", pipeline.getType());
-            //telemetry.addData(pipeline.getAverage()); //was broken idk sdahfhhasd
-//            telemetry.addData("Average #2", pipeline.getAverage());
-//            telemetry.addData("Average #3", pipeline.getAverage());
-           // telemetry.addData("Location", pipeline.getLocation());
-            telemetry.addData("Average", pipeline.getAverage());
-            //telemetry.addData("Average #2", pipeline.getAverage());
-            //telemetry.addData("Average #3", pipeline.getAverage());
-            telemetry.addData("Location", pipeline.getLocation());
-            telemetry.update();
-            sleep(50);
+        if (opModeIsActive()) {
+            //camera reads value
+            if (samplePipeline.average1 > samplePipeline.THRESHOLD2) {
+                samplePipeline.location = SamplePipeline.LOCATION.LEFT;
+            }
+             if (samplePipeline.average2 > samplePipeline.THRESHOLD2) {
+                 samplePipeline.location = SamplePipeline.LOCATION.MIDDLE;
+            }
+             if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
+                 samplePipeline.location = SamplePipeline.LOCATION.RIGHT;
+             }
+            tankDrive.drive(1,1);
+            sleep(300);
+            tankDrive.brakeStop();
+            //turn right
+            turn90Right();
+            tankDrive.drive(1,1);
+            sleep(450);
+            tankDrive.brakeStop();
+            turn90Left();
+            tankDrive.drive(1,1);
+            sleep(700);
+            tankDrive.brakeStop();
+
+            sleep(700);
+            //outake:
+            // if location = left, drops freight in correct left
+            // else if middle, middle
+            // else, top
+
+            /*if (samplePipeline.location = SamplePipeline.LOCATION.LEFT){
+                tankDrive.rotini.setPower(0.5);
+                tankDrive.getRotiniHeight();
+
+
+            }*/
+            turn90Right();
+            tankDrive.drive(-1,-1);
+            sleep(2000);
+            tankDrive.brakeStop();
+            turn90Left();
+            tankDrive.drive(1,1);
+            sleep(500);
+            tankDrive.brakeStop();
+            sleep(500);
+            duckSpinner.setPower(1);
+            sleep(1000);
+            //spin ducks
+            tankDrive.drive(1,1);
+            sleep(500);
+            tankDrive.brakeStop();
+
         }
     }
 
+    //webcam stuff
     public static class SamplePipeline extends OpenCvPipeline {
         private static final Scalar BLUE = new Scalar(0, 0, 255);
 
@@ -78,7 +183,7 @@ public class opencvexample extends LinearOpMode {
         //region 3
         Point topLeft3 = new Point(250, 50);
         Point bottomRight3 = new Point(300, 100);
-//mat = matrix
+        //mat = matrix
         Mat region1_Cb;
         Mat region2_Cb;
         Mat region3_Cb;
@@ -90,6 +195,7 @@ public class opencvexample extends LinearOpMode {
         private volatile int average3;
         private volatile TYPE type = TYPE.BALL;
         private volatile LOCATION location;
+        private volatile LOCATION locations;
 
         private void inputToCb(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
@@ -116,16 +222,7 @@ public class opencvexample extends LinearOpMode {
             Imgproc.rectangle(input, topLeft2, bottomRight2, BLUE, 2);
             Imgproc.rectangle(input, topLeft3, bottomRight3, BLUE, 2);
 
-//            if (average1 < THRESHOLD1) {
-//                type = TYPE.CUBE;
-//            }
-//            else if (average1 > THRESHOLD1 && average1 < THRESHOLD2) {
-//                type = TYPE.BALL;
-//            }
-//            else {
-//                type = TYPE.BEZ;
-//            }
-            if (average1 > THRESHOLD2) {
+            /*if (average1 > THRESHOLD2) {
                 location = LOCATION.LEFT;
             }
             if (average2 > THRESHOLD2) {
@@ -133,8 +230,7 @@ public class opencvexample extends LinearOpMode {
             }
             if (average3 > THRESHOLD2) {
                 location = LOCATION.RIGHT;
-            }
-
+            }*/
 
             return input;
         }
@@ -142,7 +238,6 @@ public class opencvexample extends LinearOpMode {
         public TYPE getType() {
             return type;
         }
-
         public String getAverage() {
             return String.format("average #1: %d \n average #2: %d \n average #3: %d", average1, average2, average3);
             // %d: d means int; %d will act as a variable that the variable (average1 for the first %d) listed later will replace)
@@ -150,12 +245,13 @@ public class opencvexample extends LinearOpMode {
         public String getLocation() {
             return String.format("Location: ", location);
         }
-
         public enum TYPE { //enum = variable with set output values
             BALL, CUBE, BEZ //bez for embezzlemnet (aka the team object)
         }
         public enum LOCATION {
             LEFT, MIDDLE, RIGHT
         }
+
     }
+
 }
