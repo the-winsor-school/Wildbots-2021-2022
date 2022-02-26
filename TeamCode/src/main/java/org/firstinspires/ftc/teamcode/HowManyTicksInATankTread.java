@@ -20,6 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+@Disabled
 @TeleOp(name = "tick tank tread")
 public class HowManyTicksInATankTread extends LinearOpMode {
     //private TankDrive tankDrive;

@@ -82,11 +82,37 @@ public class TankDrive {
         return (int) (num * 28 / (Math.PI * 0.7));
     } //no idea what the conversion factor actually is yet :(
 
-    public void moveRotiniUp() {
+    int rotiniLevel = 0;
+    public void moveRotiniPos(int level) {
+        int distance = 0;
+        if (rotiniLevel > level) {
+            //moving down
+            if ((rotiniLevel - level) == 2) {
+                distance -= 12;
+            } else if ((rotiniLevel - level) == 1)  {
+                distance -= 6;
+            }
+            moveRotiniDown(distance);
+
+        } else if (rotiniLevel < level) {
+            //moving up
+            if (rotiniLevel == 0) {
+                distance += 3;
+            } else if ((level - rotiniLevel) == 2) {
+                distance += 12;
+            } else if ((level - rotiniLevel) == 1) {
+                distance += 6;
+            }
+            moveRotiniUp(distance);
+        }
+        rotiniLevel = level;
+    }
+    public void moveRotiniUp(int pos) {
+
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
         if(getRotiniHeight()<12){
-            while(curPos-initPos>convertToRotini(-4)){
+            while(curPos-initPos>convertToRotini(pos)){
                 rotini.setPower(-0.5);
                 curPos=rotini.getCurrentPosition();
                 opMode.telemetry.addData("initial rotini", initPos);
@@ -99,11 +125,11 @@ public class TankDrive {
     }
 
     //move the rotini down
-    public void moveRotiniDown() {
+    public void moveRotiniDown(int pos) {
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
         if(getRotiniHeight()>4){
-            while(curPos-initPos<convertToRotini(4)){
+            while(curPos-initPos<convertToRotini(pos)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
                 opMode.telemetry.addData("initial rotini", initPos);
