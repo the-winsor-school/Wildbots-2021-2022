@@ -19,15 +19,11 @@ public class AutonBlueBottom extends LinearOpMode {
 
 
     //Servo spinningArm;
-    OpenCvCamera webcam;
-    SamplePipeline pipeline;
-    public Servo boxServo;
+    //OpenCvCamera webcam;
+    //SamplePipeline pipeline;
+    public DcMotor boxWheels;
     public DcMotor duckSpinner;
     TankDrive tankDrive;
-
-    int secToCarousel=1500;
-    int secToHub=1000;
-    int secDuckSpin=3000;
 
     //initializing
     @Override
@@ -35,7 +31,7 @@ public class AutonBlueBottom extends LinearOpMode {
 
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         telemetry.addData("status", "initialized");
         telemetry.update();
@@ -81,26 +77,32 @@ public class AutonBlueBottom extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-                tankDrive.spinToAngle(-Math.PI/2);
-                //go to the carousel
-                tankDrive.drive(1,1);
-                sleep(secToCarousel);
+            if (opModeIsActive()) {
+                tankDrive.driveADistance(6, 0.7);
                 tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
 
-                //spin carousel
-                duckSpinner.setPower(1);
-                sleep(secDuckSpin);
-                duckSpinner.setPower(0);
-
-                //go to the alliance hub?
-                tankDrive.drive(-1,-1);
-                sleep(secToCarousel*2);
+                tankDrive.driveADistance(18, 0.7);
                 tankDrive.brakeStop();
-
                 tankDrive.spinToAngle(0);
-                tankDrive.drive(1, 1);
-                sleep(secToHub);
+
+                tankDrive.driveADistance(27, 0.7);
                 tankDrive.brakeStop();
+
+                tankDrive.moveRotiniToAPosition(22);
+                boxWheels.setPower(-1);
+                sleep(1000);
+                boxWheels.setPower(0);
+                tankDrive.moveRotiniToAPosition(0);
+
+                tankDrive.driveADistance(20, -0.7);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
+
+                tankDrive.driveADistance(40, -0.7);
+                tankDrive.brakeStop();
+
+
 
                 /*
             if (pipeline.getLocation() == LOCATION.LEFT) {
@@ -136,23 +138,9 @@ public class AutonBlueBottom extends LinearOpMode {
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
                  */
-            //go to parking spot
-            tankDrive.drive(-1, -1);
-            sleep(secToHub);
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI/2);
-            tankDrive.drive(-1, -1);
-            sleep(secToCarousel*2);
-            //should be back at carousel
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(0);
-            tankDrive.drive(1,1);
-            sleep(1000);
-            tankDrive.brakeStop();
+                //go to parking spot
 
             }
-
-
 
                 /*
                 tankDrive.spinToAngle((Math.PI * 25) / 18);
@@ -226,6 +214,6 @@ public class AutonBlueBottom extends LinearOpMode {
             */
 
 
-
         }
     }
+}
