@@ -22,9 +22,9 @@ public class TankTeleOp extends LinearOpMode {
     //public Servo cappingServo;
 
     public DcMotor boxWheels;
-    public DcMotor rotini;
+    //public DcMotor rotini;
 
-    AnalogInput forceSensitiveResistor;
+    //AnalogInput forceSensitiveResistor;
     public DcMotor duckSpinner;
 
 
@@ -36,11 +36,11 @@ public class TankTeleOp extends LinearOpMode {
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
-        rotini = hardwareMap.get(DcMotor.class, "rotini");
+        //rotini = hardwareMap.get(DcMotor.class, "rotini");
 
 
         double currentForce;
-        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
+        //forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
         boolean alreadyPrinted = false;
@@ -52,7 +52,7 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
             }
-            currentForce = forceSensitiveResistor.getVoltage();
+            currentForce = tankDrive.forceSensitiveResistor.getVoltage();
             //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             //telemetry.addData("rotini", "target height =" + rotiniTarget);
             tankDrive.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
@@ -83,11 +83,11 @@ public class TankTeleOp extends LinearOpMode {
             }
 
             //Intake Outtake
-            if(gamepad2.dpad_left) {//intake
+            if(gamepad2.dpad_left) {//outake
                 boxWheels.setPower(-1);
             }
 
-            if(gamepad2.dpad_right) {//outake
+            if(gamepad2.dpad_right) {//intake
                 boxWheels.setPower(1);
             }
 
@@ -98,7 +98,7 @@ public class TankTeleOp extends LinearOpMode {
             //Arm
             /*
             if (rotiniTarget > tankDrive.getRotiniHeight()) {
-                tankDrive.rotini.setPower(-1);
+               43553434r5454 tankDrive.rotini.setPower(-1);
                 telemetry.addData("status", "raising rotini");
             } else if (rotiniTarget < tankDrive.getRotiniHeight()) {
                 tankDrive.rotini.setPower(1);
@@ -108,18 +108,27 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
-            rotini.setPower(gamepad2.left_stick_y);
+            tankDrive.rotini.setPower(-gamepad2.left_stick_y);
 
             if (gamepad2.y) {
-                tankDrive.moveRotiniPos(3);
+                tankDrive.moveRotiniToAPosition(15);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
             }
 
             if (gamepad2.b) {
-                tankDrive.moveRotiniPos(2);
+                tankDrive.moveRotiniToAPosition(9);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
             }
 
             if (gamepad2.a) {
-                tankDrive.moveRotiniPos(1);
+                tankDrive.moveRotiniToAPosition(3);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
             }
 
             //:) from Juila Reynolds

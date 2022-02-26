@@ -51,7 +51,7 @@ public class TankDrive {
         right = hardwareMap.tryGet(DcMotor.class, "right");
         rotini = hardwareMap.get(DcMotor.class, "rotini");
         rotini.setDirection(DcMotor.Direction.REVERSE);
-        forceSensitiveResistor = hardwareMap.tryGet(AnalogInput.class, "Force Sensitive Resistor");
+        forceSensitiveResistor = hardwareMap.tryGet(AnalogInput.class, "FSR");
 
         //for imu set up
         imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -66,8 +66,8 @@ public class TankDrive {
     }
 
     public void drive(double l, double r) {
-        left.setPower(l);
-        right.setPower(r);
+        left.setPower(-l);
+        right.setPower(-r);
     }
 
     public double getRotiniHeight() {
@@ -81,37 +81,12 @@ public class TankDrive {
     public int convertToTread(int num) {
         return (int) (num * 28 / (Math.PI * 0.7));
     } //no idea what the conversion factor actually is yet :(
-
-    int rotiniLevel = 0;
-    public void moveRotiniPos(int level) {
-        int distance = 0;
-        if (rotiniLevel > level) {
-            //moving down
-            if ((rotiniLevel - level) == 2) {
-                distance -= 12;
-            } else if ((rotiniLevel - level) == 1)  {
-                distance -= 6;
-            }
-            moveRotiniDown(distance);
-
-        } else if (rotiniLevel < level) {
-            //moving up
-            if (rotiniLevel == 0) {
-                distance += 3;
-            } else if ((level - rotiniLevel) == 2) {
-                distance += 12;
-            } else if ((level - rotiniLevel) == 1) {
-                distance += 6;
-            }
-            moveRotiniUp(distance);
-        }
-        rotiniLevel = level;
-    }
+    
     public void moveRotiniUp(int pos) {
 
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
-        if(getRotiniHeight()<12){
+        //if(getRotiniHeight()<12){
             while(curPos-initPos>convertToRotini(pos)){
                 rotini.setPower(-0.5);
                 curPos=rotini.getCurrentPosition();
@@ -121,14 +96,14 @@ public class TankDrive {
             }
             rotini.setPower(0);
             rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
+        //}
     }
 
     //move the rotini down
     public void moveRotiniDown(int pos) {
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
-        if(getRotiniHeight()>4){
+        //if(getRotiniHeight()>4){
             while(curPos-initPos<convertToRotini(pos)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
@@ -138,7 +113,7 @@ public class TankDrive {
             }
             rotini.setPower(0);
             rotini.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
+        //}
     }
 
     //theoretically could be used to measure the weight and automatically move rotini height, idk if that's what we want yet though
@@ -158,24 +133,19 @@ public class TankDrive {
 
     //i got tired of writing the same thing over again so this one will actually the target position to rotini numbers
     public void moveRotiniToAPosition(int num) {
-        int initPos=rotini.getCurrentPosition();
+        //int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
-        if(convertToRotini(num)+initPos>curPos){
-            while(curPos-initPos>convertToRotini(num)){
+        if(convertToRotini(num)>curPos){
+            while(curPos<convertToRotini(num)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
-                opMode.telemetry.addData("initial rotini", initPos);
-                opMode.telemetry.addData("rotini", curPos-initPos);
                 opMode.telemetry.update();
             }
         }
-        if(convertToRotini(num)+initPos<curPos){
-            while(curPos-initPos<convertToRotini(num)){
+        if(convertToRotini(num)<curPos){
+            while(curPos>convertToRotini(num)){
                 rotini.setPower(-0.5);
                 curPos=rotini.getCurrentPosition();
-                opMode.telemetry.addData("initial rotini", initPos);
-                opMode.telemetry.addData("rotini", curPos-initPos);
-                opMode.telemetry.update();
             }
         }
         rotini.setPower(0);
