@@ -41,7 +41,6 @@ public class AutonBlueBottom extends LinearOpMode {
         //telemetry.update();
 
 
-        //spinningArm = hardwareMap.get(Servo.class, "Carousel Spinning Arm");
 
         /*
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
