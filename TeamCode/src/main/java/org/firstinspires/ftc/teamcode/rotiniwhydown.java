@@ -21,6 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 @TeleOp(name = "rotiniwhydown")
+@Disabled
 public class rotiniwhydown extends LinearOpMode {
     //private TankDrive tankDrive;
     public Orientation angles;

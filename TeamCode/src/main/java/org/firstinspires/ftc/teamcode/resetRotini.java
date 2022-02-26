@@ -21,6 +21,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 @TeleOp(name = "reset rotini but it doesn't work yet")
+@Disabled
 public class resetRotini extends LinearOpMode {
     //private TankDrive tankDrive;
     public Orientation angles;
