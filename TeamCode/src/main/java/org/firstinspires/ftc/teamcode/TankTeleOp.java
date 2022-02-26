@@ -147,7 +147,7 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
-
+/*
             boxServo.setPower(gamepad2.right_stick_y);
 
             if (gamepad2.dpad_right) { //moves box servos up
@@ -165,6 +165,8 @@ public class TankTeleOp extends LinearOpMode {
                 // outtake
             }
 
+
+
             if (gamepad2.b) {//spins intake wheels
                 leftIntakeSpinner.setPower(1);
                 rightIntakeSpinner.setPower(-1);
@@ -174,6 +176,8 @@ public class TankTeleOp extends LinearOpMode {
                 rightIntakeSpinner.setPower(0);
                 frontIntakeSpinner.setPower(0);
             }
+
+ */
             if (currentForce > 0.113 && currentForce < 0.169) {
                 telemetry.addData("Box Weight:", "Light");
                 telemetry.update();
