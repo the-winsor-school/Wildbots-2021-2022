@@ -111,15 +111,15 @@ public class TankTeleOp extends LinearOpMode {
             rotini.setPower(gamepad2.left_stick_y);
 
             if (gamepad2.y) {
-                moveRotiniPos(3);
+                tankDrive.moveRotiniPos(3);
             }
 
             if (gamepad2.b) {
-                moveRotiniPos(2);
+                tankDrive.moveRotiniPos(2);
             }
 
             if (gamepad2.a) {
-                moveRotiniPos(1);
+                tankDrive.moveRotiniPos(1);
             }
 
             //:) from Juila Reynolds
