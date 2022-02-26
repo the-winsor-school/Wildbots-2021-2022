@@ -33,6 +33,7 @@ public class LiftieTeleOp extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
+
         barcode = hardwareMap.get(Rev2mDistanceSensor.class, "barcode");
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
@@ -45,39 +46,23 @@ public class LiftieTeleOp extends LinearOpMode {
 
         waitForStart();
 
+
+
         while (opModeIsActive()) {
             //driving
             drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
-
+            arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             // switching braking modes
             if (gamepad1.b) {
                 drivingMode++;
                 drivingMode %= DrivingMode.values().length;
                 drivingLibrary.setMode(drivingMode);
             }
-
-            //lift the arm
-//            if(gamepad2.dpad_up) { //move up one level
-//                arm.setPower(0.5);
-//                sleep(100);
-//                arm.setPower(0);
-//                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//            }
-
             //making the arm go down
             arm.setPower((gamepad2.left_stick_y) / 2);
 
-//            if(gamepad2.dpad_down) {
-//                arm.setPower(-0.5);
-//                sleep(100);
-//                arm.setPower(0);
-//                arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//            }
-
             left.setPower(gamepad2.right_stick_x);
             right.setPower(-gamepad2.right_stick_x);
-
-            //adjust the angle of the intake box
 
             //intake
             if(gamepad2.b) {
