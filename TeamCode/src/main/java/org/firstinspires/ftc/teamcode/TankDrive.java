@@ -137,7 +137,7 @@ public class TankDrive {
         int curPos=rotini.getCurrentPosition();
         if(convertToRotini(num)>curPos){
             while(curPos<convertToRotini(num)){
-                rotini.setPower(0.7);
+                rotini.setPower(1);
                 curPos=rotini.getCurrentPosition();
                 opMode.telemetry.update();
             }
