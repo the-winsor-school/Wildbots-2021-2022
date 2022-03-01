@@ -112,22 +112,25 @@ public class TankTeleOp extends LinearOpMode {
 
             if (gamepad2.y) {
                 tankDrive.moveRotiniToAPosition(15);
-                boxWheels.setPower(-1);
+                boxWheels.setPower(1);
                 sleep(500);
+                boxWheels.setPower(0);
                 tankDrive.moveRotiniToAPosition(0);
             }
 
             if (gamepad2.b) {
                 tankDrive.moveRotiniToAPosition(9);
-                boxWheels.setPower(-1);
+                boxWheels.setPower(1);
                 sleep(500);
+                boxWheels.setPower(0);
                 tankDrive.moveRotiniToAPosition(0);
             }
 
             if (gamepad2.a) {
                 tankDrive.moveRotiniToAPosition(3);
-                boxWheels.setPower(-1);
+                boxWheels.setPower(1);
                 sleep(500);
+                boxWheels.setPower(0);
                 tankDrive.moveRotiniToAPosition(0);
             }
 
