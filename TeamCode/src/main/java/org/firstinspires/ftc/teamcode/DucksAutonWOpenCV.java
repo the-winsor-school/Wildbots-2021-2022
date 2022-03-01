@@ -38,14 +38,16 @@ public class DucksAutonWOpenCV extends LinearOpMode {
 
     //public Servo cappingServo;
 
-    public DcMotor leftIntakeSpinner;
+    /*public DcMotor leftIntakeSpinner;
     public DcMotor rightIntakeSpinner;
-    public DcMotor frontIntakeSpinner;
+    public DcMotor frontIntakeSpinner;*/
     AnalogInput forceSensitiveResistor;
 
     public int servoPosition;
 
     public DcMotor duckSpinner;
+    public DcMotor boxWheels;
+
 
     //initializing
 
@@ -95,20 +97,23 @@ public class DucksAutonWOpenCV extends LinearOpMode {
         //boxServo = hardwareMap.get(CRServo.class, "boxServo");
         //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-        leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
+      /*  leftIntakeSpinner = hardwareMap.get(DcMotor.class, "leftIntakeSpinner");
         rightIntakeSpinner = hardwareMap.get(DcMotor.class, "rightIntakeSpinner");
         frontIntakeSpinner = hardwareMap.get(DcMotor.class, "frontIntakeSpinner");
-
+*/
+        boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
 
 
         double currentForce;
-        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
+        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "FSR");
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.update();
         boolean alreadyPrinted = false;
         int rotiniTarget = 0;
 
-        //spinningArm = hardwareMap.get(Servo.class, "Carousel Spinning Arm");
+        //spinningArm = hardwareMap.get(Servo.clas
+        // [p=[-090-p[[[[[[[[=\]
+        // os, "Carousel Spinning Arm");
 
         waitForStart();
 
@@ -123,44 +128,63 @@ public class DucksAutonWOpenCV extends LinearOpMode {
              if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
                  samplePipeline.location = SamplePipeline.LOCATION.RIGHT;
              }
-            tankDrive.drive(1,1);
+            tankDrive.drive(-1,-1); //i had to reverse all the tankDrive.drive values bc it was driving backwards into the wall
             sleep(300);
             tankDrive.brakeStop();
             //turn right
             turn90Right();
-            tankDrive.drive(1,1);
+            tankDrive.drive(-1,-1);
             sleep(450);
             tankDrive.brakeStop();
             turn90Left();
-            tankDrive.drive(1,1);
+            tankDrive.drive(-1,-1);
             sleep(700);
             tankDrive.brakeStop();
 
             sleep(700);
-            //outake:
-            // if location = left, drops freight in correct left
-            // else if middle, middle
-            // else, top
-
-            /*if (samplePipeline.location = SamplePipeline.LOCATION.LEFT){
-                tankDrive.rotini.setPower(0.5);
-                tankDrive.getRotiniHeight();
 
 
-            }*/
+            //tankDrive.rotini.setPower(-gamepad2.left_stick_y);
+            //tankDrive.rotini.setPower(1);
+
+            if (samplePipeline.location == SamplePipeline.LOCATION.LEFT) //bottom level
+            {
+                tankDrive.moveRotiniToAPosition(3);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
+            }
+
+            else if (samplePipeline.location == SamplePipeline.LOCATION.MIDDLE) //middle
+            {
+                tankDrive.moveRotiniToAPosition(9);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
+            }
+
+            else //top level
+            {
+                tankDrive.moveRotiniToAPosition(15);
+                boxWheels.setPower(-1);
+                sleep(500);
+                tankDrive.moveRotiniToAPosition(0);
+            }
+
+
             turn90Right();
-            tankDrive.drive(-1,-1);
+            tankDrive.drive(1,1);
             sleep(2000);
             tankDrive.brakeStop();
             turn90Left();
-            tankDrive.drive(1,1);
+            tankDrive.drive(-1,-1);
             sleep(500);
             tankDrive.brakeStop();
             sleep(500);
             duckSpinner.setPower(1);
             sleep(1000);
             //spin ducks
-            tankDrive.drive(1,1);
+            tankDrive.drive(-1,-1);
             sleep(500);
             tankDrive.brakeStop();
 
