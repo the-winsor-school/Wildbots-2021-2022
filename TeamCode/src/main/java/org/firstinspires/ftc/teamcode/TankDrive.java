@@ -133,7 +133,7 @@ public class TankDrive {
 
     //i got tired of writing the same thing over again so this one will actually the target position to rotini numbers
     public void moveRotiniToAPosition(int num) {
-        //int initPos=rotini.getCurrentPosition();
+        brakeStop();
         int curPos=rotini.getCurrentPosition();
         if(convertToRotini(num)>curPos){
             while(curPos<convertToRotini(num)){
