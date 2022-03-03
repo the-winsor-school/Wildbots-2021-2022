@@ -70,7 +70,7 @@ public class AutonBlueTop extends LinearOpMode {
             tankDrive.spinToAngle(0);
 
             //going to hub
-            tankDrive.driveADistance(4, 0.5);
+            tankDrive.driveADistance(3, 0.5);
             tankDrive.brakeStop();
 
             //deilvers freight
