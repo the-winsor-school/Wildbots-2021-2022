@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-@Disabled
+
 @TeleOp(name = "tick tank tread")
 public class HowManyTicksInATankTread extends LinearOpMode {
     //private TankDrive tankDrive;
@@ -61,8 +61,8 @@ public class HowManyTicksInATankTread extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             if(!gotInitPos){
-                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                //left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftInitPos=left.getCurrentPosition();
                 rightInitPos=right.getCurrentPosition();
                 telemetry.addData("left init", leftInitPos);
@@ -72,7 +72,7 @@ public class HowManyTicksInATankTread extends LinearOpMode {
             }
             if (!alreadyRun) {
                 left.setPower(-0.5);
-                right.setPower(0.5);
+                //right.setPower(0.5);
                 sleep(1000);
                 left.setPower(0);
                 right.setPower(0);
