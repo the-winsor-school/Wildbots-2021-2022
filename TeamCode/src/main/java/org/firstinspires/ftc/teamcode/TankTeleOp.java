@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.TankDrive;
 public class TankTeleOp extends LinearOpMode {
 
     private TankDrive tankDrive;
-    //public Servo cappingServo;
+    public Servo cappingServo;
 
     public DcMotor boxWheels;
     //public DcMotor rotini;
@@ -33,7 +33,7 @@ public class TankTeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
+        cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         //rotini = hardwareMap.get(DcMotor.class, "rotini");
@@ -58,11 +58,6 @@ public class TankTeleOp extends LinearOpMode {
             tankDrive.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
-
-
-            if (gamepad1.b) {
-                tankDrive.brakeStop();
-            }
 
             //Mech Controller
 
@@ -157,19 +152,19 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
+            cappingServo.setPosition();
 
 
-            /*
-            if (gamepad2.dpad_left) {
-                cappingServo.setPosition(45);
+            if (-gamepad2.right_stick_y) {
+                cappingServo.setPosition(-90);
                 // moves capping servo 45 degrees to the right
             }
             *
-            if (gamepad2.dpad_right) {
-                cappingServo.setPosition(-45);
+            if (gamepad2.right_stick_y) {
+                cappingServo.setPosition(90);
                 // moves capping servo 45 degrees to the left(?)
             }
-            */
+
 
 
             if (currentForce > 0.113 && currentForce < 0.169) {
