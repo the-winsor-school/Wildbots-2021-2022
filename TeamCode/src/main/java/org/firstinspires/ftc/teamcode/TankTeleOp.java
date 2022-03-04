@@ -7,13 +7,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.util.Range;
 
 
-import org.firstinspires.ftc.libraries.AutonLibrary;
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+// import org.firstinspires.ftc.libraries.AutonLibrary;
+// import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
-
-
 
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
@@ -26,7 +25,9 @@ public class TankTeleOp extends LinearOpMode {
 
     //AnalogInput forceSensitiveResistor;
     public DcMotor duckSpinner;
-
+    public final static double capStart = 0.0;
+    public static double capPos = 0.5;
+    final double capIncrement = 0.001;
 
     //private int encoderValues = 0;
     @Override
@@ -36,6 +37,7 @@ public class TankTeleOp extends LinearOpMode {
         cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
+        cappingServo.setPosition(capStart);
         //rotini = hardwareMap.get(DcMotor.class, "rotini");
 
 
@@ -155,17 +157,19 @@ public class TankTeleOp extends LinearOpMode {
             //cappingServo.setPosition();
 
 
-            if (-gamepad2.right_stick_y>0) {
-                cappingServo.setPosition(-150);
-                // moves capping servo up(?)
+            if (gamepad2.right_stick_y > 0) {
+                 capPos = capPos + capIncrement;
+                 cappingServo.setPosition(capPos);
+                 telemetry.addData("Position: ", capPos);
+                // moves capping servo up by an increment of 0.01
             }
 
-            if (gamepad2.right_stick_y<0) {
-                cappingServo.setPosition(140);
-                // moves capping servo down(?)
+            if (gamepad2.right_stick_y < 0) {
+                capPos = capPos - capIncrement;
+                cappingServo.setPosition(capPos);
+                telemetry.addData("Position: ", capPos);
+                // moves capping servo down by an increment of 0.01
             }
-
-
 
             if (currentForce > 0.113 && currentForce < 0.169) {
                 telemetry.addData("Box Weight:", "Light");
