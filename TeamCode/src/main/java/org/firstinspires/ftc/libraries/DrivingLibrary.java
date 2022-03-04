@@ -26,7 +26,7 @@ import java.util.Hashtable;
 
 import java.util.Arrays;
 
-public class    DrivingLibrary {
+public class DrivingLibrary {
     // hardware variables
     public DcMotor leftFront;
     public DcMotor rightFront;

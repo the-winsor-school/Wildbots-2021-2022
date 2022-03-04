@@ -2,17 +2,22 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "Liftie Parking Auton Short")
-public class LiftieParkingAutonShort extends LinearOpMode{
+@Autonomous(name = "Blue Liftie Carousel Auton SU Short")
+public class LiftieCarouselAutonParkShortBlue extends LinearOpMode{
 
     private DrivingLibrary drivingLibrary;
+    DcMotor carousel;
 
     @Override
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
         drivingLibrary.setSpeed(1.0);
+
+        carousel = hardwareMap.get(DcMotor.class, "carousel");
 
         telemetry.addData("status", "initialized");
         telemetry.update();
@@ -20,12 +25,18 @@ public class LiftieParkingAutonShort extends LinearOpMode{
         waitForStart();
 
         if (opModeIsActive()) {
-            drivingLibrary.bevelDrive(1, 0, 0); //left on the red side with carousel facing warehouse
-            //for blue side, x = -1
-            sleep(720);
+            drivingLibrary.bevelDrive(-0.6f, 0, 0);
+            sleep(400);
 
             drivingLibrary.bevelDrive(0, 1, 0);
-            sleep(2500);
+            sleep(750);
+
+            carousel.setPower(1);
+            sleep(3500);
+            carousel.setPower(0);
+
+            drivingLibrary.bevelDrive(-1, 0, 0);
+            sleep(1200);
 
             drivingLibrary.brakeStop();
         }

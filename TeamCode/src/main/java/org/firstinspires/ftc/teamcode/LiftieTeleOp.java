@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.enums.DrivingMode;
+//import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -53,11 +53,11 @@ public class LiftieTeleOp extends LinearOpMode {
             drivingLibrary.bevelDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             // switching braking modes
-            if (gamepad1.b) {
-                drivingMode++;
-                drivingMode %= DrivingMode.values().length;
-                drivingLibrary.setMode(drivingMode);
-            }
+//            if (gamepad1.b) {
+//                drivingMode++;
+//                drivingMode %= DrivingMode.values().length;
+//                drivingLibrary.setMode(drivingMode);
+//            }
             //making the arm go down
             arm.setPower((gamepad2.left_stick_y) / 2);
 
@@ -65,35 +65,28 @@ public class LiftieTeleOp extends LinearOpMode {
             right.setPower(-gamepad2.right_stick_x);
 
             //intake
-            if(gamepad2.b) {
+            intakeSpinner.setPower(0);
+
+            while(gamepad2.b) {
                 intakeSpinner.setPower(1);
-                sleep(1500);
-                intakeSpinner.setPower(0);
             }
 
             //outake
-            if(gamepad2.y) {
+            while(gamepad2.y) {
                 intakeSpinner.setPower(-1);
-                sleep(1500);
-                intakeSpinner.setPower(0);
-            }
-
-            //get distance
-            if(gamepad2.a) {
-                barcode.getDistance(DistanceUnit.CM);
-                telemetry.addData("Distance", barcode.getDistance(DistanceUnit.CM));
-                telemetry.update();
             }
 
             //carousel ducks
-            if(gamepad2.a) {
-                carousel.setPower(1);
-                sleep(2000);
-                carousel.setPower(0);
+            carousel.setPower(0);
+            while(gamepad2.a) { //red
+                carousel.setPower(0.7);
+            }
+            while(gamepad2.x){ //blue
+                carousel.setPower(-0.7);
             }
 
             telemetry.addData("Status", "Running"); //prints to phone
-            telemetry.addData("Brake Mode", drivingLibrary.getMode());
+            //telemetry.addData("Brake Mode", drivingLibrary.getMode());
 
             telemetry.update(); //makes actually print
         }
