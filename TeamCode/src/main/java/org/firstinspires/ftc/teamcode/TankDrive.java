@@ -163,6 +163,7 @@ public class TankDrive {
     }
 
     public void driveADistance(double dist, double motorPower) {
+
         int rightInitPos=right.getCurrentPosition();
         int rightCurPos=right.getCurrentPosition();
         opMode.telemetry.addData("right init", rightInitPos);
@@ -190,6 +191,7 @@ public class TankDrive {
 
         right.setPower(0);
         left.setPower(0);
+
 
     }
 

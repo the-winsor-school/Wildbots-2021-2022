@@ -7,35 +7,37 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.util.Range;
 
 
-import org.firstinspires.ftc.libraries.AutonLibrary;
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+// import org.firstinspires.ftc.libraries.AutonLibrary;
+// import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
-
-
 
 @TeleOp(name = "TeleOp")
 public class TankTeleOp extends LinearOpMode {
 
     private TankDrive tankDrive;
-    //public Servo cappingServo;
+    public Servo cappingServo;
 
     public DcMotor boxWheels;
     //public DcMotor rotini;
 
     //AnalogInput forceSensitiveResistor;
     public DcMotor duckSpinner;
-
+    public final static double capStart = 0.0;
+    public static double capPos = 0.5;
+    final double capIncrement = 0.001;
 
     //private int encoderValues = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        //cappingServo = hardwareMap.get(Servo.class, "cappingServo");
+        cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
+        cappingServo.setPosition(capStart);
         //rotini = hardwareMap.get(DcMotor.class, "rotini");
 
 
@@ -58,11 +60,6 @@ public class TankTeleOp extends LinearOpMode {
             tankDrive.drive(gamepad1.left_stick_y, gamepad1.right_stick_y);
             // use joysticks for Tankalicious teleop
             telemetry.update();
-
-
-            if (gamepad1.b) {
-                tankDrive.brakeStop();
-            }
 
             //Mech Controller
 
@@ -157,20 +154,22 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
+            //cappingServo.setPosition();
 
 
-            /*
-            if (gamepad2.dpad_left) {
-                cappingServo.setPosition(45);
-                // moves capping servo 45 degrees to the right
+            if (gamepad2.right_stick_y > 0) {
+                 capPos = capPos + capIncrement;
+                 cappingServo.setPosition(capPos);
+                 telemetry.addData("Position: ", capPos);
+                // moves capping servo up by an increment of 0.01
             }
-            *
-            if (gamepad2.dpad_right) {
-                cappingServo.setPosition(-45);
-                // moves capping servo 45 degrees to the left(?)
-            }
-            */
 
+            if (gamepad2.right_stick_y < 0) {
+                capPos = capPos - capIncrement;
+                cappingServo.setPosition(capPos);
+                telemetry.addData("Position: ", capPos);
+                // moves capping servo down by an increment of 0.01
+            }
 
             if (currentForce > 0.113 && currentForce < 0.169) {
                 telemetry.addData("Box Weight:", "Light");
