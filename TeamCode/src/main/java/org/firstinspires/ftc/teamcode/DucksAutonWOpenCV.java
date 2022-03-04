@@ -107,6 +107,7 @@ public class DucksAutonWOpenCV extends LinearOpMode {
         double currentForce;
         forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "FSR");
         telemetry.addData("status", "BAAAAAAAH initialized");
+        telemetry.addData("Location", pipeline.getLocation());
         telemetry.update();
         boolean alreadyPrinted = false;
         int rotiniTarget = 0;
@@ -128,65 +129,79 @@ public class DucksAutonWOpenCV extends LinearOpMode {
              if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
                  samplePipeline.location = SamplePipeline.LOCATION.RIGHT;
              }
-            tankDrive.drive(-1,-1); //i had to reverse all the tankDrive.drive values bc it was driving backwards into the wall
-            sleep(300);
+
+
+            tankDrive.rotini.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.rotini.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            tankDrive.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            tankDrive.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
-            //turn right
-            turn90Right();
-            tankDrive.drive(-1,-1);
-            sleep(450);
+            tankDrive.spinToAngle(Math.PI/2);
+
+            //going long across
+            tankDrive.driveADistance(13, 0.7);
             tankDrive.brakeStop();
-            turn90Left();
-            tankDrive.drive(-1,-1);
-            sleep(700);
+            tankDrive.spinToAngle(0);
+
+            //going to hub
+            tankDrive.driveADistance(1, 0.5);
             tankDrive.brakeStop();
 
-            sleep(700);
-
-
-            //tankDrive.rotini.setPower(-gamepad2.left_stick_y);
-            //tankDrive.rotini.setPower(1);
-
+            //deilvers freight
             if (samplePipeline.location == SamplePipeline.LOCATION.LEFT) //bottom level
             {
                 tankDrive.moveRotiniToAPosition(3);
-                boxWheels.setPower(-1);
-                sleep(500);
-                tankDrive.moveRotiniToAPosition(0);
             }
 
             else if (samplePipeline.location == SamplePipeline.LOCATION.MIDDLE) //middle
             {
                 tankDrive.moveRotiniToAPosition(9);
-                boxWheels.setPower(-1);
-                sleep(500);
-                tankDrive.moveRotiniToAPosition(0);
             }
 
             else //top level
             {
                 tankDrive.moveRotiniToAPosition(15);
-                boxWheels.setPower(-1);
-                sleep(500);
-                tankDrive.moveRotiniToAPosition(0);
             }
 
-
-            turn90Right();
-            tankDrive.drive(1,1);
-            sleep(2000);
-            tankDrive.brakeStop();
-            turn90Left();
-            tankDrive.drive(-1,-1);
-            sleep(500);
-            tankDrive.brakeStop();
-            sleep(500);
-            duckSpinner.setPower(1);
+            boxWheels.setPower(-1);
             sleep(1000);
-            //spin ducks
-            tankDrive.drive(-1,-1);
-            sleep(500);
+            boxWheels.setPower(0);
+            tankDrive.moveRotiniToAPosition(0);
+
+            //goes back
+            tankDrive.driveADistance(-21, -0.7);
             tankDrive.brakeStop();
+            tankDrive.spinToAngle(Math.PI/2);
+
+            //goes to carousel ish
+            tankDrive.driveADistance(-55, -0.8);
+            tankDrive.brakeStop();
+
+            //aligns with carousel
+            tankDrive.drive(0,1);
+            sleep(30);
+            tankDrive.brakeStop();
+
+            //spins carousel
+            duckSpinner.setPower(0.75);
+            sleep(1800);
+            duckSpinner.setPower(0);
+
+            //backs up
+            tankDrive.driveADistance(17, 0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(-Math.PI / 2);
+
+            //drives to park
+            tankDrive.driveADistance(10, 0.7);
+            tankDrive.brakeStop();
+
+
+
+
+
+
 
         }
     }
