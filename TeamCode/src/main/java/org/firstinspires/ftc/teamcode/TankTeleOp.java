@@ -152,15 +152,15 @@ public class TankTeleOp extends LinearOpMode {
             }
             */
 
-            cappingServo.setPosition();
+            //cappingServo.setPosition();
 
 
-            if (-gamepad2.right_stick_y) {
+            if (-gamepad2.right_stick_y>0) {
                 cappingServo.setPosition(-150);
                 // moves capping servo up(?)
             }
 
-            if (gamepad2.right_stick_y) {
+            if (gamepad2.right_stick_y<0) {
                 cappingServo.setPosition(140);
                 // moves capping servo down(?)
             }
