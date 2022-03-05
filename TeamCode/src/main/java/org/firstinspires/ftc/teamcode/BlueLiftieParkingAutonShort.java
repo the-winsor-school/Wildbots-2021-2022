@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 // orient with box facing warehouse
-@Autonomous(name = "Liftie Parking Auton Short")
-public class LiftieParkingAutonShortBlue extends LinearOpMode{
+@Autonomous(name = "Blue Liftie Parking Auton Short")
+public class BlueLiftieParkingAutonShort extends LinearOpMode{
 
     private DrivingLibrary drivingLibrary;
 

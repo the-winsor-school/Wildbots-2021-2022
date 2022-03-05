@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 // orient with box facing warehouse
-@Autonomous(name = "Liftie Parking Auton Long")
-public class LiftieParkingAutonLongRed extends LinearOpMode{
+@Autonomous(name = "Red Liftie Parking Auton Short")
+public class RedLiftieParkingAutonShort extends LinearOpMode{
 
     private DrivingLibrary drivingLibrary;
 
@@ -20,13 +20,12 @@ public class LiftieParkingAutonLongRed extends LinearOpMode{
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(2000);
-
-            drivingLibrary.bevelDrive(1, 0, 0); //left on the red side
+            drivingLibrary.bevelDrive(1, 0, 0); //left on the red side with carousel facing warehouse
+            //for blue side, x = -1
             sleep(720);
 
             drivingLibrary.bevelDrive(0, 1, 0);
-            sleep(4500);
+            sleep(2500);
 
             drivingLibrary.brakeStop();
         }
