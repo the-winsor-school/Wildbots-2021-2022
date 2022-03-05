@@ -163,8 +163,7 @@ public class DucksAutonWOpenCV extends LinearOpMode {
                 tankDrive.moveRotiniToAPosition(20);
             //}
             telemetry.update();
-            boxWheels.setPower(0.7
-            );
+            boxWheels.setPower(-1);
             sleep(1000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
@@ -175,11 +174,11 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             tankDrive.spinToAngle(Math.PI/2);
 
             //goes to carousel ish
-            tankDrive.driveADistance(-55, -0.8);
+            tankDrive.driveADistance(-53, -0.8);
             tankDrive.brakeStop();
 
             //aligns with carousel
-            tankDrive.drive(0,0.75);
+            tankDrive.drive(0,0.8);
             sleep(800);
             tankDrive.brakeStop();
 
@@ -195,8 +194,6 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             tankDrive.driveADistance(10, 0.7);
             tankDrive.brakeStop();
 
-            tankDrive.spinToAngle(0);
-            tankDrive.driveADistance(3,0.2);
 
 
 

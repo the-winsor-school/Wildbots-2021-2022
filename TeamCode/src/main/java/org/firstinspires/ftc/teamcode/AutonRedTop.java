@@ -25,7 +25,7 @@ public class AutonRedTop extends LinearOpMode {
      */
     public DcMotor duckSpinner;
     public DcMotor boxWheels;
-    public DcMotor LED;
+    //public DcMotor LED;
     TankDrive tankDrive;
 
     @Override
@@ -33,7 +33,7 @@ public class AutonRedTop extends LinearOpMode {
         tankDrive = new TankDrive(this);
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
-        LED= hardwareMap.get(DcMotor.class, "LED");
+        //LED= hardwareMap.get(DcMotor.class, "LED");
         telemetry.addData("status", "initialized");
         telemetry.update();
         /*

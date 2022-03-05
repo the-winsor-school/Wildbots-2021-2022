@@ -77,7 +77,7 @@ public class AutonBlueTop extends LinearOpMode {
 
             //deilvers freight
             tankDrive.moveRotiniToAPosition(20);
-            boxWheels.setPower(1);
+            boxWheels.setPower(-1);
             sleep(2000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
@@ -88,11 +88,11 @@ public class AutonBlueTop extends LinearOpMode {
             tankDrive.spinToAngle(Math.PI/2);
 
             //goes to carousel ish
-            tankDrive.driveADistance(-51, -0.8);
+            tankDrive.driveADistance(-49, -0.8);
             tankDrive.brakeStop();
 
             //aligns with carousel
-            tankDrive.drive(0,0.6);
+            tankDrive.drive(0,0.75);
             sleep(800);
             tankDrive.brakeStop();
 
@@ -104,11 +104,11 @@ public class AutonBlueTop extends LinearOpMode {
             //backs up
             tankDrive.driveADistance(20, 0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI / 2);
+            //tankDrive.spinToAngle(-Math.PI / 2);
 
             //drives to park
-            tankDrive.driveADistance(12, 0.7);
-            tankDrive.brakeStop();
+            //tankDrive.driveADistance(12, 0.7);
+            //tankDrive.brakeStop();
 
             /*
             //parks

@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 // import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.teamcode.TankDrive;
 
-@TeleOp(name = "TeleOp")
+@TeleOp(name = "Tank TeleOp")
 public class TankTeleOp extends LinearOpMode {
 
     private TankDrive tankDrive;
@@ -25,7 +25,7 @@ public class TankTeleOp extends LinearOpMode {
 
     //AnalogInput forceSensitiveResistor;
     public DcMotor duckSpinner;
-    public DcMotor LED;
+    //public DcMotor y;
     public final static double capStart = 0.0;
     public static double capPos = 0.5;
     final double capIncrement = 0.001;
@@ -37,7 +37,6 @@ public class TankTeleOp extends LinearOpMode {
 
         cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
-        LED= hardwareMap.get(DcMotor.class, "LED");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         cappingServo.setPosition(capStart);
         //rotini = hardwareMap.get(DcMotor.class, "rotini");
@@ -45,7 +44,7 @@ public class TankTeleOp extends LinearOpMode {
 
         double currentForce;
         //forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "Force Sensitive Resistor");
-        telemetry.addData("status", "BAAAAAAAH initialized");
+        telemetry.addData("status", "Hello! initialized");
         telemetry.update();
         boolean alreadyPrinted = false;
         int rotiniTarget = 0;
@@ -56,7 +55,7 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
             }
-            LED.setPower(1);
+
             currentForce = tankDrive.forceSensitiveResistor.getVoltage();
             //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             //telemetry.addData("rotini", "target height =" + rotiniTarget);
