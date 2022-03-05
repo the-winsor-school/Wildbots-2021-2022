@@ -5,9 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
-
-@Autonomous(name = "Red Liftie Warehouse Auton Carousel Short")
-public class LiftieParkingAutonCarouselShortRed extends LinearOpMode{
+// orient robot with box towards carousel
+@Autonomous(name = "Red Liftie Carousel Auton SU Short")
+public class RedLiftieCarouselAutonSUShort extends LinearOpMode{
 
     private DrivingLibrary drivingLibrary;
     DcMotor carousel;
@@ -36,10 +36,7 @@ public class LiftieParkingAutonCarouselShortRed extends LinearOpMode{
             carousel.setPower(0);
 
             drivingLibrary.bevelDrive(-1, 0, 0);
-            sleep(350);
-
-            drivingLibrary.bevelDrive(0, -1, 0);
-            sleep(5000);
+            sleep(1200);
 
             drivingLibrary.brakeStop();
         }
