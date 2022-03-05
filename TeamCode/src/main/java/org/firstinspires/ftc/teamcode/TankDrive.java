@@ -66,8 +66,8 @@ public class TankDrive {
     }
 
     public void drive(double l, double r) {
-        left.setPower(l); //reversed these (took out - sign)
-        right.setPower(r); //same
+        left.setPower(-l); //reversed these (took out - sign)
+        right.setPower(-r); //same
     }
 
     public double getRotiniHeight() {

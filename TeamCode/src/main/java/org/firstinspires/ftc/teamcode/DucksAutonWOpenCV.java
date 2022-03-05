@@ -129,18 +129,13 @@ public class DucksAutonWOpenCV extends LinearOpMode {
              if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
                  samplePipeline.location = SamplePipeline.LOCATION.RIGHT;
              }
-
-
-            tankDrive.rotini.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            tankDrive.rotini.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            tankDrive.right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            tankDrive.right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+             sleep(1000);
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
 
             //going long across
-            tankDrive.driveADistance(13, 0.7);
+            tankDrive.driveADistance(9, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
 
@@ -149,22 +144,27 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             tankDrive.brakeStop();
 
             //deilvers freight
+            /*
             if (samplePipeline.location == SamplePipeline.LOCATION.LEFT) //bottom level
             {
+                telemetry.addData("location", "left");
                 tankDrive.moveRotiniToAPosition(3);
             }
 
             else if (samplePipeline.location == SamplePipeline.LOCATION.MIDDLE) //middle
             {
+                telemetry.addData("location", "middle");
                 tankDrive.moveRotiniToAPosition(9);
             }
-
-            else //top level
-            {
-                tankDrive.moveRotiniToAPosition(15);
-            }
-
-            boxWheels.setPower(-1);
+*/
+            //else //top level
+            //{
+                telemetry.addData("location", "right");
+                tankDrive.moveRotiniToAPosition(20);
+            //}
+            telemetry.update();
+            boxWheels.setPower(0.7
+            );
             sleep(1000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
@@ -179,23 +179,24 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             tankDrive.brakeStop();
 
             //aligns with carousel
-            tankDrive.drive(0,1);
-            sleep(30);
+            tankDrive.drive(0,0.75);
+            sleep(800);
             tankDrive.brakeStop();
 
             //spins carousel
-            duckSpinner.setPower(0.75);
+            duckSpinner.setPower(0.6);
             sleep(1800);
             duckSpinner.setPower(0);
 
             //backs up
-            tankDrive.driveADistance(17, 0.7);
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(-Math.PI / 2);
+            tankDrive.spinToAngle(-Math.PI/9);
 
             //drives to park
             tankDrive.driveADistance(10, 0.7);
             tankDrive.brakeStop();
+
+            tankDrive.spinToAngle(0);
+            tankDrive.driveADistance(3,0.2);
 
 
 
@@ -211,7 +212,7 @@ public class DucksAutonWOpenCV extends LinearOpMode {
         private static final Scalar BLUE = new Scalar(0, 0, 255);
 
         private static final int THRESHOLD1 = 107; // yellow < 107 < white
-        private static final int THRESHOLD2 = 140; // white < 140 < purple
+        private static final int THRESHOLD2 = 130; // white < 140 < purple
 
         //region 1
         Point topLeft1 = new Point(50, 50);

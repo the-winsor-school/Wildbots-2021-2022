@@ -25,6 +25,7 @@ public class TankTeleOp extends LinearOpMode {
 
     //AnalogInput forceSensitiveResistor;
     public DcMotor duckSpinner;
+    public DcMotor LED;
     public final static double capStart = 0.0;
     public static double capPos = 0.5;
     final double capIncrement = 0.001;
@@ -36,6 +37,7 @@ public class TankTeleOp extends LinearOpMode {
 
         cappingServo = hardwareMap.get(Servo.class, "cappingServo");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
+        LED= hardwareMap.get(DcMotor.class, "LED");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         cappingServo.setPosition(capStart);
         //rotini = hardwareMap.get(DcMotor.class, "rotini");
@@ -54,6 +56,7 @@ public class TankTeleOp extends LinearOpMode {
                 telemetry.addData("status", "OKAY WE'RE IN THE LOOP");
                 alreadyPrinted = true;
             }
+            LED.setPower(1);
             currentForce = tankDrive.forceSensitiveResistor.getVoltage();
             //telemetry.addData("rotini", "current height =" + tankDrive.getRotiniHeight());
             //telemetry.addData("rotini", "target height =" + rotiniTarget);

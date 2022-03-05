@@ -75,33 +75,35 @@ public class AutonBlueBottom extends LinearOpMode {
 
 
         if (opModeIsActive()) {
+            tankDrive.driveADistance(6, 0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(3*Math.PI/2);
 
-            if (opModeIsActive()) {
-                tankDrive.driveADistance(6, 0.7);
-                tankDrive.brakeStop();
-                tankDrive.spinToAngle(Math.PI / 2);
+            //going long across
+            tankDrive.driveADistance(9, 0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
 
-                tankDrive.driveADistance(18, 0.7);
-                tankDrive.brakeStop();
-                tankDrive.spinToAngle(0);
+            //going to hub
+            tankDrive.driveADistance(4, 0.5);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
 
-                tankDrive.driveADistance(27, 0.7);
-                tankDrive.brakeStop();
+            //deilvers freight
+            tankDrive.moveRotiniToAPosition(20);
+            boxWheels.setPower(1);
+            sleep(2000);
+            boxWheels.setPower(0);
+            tankDrive.moveRotiniToAPosition(0);
 
-                tankDrive.moveRotiniToAPosition(22);
-                boxWheels.setPower(-1);
-                sleep(1000);
-                boxWheels.setPower(0);
-                tankDrive.moveRotiniToAPosition(0);
+            //goes back
+            tankDrive.driveADistance(-23, -0.7);
+            tankDrive.brakeStop();
+            tankDrive.spinToAngle(3*Math.PI/2);
 
-                tankDrive.driveADistance(20, -0.7);
-                tankDrive.brakeStop();
-                tankDrive.spinToAngle(Math.PI / 2);
-
-                tankDrive.driveADistance(40, -0.7);
-                tankDrive.brakeStop();
-
-
+            //goes to carousel ish
+            tankDrive.driveADistance(40, 0.8);
+            tankDrive.brakeStop();
 
                 /*
             if (pipeline.getLocation() == LOCATION.LEFT) {
@@ -213,6 +215,6 @@ public class AutonBlueBottom extends LinearOpMode {
             */
 
 
-        }
+
     }
 }

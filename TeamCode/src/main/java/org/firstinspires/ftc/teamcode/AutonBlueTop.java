@@ -25,6 +25,7 @@ public class AutonBlueTop extends LinearOpMode {
      */
     public DcMotor duckSpinner;
     public DcMotor boxWheels;
+
     TankDrive tankDrive;
 
     @Override
@@ -32,6 +33,7 @@ public class AutonBlueTop extends LinearOpMode {
         tankDrive = new TankDrive(this);
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
         boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
+
         telemetry.addData("status", "initialized");
         telemetry.update();
         /*
@@ -59,38 +61,38 @@ public class AutonBlueTop extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
 
             //going long across
-            tankDrive.driveADistance(13, 0.7);
+            tankDrive.driveADistance(9, 0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
 
             //going to hub
-            tankDrive.driveADistance(3, 0.5);
+            tankDrive.driveADistance(4, 0.5);
             tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
 
             //deilvers freight
             tankDrive.moveRotiniToAPosition(20);
             boxWheels.setPower(1);
-            sleep(1500);
+            sleep(2000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
 
             //goes back
-            tankDrive.driveADistance(-24, -0.7);
+            tankDrive.driveADistance(-23, -0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
 
             //goes to carousel ish
-            tankDrive.driveADistance(-55, -0.8);
+            tankDrive.driveADistance(-51, -0.8);
             tankDrive.brakeStop();
 
             //aligns with carousel
-            tankDrive.drive(0,-0.6);
+            tankDrive.drive(0,0.6);
             sleep(800);
             tankDrive.brakeStop();
 

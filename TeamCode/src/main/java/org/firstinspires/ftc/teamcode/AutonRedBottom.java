@@ -20,7 +20,7 @@ public class AutonRedBottom extends LinearOpMode {
     //Servo spinningArm;
     OpenCvCamera webcam;
     SamplePipeline pipeline;
-    public Servo boxServo;
+    public DcMotor boxWheels;
     public DcMotor duckSpinner;
     TankDrive tankDrive;
 
@@ -34,7 +34,7 @@ public class AutonRedBottom extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         tankDrive = new TankDrive(this);
 
-        boxServo = hardwareMap.get(Servo.class, "boxServo");
+        boxWheels = hardwareMap.get(DcMotor.class, "boxWheels");
         duckSpinner = hardwareMap.get(DcMotor.class, "duckSpinner");
 
         telemetry.addData("status", "initialized");
@@ -65,34 +65,34 @@ public class AutonRedBottom extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+            tankDrive.driveADistance(6, 0.7);
+            tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
-            //go to the carousel
-            tankDrive.drive(1,1);
-            sleep(secToCarousel);
+
+            //going long across
+            tankDrive.driveADistance(9, 0.7);
             tankDrive.brakeStop();
-
-            //spin carousel
-            duckSpinner.setPower(1);
-            sleep(secDuckSpin);
-            duckSpinner.setPower(0);
-
-            //go to the alliance hub?
-            tankDrive.drive(-1,-1);
-            sleep(secToCarousel*2);
-            tankDrive.brakeStop();
-
             tankDrive.spinToAngle(0);
-            tankDrive.drive(1, 1);
-            sleep(secToHub);
+
+            //going to hub
+            tankDrive.driveADistance(4, 0.5);
             tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
+
+            //deilvers freight
+            tankDrive.moveRotiniToAPosition(20);
+            boxWheels.setPower(1);
+            sleep(2000);
+            boxWheels.setPower(0);
+            tankDrive.moveRotiniToAPosition(0);
 
             if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1000);
                 tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
+                boxWheels.setPower(1);
                 sleep(700);
-                boxServo.setPosition(0);
+                boxWheels.setPower(0);
                 sleep(700);
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1000);
@@ -101,9 +101,9 @@ public class AutonRedBottom extends LinearOpMode {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1500);
                 tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
+                boxWheels.setPower(1);
                 sleep(700);
-                boxServo.setPosition(0);
+                boxWheels.setPower(0);
                 sleep(700);
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
@@ -112,25 +112,21 @@ public class AutonRedBottom extends LinearOpMode {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1500);
                 tankDrive.rotini.setPower(0);
-                boxServo.setPosition(1);
+                boxWheels.setPower(1);
                 sleep(700);
-                boxServo.setPosition(0);
+                boxWheels.setPower(0);
                 sleep(700);
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
             }
             //go to parking spot
-            tankDrive.drive(-1, -1);
-            sleep(secToHub);
+            //goes back
+            tankDrive.driveADistance(-23, -0.7);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(Math.PI/2);
-            tankDrive.drive(-1, -1);
-            sleep(secToCarousel*2);
-            //should be back at carousel
-            tankDrive.brakeStop();
-            tankDrive.spinToAngle(0);
-            tankDrive.drive(1,1);
-            sleep(1000);
+
+            //goes to carousel ish
+            tankDrive.driveADistance(-51, -0.8);
             tankDrive.brakeStop();
 
             /*
