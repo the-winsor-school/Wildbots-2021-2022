@@ -1,75 +1,44 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-//webcam stuff
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
+//import org.firstinspires.ftc.libraries.TankDrive;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+//webcam stuff
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-import org.firstinspires.ftc.libraries.DrivingLibrary;
+@Autonomous(name = "Blue Bottom OpenCV")
+public class BlueBottomOpenCV extends LinearOpMode {
 
-@Autonomous(name = "DucksAutonWOpenCV")
-public class DucksAutonWOpenCV extends LinearOpMode {
 
+    //Servo spinningArm;
+    //OpenCvCamera webcam;
+    //SamplePipeline pipeline;
+    public DcMotor boxWheels;
+    public DcMotor duckSpinner;
     //webcam stuff
     OpenCvCamera webcam;
     opencvexample.SamplePipeline pipeline;
-
-
-    //private DrivingLibrary drivingLibrary;
-    private TankDrive tankDrive;
-
-    //public CRServo boxServo;
-
-    //public Servo cappingServo;
-
-    /*public DcMotor leftIntakeSpinner;
-    public DcMotor rightIntakeSpinner;
-    public DcMotor frontIntakeSpinner;*/
-    AnalogInput forceSensitiveResistor;
-
-    public int servoPosition;
-
-    public DcMotor duckSpinner;
-    public DcMotor boxWheels;
-
+    TankDrive tankDrive;
 
     //initializing
-
-    public void turn90Right() {
-        TankDrive tankDrive= new TankDrive(this);
-        tankDrive.drive(0.5,-0.5);
-        sleep(1500);
-        tankDrive.brakeStop();
-    }
-    public void turn90Left() {
-        TankDrive tankDrive= new TankDrive(this);
-        tankDrive.drive(-0.5,0.5);
-        sleep(1500);
-        tankDrive.brakeStop();
-    }
     @Override
     public void runOpMode() throws InterruptedException {
-//        drivingLibrary = new DrivingLibrary(this);
-//        drivingLibrary.setSpeed(1.0);
 
         //webcam stuff
-        DucksAutonWOpenCV.SamplePipeline samplePipeline = new DucksAutonWOpenCV.SamplePipeline();
+        BlueBottomOpenCV.SamplePipeline samplePipeline = new BlueBottomOpenCV.SamplePipeline();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
@@ -105,34 +74,38 @@ public class DucksAutonWOpenCV extends LinearOpMode {
 
 
         double currentForce;
-        forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "FSR");
+        //forceSensitiveResistor = hardwareMap.get(AnalogInput.class, "FSR");
         telemetry.addData("status", "BAAAAAAAH initialized");
         telemetry.addData("Location", pipeline.getLocation());
         telemetry.update();
         boolean alreadyPrinted = false;
         int rotiniTarget = 0;
 
-        //spinningArm = hardwareMap.get(Servo.clas
-        // [p=[-090-p[[[[[[[[=\]
-        // os, "Carousel Spinning Arm");
-
         waitForStart();
+
+        /* ABBIE'S CODE
+        tankDrive.rotini.setPower(0.5);//
+                sleep(1000);//
+                tankDrive.rotini.setPower(0);//
+         */
+
 
         if (opModeIsActive()) {
             //camera reads value
             if (samplePipeline.average1 > samplePipeline.THRESHOLD2) {
-                samplePipeline.location = SamplePipeline.LOCATION.LEFT;
+                samplePipeline.location = BlueBottomOpenCV.SamplePipeline.LOCATION.LEFT;
             }
-             if (samplePipeline.average2 > samplePipeline.THRESHOLD2) {
-                 samplePipeline.location = SamplePipeline.LOCATION.MIDDLE;
+            if (samplePipeline.average2 > samplePipeline.THRESHOLD2) {
+                samplePipeline.location = BlueBottomOpenCV.SamplePipeline.LOCATION.MIDDLE;
             }
-             if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
-                 samplePipeline.location = SamplePipeline.LOCATION.RIGHT;
-             }
-             sleep(1000);
+            if (samplePipeline.average3 > samplePipeline.THRESHOLD2) {
+                samplePipeline.location = BlueBottomOpenCV.SamplePipeline.LOCATION.RIGHT;
+            }
+            sleep(1000);
+
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(Math.PI/2);
+            tankDrive.spinToAngle(3*Math.PI/2);
 
             //going long across
             tankDrive.driveADistance(9, 0.7);
@@ -140,69 +113,135 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             tankDrive.spinToAngle(0);
 
             //going to hub
-            tankDrive.driveADistance(1, 0.5);
+            tankDrive.driveADistance(4, 0.5);
             tankDrive.brakeStop();
+            tankDrive.spinToAngle(0);
 
             //deilvers freight
-
-            if (samplePipeline.location == SamplePipeline.LOCATION.LEFT) //bottom level
-            {
-                telemetry.addData("location", "left");
-                tankDrive.moveRotiniToAPosition(3);
-            }
-
-            else if (samplePipeline.location == SamplePipeline.LOCATION.MIDDLE) //middle
-            {
-                telemetry.addData("location", "middle");
-                tankDrive.moveRotiniToAPosition(9);
-            }
-            else //top level
-            {
-                telemetry.addData("location", "right");
-                tankDrive.moveRotiniToAPosition(20);
-            }
-            telemetry.update();
-            boxWheels.setPower(-1);
-            sleep(1000);
+            tankDrive.moveRotiniToAPosition(20);
+            boxWheels.setPower(1);
+            sleep(2000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
 
             //goes back
-            tankDrive.driveADistance(-21, -0.7);
+            tankDrive.driveADistance(-23, -0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(Math.PI/2);
+            tankDrive.spinToAngle(3*Math.PI/2);
 
-            //goes to carousel ish
-            tankDrive.driveADistance(-53, -0.8);
-            tankDrive.brakeStop();
-
-            //aligns with carousel
-            tankDrive.drive(0,0.8);
-            sleep(800);
+            //goes to area ish
+            tankDrive.driveADistance(40, 0.8);
             tankDrive.brakeStop();
 
-            //spins carousel
-            duckSpinner.setPower(0.6);
-            sleep(1800);
-            duckSpinner.setPower(0);
-
-            //backs up
-            tankDrive.spinToAngle(-Math.PI/9);
-
-            //drives to park
-            tankDrive.driveADistance(10, 0.7);
-            tankDrive.brakeStop();
-
-
-
-
-
-
-
+                /*
+            if (pipeline.getLocation() == LOCATION.LEFT) {
+                tankDrive.rotini.setPower(0.5);
+                sleep(1000);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1000);
+            }
+            else if (pipeline.getLocation() == LOCATION.MIDDLE) {
+                tankDrive.rotini.setPower(0.5);
+                sleep(1500);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1500);
+            }
+            else {
+                tankDrive.rotini.setPower(0.5);
+                sleep(1500);
+                tankDrive.rotini.setPower(0);
+                boxServo.setPosition(1);
+                sleep(700);
+                boxServo.setPosition(0);
+                sleep(700);
+                tankDrive.rotini.setPower(-0.5);
+                sleep(1500);
+                 */
+            //go to parking spot
 
         }
-    }
 
+                /*
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(3000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+
+
+            } else if (pipeline.getLocation() == LOCATION.MIDDLE) {
+                tankDrive.drive(1,1);
+                sleep(1500);
+                tankDrive.brakeStop();
+                //spin carousel
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(3000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+            } else {
+                tankDrive.drive(1,1);
+                sleep(1500);
+                tankDrive.brakeStop();
+                //spin carousel
+                tankDrive.spinToAngle((Math.PI * 25) / 18);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(3000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 4);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+                tankDrive.spinToAngle(Math.PI / 2);
+                sleep(1000);
+                tankDrive.brakeStop();
+                tankDrive.drive(1,1);
+                sleep(2000);
+                tankDrive.brakeStop();
+
+            }
+            */
+    }
     //webcam stuff
     private static class SamplePipeline extends OpenCvPipeline {
         private static final Scalar BLUE = new Scalar(0, 0, 255);
@@ -229,9 +268,9 @@ public class DucksAutonWOpenCV extends LinearOpMode {
         private volatile int average1;
         private volatile int average2;
         private volatile int average3;
-        private volatile TYPE type = TYPE.BALL;
-        private volatile LOCATION location;
-        private volatile LOCATION locations;
+        private volatile BlueBottomOpenCV.SamplePipeline.TYPE type = BlueBottomOpenCV.SamplePipeline.TYPE.BALL;
+        private volatile BlueBottomOpenCV.SamplePipeline.LOCATION location;
+        private volatile BlueBottomOpenCV.SamplePipeline.LOCATION locations;
 
         private void inputToCb(Mat input) {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
@@ -271,7 +310,7 @@ public class DucksAutonWOpenCV extends LinearOpMode {
             return input;
         }
 
-        public TYPE getType() {
+        public BlueBottomOpenCV.SamplePipeline.TYPE getType() {
             return type;
         }
         public String getAverage() {
@@ -291,3 +330,5 @@ public class DucksAutonWOpenCV extends LinearOpMode {
     }
 
 }
+
+
