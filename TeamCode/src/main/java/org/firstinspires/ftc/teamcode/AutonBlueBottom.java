@@ -80,7 +80,7 @@ public class AutonBlueBottom extends LinearOpMode {
             tankDrive.spinToAngle(3*Math.PI/2);
 
             //going long across
-            tankDrive.driveADistance(9, 0.7);
+            tankDrive.driveADistance(9, 1.0);
             tankDrive.brakeStop();
             tankDrive.spinToAngle(0);
 
