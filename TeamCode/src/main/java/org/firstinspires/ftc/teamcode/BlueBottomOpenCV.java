@@ -105,7 +105,15 @@ public class BlueBottomOpenCV extends LinearOpMode {
 
             tankDrive.driveADistance(6, 0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(3*Math.PI/2);
+            double angle=-Math.PI/2;
+            double goalAngle = tankDrive.getIMUAngle() + angle;
+
+            while (Math.abs(angle - tankDrive.getIMUAngle()) > .15) {
+                tankDrive.right.setPower(0.7f);
+                telemetry.update();
+            }
+            tankDrive.brakeStop();
+
 
             //going long across
             tankDrive.driveADistance(9, 0.7);
@@ -127,7 +135,14 @@ public class BlueBottomOpenCV extends LinearOpMode {
             //goes back
             tankDrive.driveADistance(-23, -0.7);
             tankDrive.brakeStop();
-            tankDrive.spinToAngle(3*Math.PI/2);
+
+            goalAngle = tankDrive.getIMUAngle() + angle;
+
+            while (Math.abs(angle - tankDrive. getIMUAngle()) > .15) {
+                tankDrive.right.setPower(0.7f);
+                telemetry.update();
+            }
+            tankDrive.brakeStop();
 
             //goes to area ish
             tankDrive.driveADistance(40, 0.8);

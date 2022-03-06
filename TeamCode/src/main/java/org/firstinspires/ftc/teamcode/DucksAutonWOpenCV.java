@@ -183,14 +183,14 @@ public class DucksAutonWOpenCV extends LinearOpMode {
 
             //spins carousel
             duckSpinner.setPower(0.6);
-            sleep(1800);
+            sleep(2000);
             duckSpinner.setPower(0);
 
             //backs up
             tankDrive.spinToAngle(-Math.PI/9);
 
             //drives to park
-            tankDrive.driveADistance(10, 0.7);
+            tankDrive.driveADistance(13, 0.7);
             tankDrive.brakeStop();
 
 

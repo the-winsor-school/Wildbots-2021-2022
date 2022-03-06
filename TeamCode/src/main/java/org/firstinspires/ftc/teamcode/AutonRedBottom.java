@@ -85,7 +85,7 @@ public class AutonRedBottom extends LinearOpMode {
             sleep(2000);
             boxWheels.setPower(0);
             tankDrive.moveRotiniToAPosition(0);
-
+            /*
             if (pipeline.getLocation() == SamplePipeline.LOCATION.LEFT) {
                 tankDrive.rotini.setPower(0.5);
                 sleep(1000);
@@ -119,6 +119,8 @@ public class AutonRedBottom extends LinearOpMode {
                 tankDrive.rotini.setPower(-0.5);
                 sleep(1500);
             }
+
+             */
             //go to parking spot
             //goes back
             tankDrive.driveADistance(-23, -0.7);
