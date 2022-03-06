@@ -26,7 +26,7 @@ public class RedLiftieWarehouseAutonCarouselShort extends LinearOpMode{
 
         if (opModeIsActive()) {
             drivingLibrary.bevelDrive(-0.6f, 0, 0);
-            sleep(400);
+            sleep(350);
 
             drivingLibrary.bevelDrive(0, 1, 0);
             sleep(750);

@@ -27,17 +27,18 @@ public class RedLiftieCarouselAutonSULong extends LinearOpMode{
 
         if (opModeIsActive()) {
             drivingLibrary.bevelDrive(-0.6f, 0, 0);
-            sleep(400);
+            sleep(350);
 
             drivingLibrary.bevelDrive(0, 1, 0);
-            sleep(1500);
-
+            sleep(1200);
+            drivingLibrary.bevelDrive(0, 0, 0);
+            
             carousel.setPower(1);
             sleep(3500);
             carousel.setPower(0);
 
             drivingLibrary.bevelDrive(-1, 0, 0);
-            sleep(1200);
+            sleep(1000);
 
             drivingLibrary.brakeStop();
         }

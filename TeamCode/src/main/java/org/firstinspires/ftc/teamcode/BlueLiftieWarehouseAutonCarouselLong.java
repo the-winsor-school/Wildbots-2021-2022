@@ -32,7 +32,7 @@ public class BlueLiftieWarehouseAutonCarouselLong extends LinearOpMode{
             drivingLibrary.bevelDrive(0, 0, 0);
             //go back
             drivingLibrary.bevelDrive(0, 1, 0); //backwards
-            sleep(1500);
+            sleep(1200);
             drivingLibrary.bevelDrive(0, 0, 0);
             // turn 45 degrees
             drivingLibrary.spinToAngle(-Math.PI/4);
@@ -49,7 +49,7 @@ public class BlueLiftieWarehouseAutonCarouselLong extends LinearOpMode{
             carousel.setPower(0);
 
             // 0 degrees
-            drivingLibrary.spinToAngle(.1f);
+            drivingLibrary.spinToAngle(-.1f);
             // move right a little
             drivingLibrary.bevelDrive(1, 0, 0); // right
             sleep(200);

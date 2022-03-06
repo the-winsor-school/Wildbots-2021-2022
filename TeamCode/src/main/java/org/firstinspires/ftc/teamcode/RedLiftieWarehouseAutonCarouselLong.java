@@ -26,7 +26,7 @@ public class RedLiftieWarehouseAutonCarouselLong extends LinearOpMode{
 
         if (opModeIsActive()) {
             drivingLibrary.bevelDrive(-0.6f, 0, 0);
-            sleep(400);
+            sleep(350); // changed from 400
 
             drivingLibrary.bevelDrive(0, 1, 0);
             sleep(1500);
