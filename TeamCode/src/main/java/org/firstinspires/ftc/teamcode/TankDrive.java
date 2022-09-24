@@ -45,7 +45,7 @@ public class TankDrive {
         this.opMode = opMode;
         hardwareMap = opMode.hardwareMap;
 
-
+        //sets up motors and stuff
         left = hardwareMap.tryGet(DcMotor.class, "left");
         left.setDirection(DcMotor.Direction.REVERSE);
         right = hardwareMap.tryGet(DcMotor.class, "right");
@@ -55,7 +55,9 @@ public class TankDrive {
 
         //for imu set up
         imu = hardwareMap.get(BNO055IMU.class, "imu");
+        //parameter objecty set up
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        //sets properties of parameter object
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
@@ -73,6 +75,7 @@ public class TankDrive {
     public double getRotiniHeight() {
         return (rotini.getCurrentPosition()/420);
     }
+    //the 420 stuff is used to get better units?
 
     public int convertToRotini(int num) {
         return num*420;
@@ -104,6 +107,7 @@ public class TankDrive {
         int initPos=rotini.getCurrentPosition();
         int curPos=rotini.getCurrentPosition();
         //if(getRotiniHeight()>4){
+        //actually works below
             while(curPos-initPos<convertToRotini(pos)){
                 rotini.setPower(0.5);
                 curPos=rotini.getCurrentPosition();
@@ -205,6 +209,7 @@ public class TankDrive {
         double goalAngle = getIMUAngle() + angle;
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //toleracne code below
         while (Math.abs(angle - getIMUAngle()) > .15) {
             if (angle > 0) {
                 //left.setPower(-0.5f);
